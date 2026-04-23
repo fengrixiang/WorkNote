@@ -11,3 +11,4 @@
 - [RK3576平台](/docs/rk3576/ch1.1)
 - [Sigmastar平台](/docs/268g/ch1.1)
 - [云台开发](/docs/monitor/monitor.md)
+- [linux开发 时钟频偏计算](/docs/linux/clock.md)
