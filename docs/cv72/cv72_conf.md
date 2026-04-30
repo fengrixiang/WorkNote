@@ -63,3 +63,11 @@ make kernel-module-sp50e40
 ```
 
 > `cv72_gage` 是公板配置。
+
+**查看gpio**
+
+```bash
+
+mount -t debugfs debug /sys/kernel/debug
+
+```

@@ -13,16 +13,16 @@ docker run -d \
   /usr/sbin/sshd -D
 ```
 
-完整示例（挂载 home、data、etc 目录）：
+完整示例（挂载 home、data、opt 目录）：
 
 ```bash
 docker run -d \
-  --name sigmastar \
+  --name docker_sigmastar \
   -p 18030:22 \
   -v /home:/home \
   -v /data:/data \
-  -v /etc:/etc \
-  192.168.1.204:8000/docker/public/vhd-ubuntu:2026.04 \
+  -v /opt:/opt \
+  192.168.1.204:8000/docker/public/vhd-ubuntu:latest \
   /usr/sbin/sshd -D
 ```
 
@@ -32,17 +32,22 @@ docker run -d \
 > - `-v /home/fengrixiang/workspace:/home/workspace` 挂载本地 workspace 目录到容器的 /home/workspace 目录
 > - `192.168.1.204:8000/docker/public/vhd-ubuntu:2026.04` 镜像名称
 
+注意：不要操作容器的 /opt 目录，否则会导致容器启动失败。
 ---
 
 ## 进入容器
 
 ```bash
 # 按名称进入
-docker exec -it sigmastar /bin/bash
+docker exec -it docker_sigmastar /bin/bash
 
 # 按容器 ID 以 root 身份进入
-docker exec -it -u root a7447d327835 /bin/bash
+docker exec -it -u root 76f7b819b9d5 env LANG=C.UTF-8 /bin/bash
+
+docker exec -it  -u $(whoami) 76f7b819b9d5 env LANG=C.UTF-8 /bin/bash 
 ```
+
+>76f7b819b9d5 是docker_sigmastar的id
 
 ## 容器管理
 
