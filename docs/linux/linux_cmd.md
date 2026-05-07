@@ -184,3 +184,4 @@ systemctl status nginx      # 查看服务状态
 systemctl enable nginx      # 开机自启
 systemctl disable nginx     # 取消开机自启
 ```
+
