@@ -142,6 +142,212 @@ git tag -d v1.0.0
 git push origin --delete v1.0.0
 ```
 
+## .gitignore 配置
+
+`.gitignore` 文件指定 Git 应忽略的文件/目录，避免将编译产物、IDE 配置等提交到仓库。
+
+### 语法规则
+
+```text
+# 注释
+*.o                   # 忽略所有 .o 文件
+build/                # 忽略 build 目录
+!lib.a                # 但保留 lib.a（取反）
+doc/*.txt             # 忽略 doc 目录下的 .txt 文件（不递归）
+doc/**/*.pdf          # 忽略 doc 目录下所有子目录中的 .pdf 文件
+TODO                  # 忽略名为 TODO 的文件或目录
+```
+
+| 语法 | 说明 |
+| ------ | ------ |
+| `*` | 匹配任意字符（不含 `/`） |
+| `**` | 匹配任意层级目录 |
+| `?` | 匹配单个字符 |
+| `[abc]` | 匹配方括号中的任意一个字符 |
+| `!` | 取反，重新包含之前忽略的文件 |
+| `/` 开头 | 仅匹配仓库根目录 |
+| `/` 结尾 | 仅匹配目录 |
+
+### 嵌入式开发常用模板
+
+```text
+# 编译产物
+*.o
+*.ko
+*.elf
+*.bin
+*.hex
+*.map
+*.lst
+*.su
+*.d
+*.cmd
+modules.order
+Module.symvers
+
+# 可执行文件
+*.out
+*.app
+
+# 库文件
+*.a
+*.so
+*.so.*
+
+# 压缩包
+*.gz
+*.tar
+*.zip
+*.7z
+
+# IDE / 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.cproject
+.settings/
+
+# OS 生成的文件
+.DS_Store
+Thumbs.db
+
+# Linux 内核
+*.mod.c
+*.mod
+.tmp_versions/
+.*.cmd
+*.order
+*.symvers
+
+# 编译输出目录
+build/
+out/
+output/
+dist/
+
+# 临时文件
+*.log
+*.tmp
+cscope.*
+tags
+GTAGS
+GRTAGS
+GSYMS
+```
+
+### 全局 gitignore
+
+```bash
+# 设置全局 gitignore（对所有仓库生效）
+git config --global core.excludesfile ~/.gitignore_global
+
+# 编辑全局规则
+vim ~/.gitignore_global
+```
+
+### 清除已跟踪的忽略文件
+
+```bash
+# 清除 git 缓存（文件从版本控制中移除，但保留本地文件）
+git rm -r --cached .
+git add .
+git commit -m "apply .gitignore"
+```
+
+> 已被 Git 跟踪的文件不受 .gitignore 影响，需要先用 `git rm --cached` 清除缓存。
+
+## Patch 补丁管理
+
+### 生成 patch
+
+```bash
+# 基于最近 N 次提交生成 patch
+git format-patch -1                  # 最近 1 次提交
+git format-patch -3                  # 最近 3 次提交
+git format-patch HEAD~3..HEAD        # 同上，显式指定范围
+
+# 指定提交范围
+git format-patch commitA..commitB    # commitA 之后到 commitB 的提交
+
+# 输出到指定目录
+git format-patch -3 -o /tmp/patches/
+
+# 生成单个文件包含所有 patch
+git format-patch -3 --stdout > all.patch
+```
+
+生成的文件名格式：`0001-提交说明.patch`
+
+### 应用 patch
+
+```bash
+# 检查 patch 是否能正常应用（不实际修改）
+git apply --check 0001-xxx.patch
+
+# 查看 patch 统计信息
+git apply --stat 0001-xxx.patch
+
+# 应用 patch（仅修改工作区，不产生 commit）
+git apply 0001-xxx.patch
+
+# 应用 patch 并保留 commit 信息（推荐）
+git am 0001-xxx.patch
+
+# 应用多个 patch
+git am /tmp/patches/*.patch
+
+# 应用单个合并文件中的所有 patch
+git am < all.patch
+
+# 应用失败时解决冲突
+git am --abort     # 放弃本次 am
+git am --skip      # 跳过当前 patch
+# 手动解决冲突后：
+git add .
+git am --continue
+```
+
+### diff patch（轻量级）
+
+```bash
+# 生成 diff patch（不包含 commit 信息）
+git diff > changes.patch                          # 工作区所有修改
+git diff commitA commitB > diff.patch             # 两个提交之间的差异
+git diff HEAD~3 HEAD > diff.patch                 # 最近 3 次提交的差异
+
+# 应用 diff patch
+git apply diff.patch
+```
+
+### `git format-patch` vs `git diff`
+
+| 特性 | format-patch | diff |
+| ------ | ------ | ------ |
+| 包含 commit 信息 | 是（作者、时间、提交说明） | 否 |
+| 应用方式 | `git am`（产生 commit） | `git apply`（仅修改文件） |
+| 适用场景 | 正式提交、邮件发送补丁 | 快速同步修改 |
+| 冲突处理 | `git am --continue` | 手动解决 |
+
+### 内核/驱动开发常用流程
+
+```bash
+# 1. 在修改分支上生成 patch
+git format-patch -1 -o /tmp/patches/
+
+# 2. 切换到目标分支
+git checkout target-branch
+
+# 3. 检查并应用
+git apply --check /tmp/patches/0001-xxx.patch
+git am /tmp/patches/0001-xxx.patch
+
+# 4. 如果需要修改 commit 信息
+git commit --amend -m "新的提交说明"
+```
+
 ## 远程仓库
 
 ```bash

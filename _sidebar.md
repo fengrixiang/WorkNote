@@ -11,6 +11,7 @@
 - [RK3576平台](/docs/rk3576/rk3576)
 - [Sigmastar平台](/docs/ssc268g/ch1.1)
   - [SSC268g调试指南](/docs/ssc268g/ssc268g_debug)
+- [ARM平台](/docs/arm/arm) 
 - [云台开发](/docs/monitor/monitor)
   - [TMC5272](/docs/monitor/tmc5272) 
 - [Sensor开发](/docs/sensor/sensor)
