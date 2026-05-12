@@ -101,10 +101,6 @@ svn ls <仓库地址>               # 简写
 # 导出纯代码（不含 .svn 目录）
 svn export <仓库地址> <目标目录>
 
-# 将文件排除出版本控制
-svn propset svn:ignore "<文件名>" .
-svn propedit svn:ignore .        # 编辑忽略列表（打开编辑器）
-
 # 锁定/解锁文件（适用于二进制文件）
 svn lock <文件名> -m "锁定说明"
 svn unlock <文件名>
@@ -112,3 +108,69 @@ svn unlock <文件名>
 # 清理工作区（修复异常状态）
 svn cleanup
 ```
+
+## 忽略文件（svn:ignore）
+
+SVN 通过目录属性 `svn:ignore` 和全局配置来忽略文件，作用类似 Git 的 `.gitignore`。
+
+### 单个文件/模式
+
+```bash
+# 忽略指定文件
+svn propset svn:ignore "config.local" .
+
+# 忽略多个文件/模式（用换行分隔）
+svn propset svn:ignore -F - . << 'EOF'
+*.o
+*.bin
+build/
+.env
+EOF
+```
+
+### 编辑忽略列表
+
+```bash
+# 打开编辑器修改（推荐，更直观）
+svn propedit svn:ignore .
+
+# 查看当前目录的忽略规则
+svn proplist -v .
+svn propget svn:ignore .
+```
+
+### 递归忽略（--recursive）
+
+```bash
+# 对所有子目录设置相同的忽略规则
+svn propset svn:ignore -R "*.o" .
+```
+
+### 全局忽略（~/.subversion/config）
+
+修改 `~/.subversion/config` 的 `[miscellany]` 部分，所有 SVN 工作区生效：
+
+```ini
+[miscellany]
+global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo *.rej *~ #*# .#* .*.swp .DS_Store [Tt]humbs.db
+```
+
+### 忽略已版本控制的文件
+
+已纳入版本控制的文件无法用 `svn:ignore` 忽略，需先删除：
+
+```bash
+# 从版本控制中移除（保留本地文件）
+svn delete --keep-local <文件名>
+
+# 然后加入忽略
+svn propset svn:ignore "<文件名>" .
+```
+
+### svn:ignore vs global-ignores
+
+| 方式 | 作用范围 | 是否提交到仓库 | 适用场景 |
+|------|---------|--------------|---------|
+| `svn:ignore` | 单个目录及其直接子项 | 是（团队共享） | 项目特定的编译产物 |
+| `global-ignores` | 所有 SVN 工作区 | 否（仅本地） | 编辑器临时文件、OS 文件 |
+| `svn:global-ignores` | 目录及所有子目录（SVN 1.8+） | 是 | 递归忽略某类文件 |

@@ -185,3 +185,7 @@ systemctl enable nginx      # 开机自启
 systemctl disable nginx     # 取消开机自启
 ```
 
+
+## 查看内核编译
+
+zcat /proc/config.gz | grep "CONFIG_PREEMPT_PT"
