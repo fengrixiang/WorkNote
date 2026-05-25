@@ -80,7 +80,8 @@ i2cdump -y 0 0x50 s       # SMBus 模块
 i2ctransfer -y <总线> <消息1> [消息2] ...
 
 # 写入 1 字节到寄存器 0x10
-i2ctransfer -y 0 w3@0x50 0x10 0xAB 0xCD
+i2ctransfer -y 0 w3@0x10 0x10 0xAB 0xCD
+i2ctransfer -f -y 0 w3@0x10 0x01 0x00 0x00 
 # w3 = 写入 3 字节（寄存器地址 + 数据）
 
 # 从寄存器 0x00 读取 8 字节
@@ -138,5 +139,11 @@ i2cset -y 0 0x20 0x02 0x01
 
 - 所有地址均为 **7 位地址**（不含读写位），如设备手册给出的是 8 位地址需右移 1 位
 - `-y` 参数取消交互确认，脚本中必须加
+- `-f` 参数强制访问已被内核驱动占用的设备（`i2cdetect` 显示 `UU` 的地址），调试时常用：
+
+  ```bash
+  i2cset -f -y 0 0x50 0x10 0xFF
+  i2cget -f -y 0 0x50 0x00
+  ```
 - 嵌入式平台上可能需要先加载内核模块：`modprobe i2c-dev`
 - 操作前确认总线编号：`i2cdetect -l` 查看可用总线

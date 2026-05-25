@@ -9,3 +9,12 @@
 将其从默认的 RTP/RTSP 或 UDP 修改为 RTP over RTSP (TCP)。
 
 ![alt text](image.png)
+
+
+
+## 延迟高
+菜单栏点击 媒体 (Media) → 打开网络串流 (Open Network Stream)
+输入您的流地址
+点击右下角 显示更多选项 (Show more options) ✅
+在 缓存 (Caching) 框中输入 300（单位毫秒）
+点击 播放
