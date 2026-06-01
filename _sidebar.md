@@ -30,14 +30,25 @@
 - 云台开发
   - [云台概述](/docs/monitor/ptz)
   - [电机概述](/docs/motor/motor)
-  - [MS35774](/docs/monitor/ms35774)
-  - [MS35774 速度表](/docs/monitor/ms35774_speed)
-  - [MS35774 开发](/docs/monitor/ms35774_drive)
-  - [MS41969](/docs/monitor/ms41969)
-  - [TMC5272](/docs/monitor/tmc5272)
-  - [TMC5272 开发](/docs/monitor/tmc5272_drive)
-  - [VX630A VS VX720云台速度测试](/docs/monitor/VX630A_VS_VX720)
-  - [云台测试脚本](/docs/monitor/python)
+
+  - MS35774 
+    - [MS35774](/docs/monitor/ms35774)
+    - [MS35774 速度表](/docs/monitor/ms35774_speed)
+    - [MS35774 开发](/docs/monitor/ms35774_drive)
+
+  - TMC5272 
+    - [TMC5272](/docs/monitor/tmc5272)
+    - [TMC5272 开发](/docs/monitor/tmc5272_drive)
+    - [TMC5272 速度表](/docs/monitor/tmc5272_speed)
+    - [TMC5272 调试经验](/docs/monitor/tmc5272_debug)
+    - [TMC5272 电流](/docs/monitor/tmc5272_electric)
+
+  - 其他驱动
+    - [MS41969](/docs/monitor/ms41969)
+
+  - 云台测试
+    - [VX630A VS VX720云台速度测试](/docs/monitor/VX630A_VS_VX720)
+    - [云台测试脚本](/docs/monitor/python)
 
 - Sensor 开发
   - [Sensor 概述](/docs/sensor/sensor)
@@ -46,6 +57,7 @@
   - [IAV 框架](/docs/sensor/iav)
   - [SP50E40 帧同步测试](/docs/sensor/sp50e40)
   - [AR2020 帧同步测试](/docs/sensor/ar2020)
+  - [Linux Camera驱动调试](/docs/sensor/sensor_drive)
 
 - Linux 开发
   - [Linux 概述](/docs/linux/linux)
