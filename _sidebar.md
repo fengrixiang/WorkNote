@@ -5,7 +5,10 @@
   - [CV72 开发](/docs/cv72/cv72)
   - [CV72 环境搭建](/docs/cv72/cv72_conf)
   - [CV72 调试方法](/docs/cv72/cv72_debug)
-  - [PTP 时间同步](/docs/cv72/ptp)
+  - PTP开发心得
+    - [PTP 时间同步](/docs/cv72/ptp/ptp)
+    - [PTP 音频时钟同步](/docs/cv72/ptp/PTP_Audio_Clock_Sync)
+    - [PTP PPS 输出](/docs/cv72/ptp/ptp_out_pps)
   - [CV72 测试](/docs/cv72/test)
 
 - 海思平台开发心得

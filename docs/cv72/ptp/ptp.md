@@ -185,11 +185,11 @@ uds_address     /var/run/ptp4l
 ```
 **ptp4l 输出示例**
 
-![ptp4l master 状态日志](images/master_1.png)
+![ptp4l master 状态日志](../images/master_1.png)
 
 **phc2sys 输出示例**
 
-![phc2sys 同步日志](images/master_2.png)
+![phc2sys 同步日志](../images/master_2.png)
 
 ---
 
@@ -227,7 +227,7 @@ ptp4l -i eth0 -m -s -H &
 phc2sys -s eth0 -c CLOCK_REALTIME -w -m -r -O 0 &
 ```
 
-![ptp4l slave 状态日志](images/slave_1.png)
+![ptp4l slave 状态日志](../images/slave_1.png)
 
 ---
 
@@ -358,13 +358,13 @@ cat /proc/interrupts | grep dma
 
 ##### 5.1.3.2 注册 PPS 设备
 
-![PPS 设备注册](images/pps_0.png)
+![PPS 设备注册](../images/pps_0.png)
 
 ##### 5.1.3.3 模拟 PPS 信号
 
-![PPS 信号生成代码](images/pps_1.png)
+![PPS 信号生成代码](../images/pps_1.png)
 
-![PPS 信号测试](images/pps_2.png)
+![PPS 信号测试](../images/pps_2.png)
 
 
 ##### 5.1.3.4 phc2sys 修改
@@ -529,11 +529,11 @@ buffer_size: 1920
 
 **高负载情况下**
 
-![高负载下 PPS 偏差](images/pps_3.png)
+![高负载下 PPS 偏差](../images/pps_3.png)
 
 **低负载情况下**
 
-![低负载下 PPS 偏差](images/pps_4.png)
+![低负载下 PPS 偏差](../images/pps_4.png)
 
 ---
 
@@ -931,8 +931,8 @@ cleanup:
 
 | 测试   | 结果截图                                     |
 | ------ | -------------------------------------------- |
-| 测试 1 | ![PPM 测试结果 1](images/ppm_1.png)          |
-| 测试 2 | ![PPM 测试结果 2](images/ppm_2.png)          |
+| 测试 1 | ![PPM 测试结果 1](../images/ppm_1.png)          |
+| 测试 2 | ![PPM 测试结果 2](../images/ppm_2.png)          |
 
 ### 5.3 音频同步效果
 
@@ -1025,7 +1025,7 @@ static enum hrtimer_restart  hrtimer_test_timer_poll(struct hrtimer *timer)
 
 MIPI 数据跟随 FSIN 信号输出，验证帧同步效果：
 
-![Sensor 帧同步效果](images/sensor_frame.png)
+![Sensor 帧同步效果](../images/sensor_frame.png)
 
 ### 6.4 应用层启动
 
@@ -1083,9 +1083,9 @@ int net_visca_switch_ptp_func(unsigned char *command, ptz_return_content_s * p_c
 
 高精度定时器仍受 CPU 调度影响。测试结果显示：33ms 视频帧周期下，CPU 高负载时 FSIN 信号的相位同步最大误差约 0.1ms。
 
-![相位同步误差 1](images/phase_sync.png)
+![相位同步误差 1](../images/phase_sync.png)
 
-![相位同步误差 2](images/phase_sync_2.png)
+![相位同步误差 2](../images/phase_sync_2.png)
 
 ## 7. 常用调试方法
 
