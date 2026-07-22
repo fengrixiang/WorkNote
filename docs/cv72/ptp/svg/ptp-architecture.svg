@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 760" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" role="img" aria-label="PTP 整体方案框图">
+  <title>PTP 整体方案：主时钟经伺服后分音频域与视频域两条链路</title>
+  <desc>PTP Grandmaster → 网卡 PHC → ptp4l PI 伺服 → 音频域（EMA/限幅/Audio PLL/I2S）+ 视频域（MAC PPS/PCB/Sensor VSYNC）</desc>
+  <style>
+    :root {
+      --surface:      #fcfcfb;
+      --ink:          #0b0b0b;
+      --ink-2:        #52514e;
+      --ink-mute:     #898781;
+      --border:       rgba(11,11,11,0.10);
+      --grid:         #e1e0d9;
+      --master-fill:  #ffd6b8;
+      --master-stk:   #d95926;
+      --master-ink:   #4a1f0a;
+      --hw-fill:      #dbeafe;
+      --hw-stk:       #2a78d6;
+      --hw-ink:       #0d2c52;
+      --sw-fill:      #fff3b0;
+      --sw-stk:       #c98500;
+      --sw-ink:       #4d3500;
+      --out-fill:     #cfeacc;
+      --out-stk:      #008300;
+      --out-ink:      #0d2c0d;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface:      #1a1a19;
+        --ink:          #ffffff;
+        --ink-2:        #c3c2b7;
+        --ink-mute:     #898781;
+        --border:       rgba(255,255,255,0.10);
+        --grid:         #2c2c2a;
+        --master-fill:  #4a1f0a;
+        --master-stk:   #eb6834;
+        --master-ink:   #ffd6b8;
+        --hw-fill:      #0d2c52;
+        --hw-stk:       #3987e5;
+        --hw-ink:       #cfe2fb;
+        --sw-fill:      #4d3500;
+        --sw-stk:       #eda100;
+        --sw-ink:       #fff3b0;
+        --out-fill:     #0d2c0d;
+        --out-stk:      #4ca84c;
+        --out-ink:      #cfeacc;
+      }
+    }
+    .card       { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+    .node       { stroke-width: 1.5; }
+    .node-m     { fill: var(--master-fill); stroke: var(--master-stk); }
+    .node-hw    { fill: var(--hw-fill);    stroke: var(--hw-stk); }
+    .node-sw    { fill: var(--sw-fill);    stroke: var(--sw-stk); }
+    .node-out   { fill: var(--out-fill);   stroke: var(--out-stk); }
+    .text-m     { fill: var(--master-ink); }
+    .text-hw    { fill: var(--hw-ink); }
+    .text-sw    { fill: var(--sw-ink); }
+    .text-out   { fill: var(--out-ink); }
+    .n-text     { font-size: 13px; font-weight: 600; text-anchor: middle; }
+    .n-sub      { font-size: 11px; text-anchor: middle; }
+    .arrow      { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+    .arrow-dash { fill: none; stroke: var(--ink-2); stroke-width: 1.5; stroke-dasharray: 5 3; }
+    .arrow-head { fill: var(--ink); }
+    .arrow-lbl  { fill: var(--ink-2); font-size: 11px; }
+    .title      { fill: var(--ink); font-size: 16px; font-weight: 700; }
+    .legend-bg  { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+  </style>
+
+  <rect class="card" x="0.5" y="0.5" width="819" height="759" rx="10"/>
+  <text class="title" x="410" y="32" text-anchor="middle">PTP 整体方案：双域并行同步</text>
+
+  <!-- Row 1: PTP Grandmaster (master color) -->
+  <rect class="node node-m" x="310" y="60" width="200" height="50" rx="8"/>
+  <text class="n-text text-m" x="410" y="82">PTP Grandmaster 主时钟</text>
+  <text class="n-sub text-m"  x="410" y="100">IEEE 1588 时间源</text>
+
+  <!-- Row 2: 网卡 PHC  (hw)  +  ptp4l 伺服 (sw) -->
+  <rect class="node node-hw" x="120" y="160" width="180" height="50" rx="8"/>
+  <text class="n-text text-hw" x="210" y="185">网卡 PHC</text>
+  <text class="n-sub text-hw"  x="210" y="200">硬件时间戳</text>
+
+  <rect class="node node-sw" x="520" y="160" width="180" height="50" rx="8"/>
+  <text class="n-text text-sw" x="610" y="185">ptp4l 伺服</text>
+  <text class="n-sub text-sw"  x="610" y="200">PI 控制器</text>
+
+  <!-- Row 3: Audio domain path  (left column) -->
+  <rect class="node node-sw" x="60"  y="310" width="130" height="46" rx="8"/>
+  <text class="n-text text-sw" x="125" y="338">EMA 平滑</text>
+  <text class="n-sub text-sw"  x="125" y="368" dy="-15">α = 0.1</text>
+
+  <rect class="node node-sw" x="220" y="310" width="130" height="46" rx="8"/>
+  <text class="n-text text-sw" x="285" y="338">限幅</text>
+  <text class="n-sub text-sw"  x="285" y="368" dy="-15">±1000 Hz</text>
+
+  <rect class="node node-hw" x="60"  y="400" width="290" height="56" rx="8"/>
+  <text class="n-text text-hw" x="205" y="425">Audio PLL · gclk_audio2</text>
+  <text class="n-sub text-hw"  x="205" y="444">12.288 MHz · 频率合成</text>
+
+  <rect class="node node-hw" x="60"  y="500" width="290" height="50" rx="8"/>
+  <text class="n-text text-hw" x="205" y="522">I2S 音频采样</text>
+  <text class="n-sub text-hw"  x="205" y="540">48 kHz · 锁相输出</text>
+
+  <!-- Row 3: Video domain path (right column) -->
+  <rect class="node node-hw" x="470" y="310" width="290" height="56" rx="8"/>
+  <text class="n-text text-hw" x="615" y="335">MAC 层硬件 PPS 输出</text>
+  <text class="n-sub text-hw"  x="615" y="354">30 Hz · 纳秒级触发</text>
+
+  <rect class="node node-hw" x="470" y="400" width="290" height="50" rx="8"/>
+  <text class="n-text text-hw" x="615" y="425">PCB 物理走线</text>
+  <text class="n-sub text-hw"  x="615" y="443">硬件直连</text>
+
+  <rect class="node node-hw" x="470" y="500" width="290" height="50" rx="8"/>
+  <text class="n-text text-hw" x="615" y="522">Sensor VSYNC 从模式</text>
+  <text class="n-sub text-hw"  x="615" y="540">跟随外部脉冲出帧</text>
+
+  <!-- arrows: GM -> PHC and GM -> ptp4l via 报文 -->
+  <path class="arrow" d="M 380 110 Q 380 130 280 130 Q 230 130 210 160"/>
+  <polygon class="arrow-head" points="210,160 205,151 217,153"/>
+  <text class="arrow-lbl" x="170" y="142">Sync / Delay 报文</text>
+
+  <path class="arrow" d="M 440 110 Q 440 130 540 130 Q 580 130 610 160"/>
+  <polygon class="arrow-head" points="610,160 603,151 615,154"/>
+  <text class="arrow-lbl" x="500" y="142">硬件时间戳</text>
+
+  <!-- PHC -> ptp4l -->
+  <line class="arrow" x1="300" y1="185" x2="520" y2="185"/>
+  <polygon class="arrow-head" points="520,185 510,180 510,190"/>
+
+  <!-- ptp4l -> EMA (audio path) -->
+  <path class="arrow" d="M 610 210 Q 610 260 200 260 Q 125 260 125 310"/>
+  <polygon class="arrow-head" points="125,310 120,301 132,303"/>
+  <text class="arrow-lbl" x="380" y="255">freq (PPB)</text>
+
+  <!-- ptp4l -> MAC (video path) -->
+  <path class="arrow" d="M 610 210 Q 610 260 615 260 Q 615 285 615 310"/>
+  <polygon class="arrow-head" points="615,310 610,301 620,301"/>
+  <text class="arrow-lbl" x="625" y="260">锁定后触发</text>
+
+  <!-- EMA -> 限幅 -->
+  <line class="arrow" x1="190" y1="333" x2="220" y2="333"/>
+  <polygon class="arrow-head" points="220,333 211,328 211,338"/>
+
+  <!-- 限幅 -> Audio PLL -->
+  <line class="arrow" x1="285" y1="356" x2="205" y2="400"/>
+  <polygon class="arrow-head" points="205,400 207,391 215,396"/>
+  <text class="arrow-lbl" x="295" y="383">写寄存器</text>
+
+  <!-- Audio PLL -> I2S -->
+  <line class="arrow" x1="205" y1="456" x2="205" y2="500"/>
+  <polygon class="arrow-head" points="205,500 200,491 210,491"/>
+
+  <!-- MAC -> PCB -->
+  <line class="arrow" x1="615" y1="366" x2="615" y2="400"/>
+  <polygon class="arrow-head" points="615,400 610,391 620,391"/>
+
+  <!-- PCB -> Sensor -->
+  <line class="arrow" x1="615" y1="450" x2="615" y2="500"/>
+  <polygon class="arrow-head" points="615,500 610,491 620,491"/>
+
+  <!-- domain labels (subgraph hints, minimal to avoid clutter) -->
+  <text class="arrow-lbl" x="205" y="295" text-anchor="middle" style="font-weight:600;">音频域</text>
+  <text class="arrow-lbl" x="615" y="295" text-anchor="middle" style="font-weight:600;">视频域</text>
+
+  <!-- legend -->
+  <g transform="translate(60, 600)">
+    <rect class="legend-bg" x="0" y="0" width="700" height="130" rx="8"/>
+    <text class="title" x="20" y="28" style="font-size:13px;">图例</text>
+
+    <rect class="node node-m"   x="20"  y="50" width="22" height="22" rx="4"/>
+    <text class="text-m" x="50"  y="66" style="font-size:12px;">PTP 主时钟源（Grandmaster）</text>
+
+    <rect class="node node-hw"  x="260" y="50" width="22" height="22" rx="4"/>
+    <text class="text-hw" x="290" y="66" style="font-size:12px;">硬件链路（网卡 / PLL / MAC / Sensor）</text>
+
+    <rect class="node node-sw"  x="20"  y="90" width="22" height="22" rx="4"/>
+    <text class="text-sw" x="50"  y="106" style="font-size:12px;">软件处理（伺服 / 平滑 / 限幅）</text>
+
+    <line class="arrow" x1="260" y1="100" x2="295" y2="100"/>
+    <polygon class="arrow-head" points="295,100 286,95 286,105"/>
+    <text class="arrow-lbl" x="305" y="104" style="font-size:12px;">数据流</text>
+
+    <line class="arrow-dash" x1="430" y1="100" x2="465" y2="100"/>
+    <text class="arrow-lbl" x="475" y="104" style="font-size:12px;">报文 / 边沿对齐</text>
+  </g>
+</svg>

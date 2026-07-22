@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" role="img" aria-label="音频时钟同步 新旧方案对比">
+  <title>音频同步：旧方案（软件 PPS 长链路）vs 新方案（PPB 跨域直注）</title>
+  <desc>旧方案 ALSA → DMA → 软件 PPS → phc2sys_2 → Audio PLL；新方案 ptp4l → EMA → 限幅 → Audio PLL</desc>
+  <style>
+    :root {
+      --surface:      #fcfcfb;
+      --ink:          #0b0b0b;
+      --ink-2:        #52514e;
+      --ink-mute:     #898781;
+      --border:       rgba(11,11,11,0.10);
+      --grid:         #e1e0d9;
+      --hw-fill:      #dbeafe;
+      --hw-stk:       #2a78d6;
+      --hw-ink:       #0d2c52;
+      --sw-fill:      #fff3b0;
+      --sw-stk:       #c98500;
+      --sw-ink:       #4d3500;
+      --old-bg:       rgba(227,73,72,0.06);
+      --old-stk:      rgba(227,73,72,0.45);
+      --new-bg:       rgba(0,131,0,0.06);
+      --new-stk:      rgba(0,131,0,0.45);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface:      #1a1a19;
+        --ink:          #ffffff;
+        --ink-2:        #c3c2b7;
+        --ink-mute:     #898781;
+        --border:       rgba(255,255,255,0.10);
+        --grid:         #2c2c2a;
+        --hw-fill:      #0d2c52;
+        --hw-stk:       #3987e5;
+        --hw-ink:       #cfe2fb;
+        --sw-fill:      #4d3500;
+        --sw-stk:       #eda100;
+        --sw-ink:       #fff3b0;
+        --old-bg:       rgba(227,103,103,0.10);
+        --old-stk:      rgba(227,103,103,0.55);
+        --new-bg:       rgba(76,168,76,0.10);
+        --new-stk:      rgba(76,168,76,0.55);
+      }
+    }
+    .card       { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+    .sub-old    { fill: var(--old-bg); stroke: var(--old-stk); stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .sub-new    { fill: var(--new-bg); stroke: var(--new-stk); stroke-width: 1.5; }
+    .sub-title  { font-size: 13px; font-weight: 700; }
+    .node       { stroke-width: 1.5; }
+    .node-hw    { fill: var(--hw-fill); stroke: var(--hw-stk); }
+    .node-sw    { fill: var(--sw-fill); stroke: var(--sw-stk); }
+    .text-hw    { fill: var(--hw-ink); }
+    .text-sw    { fill: var(--sw-ink); }
+    .n-text     { font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+    .n-sub      { font-size: 10.5px; text-anchor: middle; }
+    .arrow      { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+    .arrow-head { fill: var(--ink); }
+    .title      { fill: var(--ink); font-size: 16px; font-weight: 700; }
+    .sub-old-t  { fill: #b03434; }
+    .sub-new-t  { fill: #006300; }
+    @media (prefers-color-scheme: dark) {
+      .sub-old-t { fill: #e66767; }
+      .sub-new-t { fill: #4ca84c; }
+    }
+  </style>
+
+  <rect class="card" x="0.5" y="0.5" width="879" height="539" rx="10"/>
+
+  <!-- OLD subgraph (left) -->
+  <rect class="sub-old" x="30" y="60" width="400" height="440" rx="14"/>
+  <text class="sub-title sub-old-t" x="50" y="88">旧方案 · 软件模拟 PPS</text>
+  <text class="n-sub" x="50" y="106" style="text-anchor:start;">链路长 / 依赖录音 / 受 CPU 调度影响</text>
+
+  <rect class="node node-hw" x="80"  y="140" width="140" height="56" rx="8"/>
+  <text class="n-text text-hw" x="150" y="167">ALSA 采集</text>
+  <text class="n-sub text-hw"  x="150" y="184">I²S 录音</text>
+
+  <rect class="node node-hw" x="240" y="140" width="140" height="56" rx="8"/>
+  <text class="n-text text-hw" x="310" y="167">DMA 中断</text>
+  <text class="n-sub text-hw"  x="310" y="184">每 10 ms 一次</text>
+
+  <rect class="node node-sw" x="80"  y="240" width="300" height="56" rx="8"/>
+  <text class="n-text text-sw" x="230" y="267">软件 PPS · /dev/pps1</text>
+  <text class="n-sub text-sw"  x="230" y="284">100 次中断合成 1 个脉冲</text>
+
+  <rect class="node node-sw" x="80"  y="340" width="300" height="56" rx="8"/>
+  <text class="n-text text-sw" x="230" y="367">phc2sys_2</text>
+  <text class="n-sub text-sw"  x="230" y="384">比对 PPS 与 PHC 算偏移</text>
+
+  <rect class="node node-hw" x="80"  y="430" width="300" height="50" rx="8"/>
+  <text class="n-text text-hw" x="230" y="454">Audio PLL 寄存器</text>
+  <text class="n-sub text-hw"  x="230" y="471">写 MCLK 频率</text>
+
+  <!-- OLD arrows -->
+  <line class="arrow" x1="220" y1="168" x2="240" y2="168"/>
+  <polygon class="arrow-head" points="240,168 231,163 231,173"/>
+  <line class="arrow" x1="310" y1="196" x2="230" y2="240"/>
+  <polygon class="arrow-head" points="230,240 234,231 241,236"/>
+  <line class="arrow" x1="230" y1="296" x2="230" y2="340"/>
+  <polygon class="arrow-head" points="230,340 225,331 235,331"/>
+  <line class="arrow" x1="230" y1="396" x2="230" y2="430"/>
+  <polygon class="arrow-head" points="230,430 225,421 235,421"/>
+
+  <!-- NEW subgraph (right) -->
+  <rect class="sub-new" x="450" y="60" width="400" height="440" rx="14"/>
+  <text class="sub-title sub-new-t" x="470" y="88">新方案 · PPB 跨域直注</text>
+  <text class="n-sub" x="470" y="106" style="text-anchor:start;">链路短 / 不依赖录音 / 绕开 CPU</text>
+
+  <rect class="node node-sw" x="490" y="170" width="320" height="60" rx="8"/>
+  <text class="n-text text-sw" x="650" y="198">ptp4l 提取 freq (PPB)</text>
+  <text class="n-sub text-sw"  x="650" y="216">PI 伺服直接输出无量纲比例</text>
+
+  <rect class="node node-sw" x="490" y="265" width="320" height="56" rx="8"/>
+  <text class="n-text text-sw" x="650" y="293">EMA 平滑 · α = 0.1</text>
+  <text class="n-sub text-sw"  x="650" y="310">低通滤波 · 截止 ≈ 0.016 Hz</text>
+
+  <rect class="node node-sw" x="490" y="355" width="320" height="56" rx="8"/>
+  <text class="n-text text-sw" x="650" y="383">限幅 · ±1000 Hz</text>
+  <text class="n-sub text-sw"  x="650" y="400">防突变 / 防失锁</text>
+
+  <rect class="node node-hw" x="490" y="445" width="320" height="50" rx="8"/>
+  <text class="n-text text-hw" x="650" y="469">Audio PLL 寄存器</text>
+  <text class="n-sub text-hw"  x="650" y="486">写 MCLK 频率</text>
+
+  <!-- NEW arrows -->
+  <line class="arrow" x1="650" y1="230" x2="650" y2="265"/>
+  <polygon class="arrow-head" points="650,265 645,256 655,256"/>
+  <line class="arrow" x1="650" y1="321" x2="650" y2="355"/>
+  <polygon class="arrow-head" points="650,355 645,346 655,346"/>
+  <line class="arrow" x1="650" y1="411" x2="650" y2="445"/>
+  <polygon class="arrow-head" points="650,445 645,436 655,436"/>
+
+  <!-- VS divider -->
+  <text class="title" x="440" y="290" text-anchor="middle" style="font-size:36px; fill: var(--ink-mute);">vs</text>
+</svg>

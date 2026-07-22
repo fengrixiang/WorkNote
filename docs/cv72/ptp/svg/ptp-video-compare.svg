@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 460" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" role="img" aria-label="视频帧同步 新旧方案对比">
+  <title>视频帧同步：旧方案（hrtimer 软件 FSIN）vs 新方案（MAC 硬件 PPS 直驱）</title>
+  <desc>旧方案 hrtimer → GPIO FSIN → Sensor；新方案 MAC → PCB 走线 → Sensor</desc>
+  <style>
+    :root {
+      --surface:      #fcfcfb;
+      --ink:          #0b0b0b;
+      --ink-2:        #52514e;
+      --ink-mute:     #898781;
+      --border:       rgba(11,11,11,0.10);
+      --grid:         #e1e0d9;
+      --hw-fill:      #dbeafe;
+      --hw-stk:       #2a78d6;
+      --hw-ink:       #0d2c52;
+      --sw-fill:      #fff3b0;
+      --sw-stk:       #c98500;
+      --sw-ink:       #4d3500;
+      --old-bg:       rgba(227,73,72,0.06);
+      --old-stk:      rgba(227,73,72,0.45);
+      --new-bg:       rgba(0,131,0,0.06);
+      --new-stk:      rgba(0,131,0,0.45);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface:      #1a1a19;
+        --ink:          #ffffff;
+        --ink-2:        #c3c2b7;
+        --ink-mute:     #898781;
+        --border:       rgba(255,255,255,0.10);
+        --grid:         #2c2c2a;
+        --hw-fill:      #0d2c52;
+        --hw-stk:       #3987e5;
+        --hw-ink:       #cfe2fb;
+        --sw-fill:      #4d3500;
+        --sw-stk:       #eda100;
+        --sw-ink:       #fff3b0;
+        --old-bg:       rgba(227,103,103,0.10);
+        --old-stk:      rgba(227,103,103,0.55);
+        --new-bg:       rgba(76,168,76,0.10);
+        --new-stk:      rgba(76,168,76,0.55);
+      }
+    }
+    .card       { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+    .sub-old    { fill: var(--old-bg); stroke: var(--old-stk); stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .sub-new    { fill: var(--new-bg); stroke: var(--new-stk); stroke-width: 1.5; }
+    .sub-title  { font-size: 13px; font-weight: 700; }
+    .node       { stroke-width: 1.5; }
+    .node-hw    { fill: var(--hw-fill); stroke: var(--hw-stk); }
+    .node-sw    { fill: var(--sw-fill); stroke: var(--sw-stk); }
+    .text-hw    { fill: var(--hw-ink); }
+    .text-sw    { fill: var(--sw-ink); }
+    .n-text     { font-size: 13px; font-weight: 600; text-anchor: middle; }
+    .n-sub      { font-size: 11px; text-anchor: middle; }
+    .arrow      { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+    .arrow-head { fill: var(--ink); }
+    .arrow-net  { fill: none; stroke: #7e57c2; stroke-width: 1.2; stroke-dasharray: 4 3; }
+    .arrow-net-h{ fill: #7e57c2; }
+    .title      { fill: var(--ink); font-size: 16px; font-weight: 700; }
+    .sub-old-t  { fill: #b03434; }
+    .sub-new-t  { fill: #006300; }
+    @media (prefers-color-scheme: dark) {
+      .sub-old-t { fill: #e66767; }
+      .sub-new-t { fill: #4ca84c; }
+    }
+    .metric     { font-size: 28px; font-weight: 700; text-anchor: middle; }
+    .metric-lbl { font-size: 11px; text-anchor: middle; }
+  </style>
+
+  <rect class="card" x="0.5" y="0.5" width="819" height="459" rx="10"/>
+  <text class="title" x="410" y="32" text-anchor="middle">视频帧同步：旧方案（hrtimer）vs 新方案（MAC 硬件 PPS）</text>
+
+  <!-- OLD subgraph (left) -->
+  <rect class="sub-old" x="30" y="60" width="360" height="370" rx="14"/>
+  <text class="sub-title sub-old-t" x="50" y="88">旧方案 · hrtimer 软件 FSIN</text>
+  <text class="n-sub" x="50" y="106" style="text-anchor:start;">受 CPU 调度影响</text>
+
+  <rect class="node node-sw" x="80"  y="140" width="260" height="64" rx="8"/>
+  <text class="n-text text-sw" x="210" y="170">hrtimer 软件定时器</text>
+  <text class="n-sub text-sw"  x="210" y="188">三态轮转 · 打脉冲</text>
+  <text class="n-sub text-sw"  x="210" y="202">依赖 Linux 调度</text>
+
+  <rect class="node node-hw" x="80"  y="240" width="260" height="60" rx="8"/>
+  <text class="n-text text-hw" x="210" y="270">GPIO FSIN 脉冲</text>
+  <text class="n-sub text-hw"  x="210" y="288">1 ms 高电平 · 33.33 ms 周期</text>
+
+  <rect class="node node-hw" x="80"  y="335" width="260" height="60" rx="8"/>
+  <text class="n-text text-hw" x="210" y="365">Sensor 从模式出帧</text>
+  <text class="n-sub text-hw"  x="210" y="383">4K30 · 跟随 FSIN 触发</text>
+
+  <!-- OLD arrows -->
+  <line class="arrow" x1="210" y1="204" x2="210" y2="240"/>
+  <polygon class="arrow-head" points="210,240 205,231 215,231"/>
+  <line class="arrow" x1="210" y1="300" x2="210" y2="335"/>
+  <polygon class="arrow-head" points="210,335 205,326 215,326"/>
+
+  <!-- Metric for OLD -->
+  <text class="metric sub-old-t" x="210" y="430">±100 μs</text>
+  <text class="metric-lbl" x="210" y="448" style="fill: var(--ink-2);">相位精度</text>
+
+  <!-- NEW subgraph (right) -->
+  <rect class="sub-new" x="430" y="60" width="360" height="370" rx="14"/>
+  <text class="sub-title sub-new-t" x="450" y="88">新方案 · MAC 硬件 PPS 直驱</text>
+  <text class="n-sub" x="450" y="106" style="text-anchor:start;">PTP 配置驱动 · 硬件触发</text>
+
+  <!-- PTP (配置源) -->
+  <rect class="node node-sw" x="480" y="125" width="260" height="50" rx="8"/>
+  <text class="n-text text-sw" x="610" y="147">PTP 时间基准</text>
+  <text class="n-sub text-sw"  x="610" y="165">配置 MAC 寄存器 · 对齐 master 时间</text>
+
+  <!-- MAC 硬件 PPS -->
+  <rect class="node node-hw" x="480" y="200" width="260" height="50" rx="8"/>
+  <text class="n-text text-hw" x="610" y="222">MAC 硬件 PPS 输出</text>
+  <text class="n-sub text-hw"  x="610" y="240">30 Hz · 硬件比较器触发</text>
+
+  <!-- Sensor -->
+  <rect class="node node-hw" x="480" y="275" width="260" height="50" rx="8"/>
+  <text class="n-text text-hw" x="610" y="297">Sensor 从模式出帧</text>
+  <text class="n-sub text-hw"  x="610" y="315">4K30 · 跟随 PPS 触发</text>
+
+  <!-- NEW arrows: PTP→MAC 控制流（紫色虚线）; MAC→Sensor PPS 信号流（黑色实线） -->
+  <line class="arrow-net" x1="610" y1="175" x2="610" y2="200"/>
+  <polygon class="arrow-net-h" points="610,200 605,193 615,193"/>
+  <line class="arrow" x1="610" y1="250" x2="610" y2="275"/>
+  <polygon class="arrow-head" points="610,275 605,266 615,266"/>
+
+  <!-- Metric for NEW -->
+  <text class="metric sub-new-t" x="610" y="430">&lt; 1 μs</text>
+  <text class="metric-lbl" x="610" y="448" style="fill: var(--ink-2);">相位精度</text>
+
+  <!-- VS divider -->
+  <text class="title" x="410" y="240" text-anchor="middle" style="font-size:36px; fill: var(--ink-mute);">vs</text>
+</svg>

@@ -1,0 +1,875 @@
+<!DOCTYPE html><html><head>
+      <title>PTP开发心得-培训分享版</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\feng.rixiang\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.30\crossnote\dependencies\katex\katex.min.css">
+      
+      
+      
+      <script type="text/javascript" src="file:///c:\Users\feng.rixiang\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.8.30\crossnote\dependencies\mermaid\mermaid.min.js" charset="UTF-8"></script>
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-details{margin:0;padding:0;border:none}.markdown-preview .md-toc summary.md-toc-link-wrapper{cursor:pointer;list-style-position:outside}.markdown-preview .md-toc summary.md-toc-link-wrapper::marker{font-size:.85em}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='0']{margin-left:12px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='1']{margin-left:28px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='2']{margin-left:44px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='3']{margin-left:60px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='4']{margin-left:76px}.markdown-preview .md-toc .md-toc-link-wrapper[data-level='5']{margin-left:80px}.markdown-preview a.tag,.markdown-preview a.tag:active,.markdown-preview a.tag:link,.markdown-preview a.tag:visited,.markdown-preview span.tag:not(.token){display:inline-block;background-color:var(--vscode-badge-background,rgba(127,127,127,.18));color:var(--vscode-badge-foreground,currentColor);border-radius:2em;font-size:.85em;font-weight:500;padding:.05em .55em;line-height:1.5;white-space:nowrap;text-decoration:none;text-shadow:none;box-shadow:none;transition:background-color .12s ease,opacity .12s ease}.markdown-preview a.tag{cursor:pointer}.markdown-preview a.tag:focus,.markdown-preview a.tag:hover{background-color:var(--vscode-badge-background,rgba(127,127,127,.32));color:var(--vscode-badge-foreground,currentColor);opacity:.85;text-decoration:none;outline:0}.markdown-preview .wikilink-embed-content{border-left:3px solid var(--vscode-textBlockQuote-border,rgba(128,128,128,.3));background:var(--vscode-textBlockQuote-background,rgba(128,128,128,.05));margin:.5em 0;padding:.5em .75em;border-radius:0 3px 3px 0}.markdown-preview .wikilink-embed-content.wikilink-embed-error{border-left-color:var(--vscode-errorForeground,#cf222e);color:var(--vscode-errorForeground,#cf222e);font-style:italic;opacity:.8}.markdown-preview .wikilink-embed-content h1:first-child,.markdown-preview .wikilink-embed-content h2:first-child,.markdown-preview .wikilink-embed-content h3:first-child,.markdown-preview .wikilink-embed-content h4:first-child,.markdown-preview .wikilink-embed-content h5:first-child,.markdown-preview .wikilink-embed-content h6:first-child{margin-top:.25em}.markdown-preview .wikilink-embed-content .wikilink-embed-content{margin:.25em 0;padding:.25em .5em}.markdown-preview .block-id{display:none}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}.scrollbar-style::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));border:4px solid var(--vscode-scrollbarSlider-background,rgba(150,150,150,.66));background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb:hover{background-color:var(--vscode-scrollbarSlider-hoverBackground,rgba(120,120,120,.66))}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-details{margin:0;padding:0;border:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='0']{padding-left:0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='1']{padding-left:16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='2']{padding-left:32px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='3']{padding-left:48px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='4']{padding-left:64px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper[data-level='5']{padding-left:80px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. -->
+<script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script>
+    </head>
+    <body for="html-export">
+      <div class="crossnote markdown-preview  ">
+      
+<h1 id="ptp-音视频高精度同步开发经验分享">PTP 音视频高精度同步开发经验分享 </h1>
+<hr>
+<h2 id="一--背景与需求我们要解决什么核心问题">一、 背景与需求：我们要解决什么核心问题 </h2>
+<p>需求来自客户 QSC 的多机位协同场景，核心诉求非常明确：<strong>网络内所有独立设备的音视频采样，必须严格锁定在同一个绝对时间坐标系下</strong>。</p>
+<p>具体落地为以下两个业务场景与技术挑战：</p>
+<h3 id="11-视频场景消除拍摄视频墙的滚动条纹banding">1.1 视频场景：消除拍摄视频墙的“滚动条纹（Banding）” </h3>
+<ul>
+<li>业务痛点：多台摄像机拍摄带有 LED 视频墙的画面时，如果相机的曝光周期与屏幕刷新周期哪怕有微小的错位，画面就会出现持续上下的滚动暗条纹。</li>
+<li>技术诉求（Genlock）：必须实现多机物理级别的帧同步。不仅要求每台机器的帧率绝对一致，还要求 Sensor 曝光出帧的瞬间做到极高精度的相位对齐。</li>
+</ul>
+<p><strong>什么是Banding？</strong></p>
+<ol>
+<li>画面为平直横向明暗暗带，视频回放时条纹匀速向上 / 向下滚动；</li>
+<li>人眼直视屏幕无任何纹路，仅镜头录制可见；</li>
+<li>成因：LED 逐行 PWM 刷新、相机快门时钟独立、无 Genlock 同步带来相位漂移。</li>
+</ol>
+<p><img src="image.png" alt="alt text"></p>
+<h3 id="12-音频场景麦克风阵列的声源定位doa">1.2 音频场景：麦克风阵列的声源定位（DOA） </h3>
+<ul>
+<li>业务痛点：会议室多台摄像机的麦克风协同拾音，用于精准定位说话人的三维位置。波达方向（DOA）算法对声音到达各麦克风的时间差极为敏感，微小的采样时钟错位都会引发严重的定位偏移。</li>
+<li>技术诉求：多机音频采样时钟（MCLK）必须实现微秒级的严格相位对齐，确保所有设备采到的声音在时间轴上严丝合缝。</li>
+</ul>
+<h3 id="13-问题的本质与破局点">1.3 问题的本质与破局点 </h3>
+<p>以上所有痛点的根源都在于：每台设备拥有独立的物理晶振，它们的频率各不相同，且会随温度和时间不断漂移。误差一旦长期累积，同步就会彻底崩溃。</p>
+<p>我们的解题思路分两步走：</p>
+<ul>
+<li>引入时间锚点：依托底层网卡的硬件时间戳，通过 PTP (IEEE 1588) 协议将全网设备拉齐到同一个 Grandmaster 主时钟（网卡 PHC 硬件时间）。</li>
+<li>音视频跨域绑定：将 SoC 内部的 Audio PLL（音频时钟） 和 Sensor FSIN（视频触发），分别与 PTP 时间强行绑定。</li>
+</ul>
+<hr>
+<h2 id="二-软硬件环境与-ptp-基础">二、软硬件环境与 PTP 基础 </h2>
+<blockquote>
+<ul>
+<li><strong>相位 (phase) θ</strong>：信号在一个周期里的相对位置（° 或 rad）。</li>
+<li><strong>相位差 (phase difference) Δθ</strong>：两个同频信号之间的相对位置差（° 或 rad）。</li>
+<li><strong>频率 (frequency) f</strong>：单位时间内的周期数（Hz）。</li>
+<li><strong>频偏 (frequency offset) Δf</strong>：实际频率 vs 标称频率的差（<strong>Hz 是绝对偏差，ppb/ppm 是相对偏差的比例</strong>）。</li>
+</ul>
+<p><strong>精度单位</strong>（无量纲比例）：<strong>ppm</strong>（百万分之一，10⁻⁶）、<strong>ppb</strong>（十亿分之一，10⁻⁹）。换算：<strong>1 ppm = 1000 ppb</strong>。</p>
+<p><strong>举个例子</strong>：<code>ptp4l</code> 报 <code>s2 freq +2510</code>，含义是 PHC 频率比 master 高 2510 ppb。折算成 Hz：</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Δf = 标称频率 × adj / 10⁹
+   = 12,288,000 × 2510 / 1,000,000,000
+   ≈ 30.84 Hz
+</code></pre><p>也就是说 PHC 实际频率 ≈ <strong>12,288,030.84 Hz</strong>（高了 30.84 Hz）。客户看到 +2510 不明所以时，先把 ppb × 标称频率 × 10⁻⁹ 就变成 Hz。</p>
+</blockquote>
+<p><strong>典型 24 MHz 晶振精度</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>等级</th>
+<th>精度</th>
+<th>折算 24 MHz 偏差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>无源 Xtal</strong></td>
+<td>±20-50 ppm</td>
+<td>±480-1200 Hz</td>
+</tr>
+<tr>
+<td><strong>TCXO</strong>（温补晶振）</td>
+<td>±0.5-2.5 ppm</td>
+<td>±12-60 Hz</td>
+</tr>
+<tr>
+<td><strong>OCXO</strong>（恒温晶振）</td>
+<td>±10-100 ppb</td>
+<td>±0.24-2.4 Hz</td>
+</tr>
+</tbody>
+</table>
+<h3 id="20-内核配置ptp-时钟支持如果网卡支持的话">2.0 内核配置：PTP 时钟支持（如果网卡支持的话） </h3>
+<p>PTP 同步需要内核支持。编译内核时确保以下选项打开（<code>make menuconfig</code>）：</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>CONFIG_PTP_1588_CLOCK=y
+CONFIG_PTP_1588_CLOCK_OPTIONAL=y
+CONFIG_PTP_1588_CLOCK_KVM=y
+</code></pre><p><strong>关键选项</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>含义</th>
+<th>是否必开</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CONFIG_PTP_1588_CLOCK=y</code></td>
+<td>核心 PTP 时钟框架</td>
+<td><strong>必开</strong></td>
+</tr>
+<tr>
+<td><code>CONFIG_PTP_1588_CLOCK_OPTIONAL=y</code></td>
+<td>网卡不支持 PTP 时降级运行，避免编译失败</td>
+<td>必开</td>
+</tr>
+<tr>
+<td><code>CONFIG_PTP_1588_CLOCK_KVM=y</code></td>
+<td>KVM 虚拟化场景——<strong>虚拟机也要 PTP</strong>（直通网卡常见）</td>
+<td>虚拟化环境必开</td>
+</tr>
+</tbody>
+</table>
+<p><strong>验证方法</strong>：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">ls</span> /sys/class/ptp/
+<span class="token comment"># 期望输出：ptp0（一张网卡）；多网卡会列出 ptp0、ptp1 ...</span>
+</code></pre><p>如果 <code>/sys/class/ptp/</code> 是空或目录不存在——<strong>说明内核没编进 PTP 支持</strong>，这是 PTP 跑不通的第一个排查点。</p>
+<h3 id="21-环境前提网卡必须支持硬件时间戳">2.1 环境前提：网卡必须支持硬件时间戳 </h3>
+<p>软件时间戳精度只有毫秒级，硬件时间戳才能到纳秒级。先查：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">ethtool</span> <span class="token parameter variable">-T</span> eth0
+<span class="token comment"># 关键看这几行：</span>
+<span class="token comment">#   PTP Hardware Clock: 0          ← 必须存在（ptp0），none 就没戏</span>
+<span class="token comment">#   hardware-transmit / hardware-receive  ← 必须支持 HARDWARE</span>
+</code></pre><p>确认设备节点：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">ls</span> /sys/class/ptp/      <span class="token comment"># 输出 ptp0</span>
+</code></pre><hr>
+<h3 id="22-linuxptp-三件套各司其职">2.2 linuxptp 三件套各司其职 </h3>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ptp4l</code></td>
+<td>PHC（网卡硬件时钟）与远端主时钟同步</td>
+</tr>
+<tr>
+<td><code>phc2sys</code></td>
+<td>系统时钟（CLOCK_REALTIME）与 PHC 同步</td>
+</tr>
+<tr>
+<td><code>pmc</code> / <code>phc_ctl</code></td>
+<td>状态查询与调试</td>
+</tr>
+</tbody>
+</table>
+<h4 id="221-ptp4l让-phc-跟-grandmaster-同步">2.2.1 <code>ptp4l</code>：让 PHC 跟 Grandmaster 同步 </h4>
+<p>最常见的启动命令：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>ptp4l <span class="token parameter variable">-i</span> eth0 <span class="token parameter variable">-m</span> <span class="token parameter variable">-H</span> <span class="token parameter variable">-s</span>
+</code></pre><p>参数解读：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i eth0</code></td>
+<td>指定要用的网卡接口（必须支持硬件时间戳）</td>
+</tr>
+<tr>
+<td><code>-m</code></td>
+<td>日志打到 stdout，便于实时监控；不加默认全静默</td>
+</tr>
+<tr>
+<td><code>-H</code></td>
+<td><strong>硬件时间戳模式</strong>——纳秒级精度的关键；不加默认软件时间戳（毫秒级抖动）</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>从模式（slave-only），明确告诉 BMCA 不要竞争 master；</td>
+</tr>
+<tr>
+<td><code>-f &lt;file&gt;</code></td>
+<td>指定配置文件路径，不加则走 <code>/etc/linuxptp/ptp4l.cfg</code> 默认路径</td>
+</tr>
+</tbody>
+</table>
+<p>生产环境通常改用配置文件 <code>/etc/linuxptp/ptp4l.conf</code>，用 <code>-f</code> 显式指定：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>ptp4l <span class="token parameter variable">-f</span> /etc/linuxptp/ptp4l.conf <span class="token parameter variable">-i</span> eth0 <span class="token parameter variable">-m</span>
+</code></pre><p>强制做为主机的配置内容示例：</p>
+<pre data-role="codeBlock" data-info="ini" class="language-ini ini"><code><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">global</span><span class="token punctuation">]</span></span>
+<span class="token comment"># 强制作为 master（不参与 BMCA 竞争）</span>
+masterOnly      1
+<span class="token comment"># BMCA 优先级 1（越小越优先，默认 128）</span>
+priority1       10
+<span class="token comment"># BMCA 优先级 2</span>
+priority2       10
+<span class="token comment"># 时钟等级 6 = 锁定到主参考源（GPS 之类）</span>
+clockClass      6
+<span class="token comment"># 强制硬件时间戳</span>
+time_stamping   hardware
+<span class="token comment"># UDPv4 传输</span>
+network_transport UDPv4
+<span class="token comment"># PTP 域号</span>
+domainNumber    0
+<span class="token comment"># UDS 管理接口路径（pmc 用）</span>
+uds_address     /var/run/ptp4l
+</code></pre><p>启动后观察 <code>-m</code> 日志判断是否锁定：</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>ptp4l[123.456]: master offset   -12 s2 freq   +1234 path delay 5432
+                                ↑ns              ↑ppb              ↑ns
+                             相位偏差          频率偏差         链路单程延迟
+</code></pre><p><strong>3 个数字的判读</strong>（PTP 排查核心技能）：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>单位</th>
+<th>健康范围</th>
+<th>不健康信号</th>
+<th>第一动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>master offset</code></td>
+<td>ns</td>
+<td><strong>±100 ns 内</strong>（稳定）</td>
+<td>波动大 / 不收敛</td>
+<td>查链路 + 重启 ptp4l</td>
+</tr>
+<tr>
+<td><code>s2 freq</code></td>
+<td>ppb</td>
+<td><strong>±10 ppb 内</strong>（频率稳）</td>
+<td>持续 ±1000 ppb（数小时不收敛）</td>
+<td>查温度 / 晶振老化 / 降级网络</td>
+</tr>
+<tr>
+<td><code>path delay</code></td>
+<td>ns</td>
+<td><strong>局域网 1-10 μs</strong></td>
+<td>突然涨到 ms 级</td>
+<td>千兆降百兆 / 交换机拥塞（见 §5.2 坑二）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>锁定的硬指标</strong>：<code>s2 freq</code> 数值稳定（不再大范围漂）+ <code>offset</code> 在 <strong>±100 ns 内</strong> → 视为锁定。</p>
+<h4 id="222-phc2sys让系统时钟跟着-phc-走">2.2.2 <code>phc2sys</code>：让系统时钟跟着 PHC 走 </h4>
+<p><code>ptp4l</code> 把 PHC 对齐到 master，但用户态程序用的是系统时钟 <code>CLOCK_REALTIME</code>。<code>phc2sys</code> 再把这两个时钟绑一次：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>phc2sys <span class="token parameter variable">-s</span> eth0 <span class="token parameter variable">-c</span> CLOCK_REALTIME <span class="token parameter variable">-w</span> <span class="token parameter variable">-m</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-O</span> <span class="token number">0</span>
+</code></pre><p>参数解读：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-s eth0</code></td>
+<td>源时钟 = 该网卡对应的 PHC（phc2sys 会自动从 eth0 解析出 <code>/dev/ptp0</code>，比硬写设备路径更可移植）</td>
+</tr>
+<tr>
+<td><code>-c CLOCK_REALTIME</code></td>
+<td>目标时钟 = 系统实时时钟；</td>
+</tr>
+<tr>
+<td><code>-w</code></td>
+<td>等 <code>ptp4l</code> 锁定到 master 后再开始同步，避免初始抖动污染</td>
+</tr>
+<tr>
+<td><code>-m</code></td>
+<td>日志打到 stdout（和 <code>ptp4l -m</code> 配合，便于联动查看）</td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td>反向同步——把系统时钟往 PHC 对齐（默认是 PHC 往系统对齐，方向反了）</td>
+</tr>
+<tr>
+<td><code>-O 0</code></td>
+<td>PHC 索引 0（多 PHC 场景下选第几个；新版 phc2sys 用 <code>-O</code> 取代旧的 <code>-n</code>）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>启动顺序很关键</strong>：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 1. 先起 ptp4l，等出 s2 日志</span>
+ptp4l <span class="token parameter variable">-i</span> eth0 <span class="token parameter variable">-m</span> <span class="token parameter variable">-H</span> <span class="token parameter variable">-s</span> <span class="token operator">&amp;</span>
+<span class="token function">sleep</span> <span class="token number">5</span>
+<span class="token comment"># 2. 再起 phc2sys（-w 让它等 ptp4l 稳定）</span>
+phc2sys <span class="token parameter variable">-s</span> eth0 <span class="token parameter variable">-c</span> CLOCK_REALTIME <span class="token parameter variable">-w</span> <span class="token parameter variable">-m</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-O</span> <span class="token number">0</span> <span class="token operator">&amp;</span>
+</code></pre><p>颠倒顺序会让 <code>phc2sys</code> 去同步一个尚未稳定的 PHC，offset 会被初始抖动带跑，反向污染系统时间。</p>
+<h4 id="223-pmc--phc_ctl查询与调试">2.2.3 <code>pmc</code> / <code>phc_ctl</code>：查询与调试 </h4>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token comment"># 查 BMCA 状态：谁是 master、跳数、offset、path delay</span>
+pmc <span class="token parameter variable">-u</span> <span class="token parameter variable">-b</span> <span class="token number">0</span> <span class="token string">'GET CURRENT_DATA_SET'</span>
+
+<span class="token comment"># 读 PHC 原始时间（对照系统时间用）</span>
+phc_ctl eth0 get
+</code></pre><p><code>pmc</code> 报的 <code>offsetFromMaster</code> 是最关键的同步指标——稳态 &lt; ±100 ns 才算锁定。</p>
+<h3 id="23-ptp-怎么算出-offset-和-freq">2.3 PTP 怎么算出 offset 和 freq </h3>
+<p>PTP（Precision Time Protocol，IEEE 1588）是一种用于网络设备高精度时间同步的协议，其核心目标是实现<strong>亚微秒级</strong>的时间同步精度。它通过主从时钟机制、硬件时间戳、延迟测量与计算、时钟校正四项技术实现高精度同步——核心在于用精确的硬件时间戳和延迟测量，消除网络传输引入的时间误差。</p>
+<h4 id="主从同步机制">主从同步机制 </h4>
+<ul>
+<li><strong>主时钟（Master）</strong>：作为时间基准，周期性地向网络中的从时钟发送时间同步报文。</li>
+<li><strong>从时钟（Slave）</strong>：接收主时钟的同步报文，并根据报文中的时间戳信息调整本地时间，使其与主时钟保持一致。</li>
+</ul>
+<h4 id="时间戳记录">时间戳记录 </h4>
+<p>PTP 使用<strong>硬件时间戳</strong>技术在物理层记录报文的发送和接收时刻，绕开操作系统与网络协议栈的延迟——这是纳秒级同步能成立的前提。软件时间戳精度只能到毫秒级，对音视频同步远远不够。</p>
+<h4 id="延迟测量与计算">延迟测量与计算 </h4>
+<p>PTP 通过四类报文在主从之间交换四个时间戳，从而计算出网络传输延迟。流程如下：</p>
+<ol>
+<li>主时钟向从时钟发送 <strong>Sync</strong> 报文，并记录发送时刻 <code>t1</code>。</li>
+<li>从时钟接收到 Sync 后，立即记录接收时刻 <code>t2</code>。</li>
+<li>主时钟再发送一个携带 <code>t1</code> 值的 <strong>Follow_Up</strong> 报文（Sync 与 Follow_Up 必须成对出现，且 <code>sequenceId</code> 必须相同且连续——前者打物理层硬件时间戳，后者把精确时间送上来）。</li>
+<li>从时钟向主时钟发送 <strong>Delay_Req</strong> 报文，并记录发送时刻 <code>t3</code>。</li>
+<li>主时钟收到 Delay_Req 后，记录接收时刻 <code>t4</code>。</li>
+<li>主时钟向从时钟发送一个携带 <code>t4</code> 的 <strong>Delay_Resp</strong> 报文。</li>
+</ol>
+<p>主从报文交换的时序：</p>
+<div class="mermaid">sequenceDiagram
+    participant M as PTP Master
+    participant S as PTP Slave
+    M-&gt;&gt;S: Sync 发送时刻 t1
+    Note right of S: t2 = Slave 接收时刻
+    M-&gt;&gt;S: Follow_Up 携带精确 t1
+    S-&gt;&gt;M: Delay_Req 发送时刻 t3
+    Note left of M: t4 = Master 接收时刻
+    M-&gt;&gt;S: Delay_Resp 携带精确 t4
+    Note over M,S: path_delay = (t2-t1 + t4-t3) / 2
+    Note over M,S: offset = (t2-t1) - path_delay
+</div><p>由这四个时间戳得到：</p>
+<ul>
+<li><strong>往返平均路径延迟</strong>（单程 path delay）：</li>
+</ul>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>path_delay <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">(</span>t2 - t1<span class="token punctuation">)</span> + <span class="token punctuation">(</span>t4 - t3<span class="token punctuation">)</span><span class="token punctuation">]</span> / <span class="token number">2</span>
+</code></pre><ul>
+<li><strong>从时钟相对主时钟的相位偏差 offset</strong>：</li>
+</ul>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>offset <span class="token operator">=</span> <span class="token punctuation">(</span>t2 - t1<span class="token punctuation">)</span> - path_delay
+       <span class="token operator">=</span> <span class="token punctuation">(</span>t2 - t1<span class="token punctuation">)</span> - <span class="token punctuation">[</span><span class="token punctuation">(</span>t2 - t1<span class="token punctuation">)</span> + <span class="token punctuation">(</span>t4 - t3<span class="token punctuation">)</span><span class="token punctuation">]</span> / <span class="token number">2</span>
+</code></pre><h4 id="时钟校正">时钟校正 </h4>
+<p>从时钟拿到 <code>offset</code> 和 <code>path_delay</code> 后，用 PI 伺服动态调节本地时钟频率（<code>freq</code>/PPB），让 <code>offset</code> 趋零并保持长期稳定</p>
+<p><code>offset</code>（ns）是瞬时相位误差，<br>
+<code>freq</code>（PPB）是伺服据此估算的频率偏差。</p>
+<h2 id="三-音频同步方案演进">三、音频同步方案演进 </h2>
+<p><img src="data:image/svg+xml;charset=utf-8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4ODAgNjAwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCAnU2Vnb2UgVUknLCBzYW5zLXNlcmlmIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9Iumfs+mikeaXtumSn+WQjOatpSDmlrDml6fmlrnmoYjlr7nmr5QiPgogIDx0aXRsZT7pn7PpopHlkIzmraXvvJrml6fmlrnmoYjvvIjova/ku7YgUFBTIOmVv+mTvui3r++8iXZzIOaWsOaWueahiO+8iFBQQiDot6jln5/nm7Tms6jvvIk8L3RpdGxlPgogIDxkZXNjPuaXp+aWueahiOWujOaVtOmTvui3r++8muS4iua4uCBwdHA0bCDlkIzmraUgUEhDICsgcGhjMnN5cyDlkIzmraXns7vnu5/ml7bpkp8g4oaSIOmfs+mikemTviBBTFNBL0RNQS/ova/ku7ZQUFMvcGhjMnN5c18yL0F1ZGlvIFBMTO+8m+aWsOaWueahiOi3s+i/h+aVtOS4qui9r+S7tua0vueUn+mTvu+8jHB0cDRsIOebtOaOpeaKiiBQUEIg5rOo5YWlIEF1ZGlvIFBMTDwvZGVzYz4KICA8c3R5bGU+CiAgICA6cm9vdCB7CiAgICAgIC0tc3VyZmFjZTogICAgICAjZmNmY2ZiOwogICAgICAtLWluazogICAgICAgICAgIzBiMGIwYjsKICAgICAgLS1pbmstMjogICAgICAgICM1MjUxNGU7CiAgICAgIC0taW5rLW11dGU6ICAgICAjODk4NzgxOwogICAgICAtLWJvcmRlcjogICAgICAgcmdiYSgxMSwxMSwxMSwwLjEwKTsKICAgICAgLS1ncmlkOiAgICAgICAgICNlMWUwZDk7CiAgICAgIC0taHctZmlsbDogICAgICAjZGJlYWZlOwogICAgICAtLWh3LXN0azogICAgICAgIzJhNzhkNjsKICAgICAgLS1ody1pbms6ICAgICAgICMwZDJjNTI7CiAgICAgIC0tc3ctZmlsbDogICAgICAjZmZmM2IwOwogICAgICAtLXN3LXN0azogICAgICAgI2M5ODUwMDsKICAgICAgLS1zdy1pbms6ICAgICAgICM0ZDM1MDA7CiAgICAgIC0tb2xkLWJnOiAgICAgICByZ2JhKDIyNyw3Myw3MiwwLjA2KTsKICAgICAgLS1vbGQtc3RrOiAgICAgIHJnYmEoMjI3LDczLDcyLDAuNDUpOwogICAgICAtLW5ldy1iZzogICAgICAgcmdiYSgwLDEzMSwwLDAuMDYpOwogICAgICAtLW5ldy1zdGs6ICAgICAgcmdiYSgwLDEzMSwwLDAuNDUpOwogICAgfQogICAgQG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTogZGFyaykgewogICAgICA6cm9vdCB7CiAgICAgICAgLS1zdXJmYWNlOiAgICAgICMxYTFhMTk7CiAgICAgICAgLS1pbms6ICAgICAgICAgICNmZmZmZmY7CiAgICAgICAgLS1pbmstMjogICAgICAgICNjM2MyYjc7CiAgICAgICAgLS1pbmstbXV0ZTogICAgICM4OTg3ODE7CiAgICAgICAgLS1ib3JkZXI6ICAgICAgIHJnYmEoMjU1LDI1NSwyNTUsMC4xMCk7CiAgICAgICAgLS1ncmlkOiAgICAgICAgICMyYzJjMmE7CiAgICAgICAgLS1ody1maWxsOiAgICAgICMwZDJjNTI7CiAgICAgICAgLS1ody1zdGs6ICAgICAgICMzOTg3ZTU7CiAgICAgICAgLS1ody1pbms6ICAgICAgICNjZmUyZmI7CiAgICAgICAgLS1zdy1maWxsOiAgICAgICM0ZDM1MDA7CiAgICAgICAgLS1zdy1zdGs6ICAgICAgICNlZGExMDA7CiAgICAgICAgLS1zdy1pbms6ICAgICAgICNmZmYzYjA7CiAgICAgICAgLS1vbGQtYmc6ICAgICAgIHJnYmEoMjI3LDEwMywxMDMsMC4xMCk7CiAgICAgICAgLS1vbGQtc3RrOiAgICAgIHJnYmEoMjI3LDEwMywxMDMsMC41NSk7CiAgICAgICAgLS1uZXctYmc6ICAgICAgIHJnYmEoNzYsMTY4LDc2LDAuMTApOwogICAgICAgIC0tbmV3LXN0azogICAgICByZ2JhKDc2LDE2OCw3NiwwLjU1KTsKICAgICAgfQogICAgfQogICAgLmNhcmQgICAgICAgeyBmaWxsOiB2YXIoLS1zdXJmYWNlKTsgc3Ryb2tlOiB2YXIoLS1ib3JkZXIpOyBzdHJva2Utd2lkdGg6IDE7IH0KICAgIC5zdWItb2xkICAgIHsgZmlsbDogdmFyKC0tb2xkLWJnKTsgc3Ryb2tlOiB2YXIoLS1vbGQtc3RrKTsgc3Ryb2tlLXdpZHRoOiAxLjU7IHN0cm9rZS1kYXNoYXJyYXk6IDYgNDsgfQogICAgLnN1Yi1uZXcgICAgeyBmaWxsOiB2YXIoLS1uZXctYmcpOyBzdHJva2U6IHZhcigtLW5ldy1zdGspOyBzdHJva2Utd2lkdGg6IDEuNTsgfQogICAgLnN1Yi10aXRsZSAgeyBmb250LXNpemU6IDEzcHg7IGZvbnQtd2VpZ2h0OiA3MDA7IH0KICAgIC5zZWMtdGl0bGUgIHsgZm9udC1zaXplOiAxMXB4OyBmb250LXdlaWdodDogNjAwOyBmaWxsOiB2YXIoLS1pbmstMik7IH0KICAgIC5yb3ctbGFiZWwgIHsgZm9udC1zaXplOiAxMHB4OyBmb250LXdlaWdodDogNjAwOyBmaWxsOiB2YXIoLS1pbmstbXV0ZSk7IGxldHRlci1zcGFjaW5nOiAwLjVweDsgfQogICAgLm5ldC1sYWJlbCAgeyBmb250LXNpemU6IDkuNXB4OyBmb250LXN0eWxlOiBpdGFsaWM7IGZpbGw6IHZhcigtLWluay1tdXRlKTsgfQogICAgLm5vZGUgICAgICAgeyBzdHJva2Utd2lkdGg6IDEuNTsgfQogICAgLm5vZGUtaHcgICAgeyBmaWxsOiB2YXIoLS1ody1maWxsKTsgc3Ryb2tlOiB2YXIoLS1ody1zdGspOyB9CiAgICAubm9kZS1zdyAgICB7IGZpbGw6IHZhcigtLXN3LWZpbGwpOyBzdHJva2U6IHZhcigtLXN3LXN0ayk7IH0KICAgIC5ub2RlLW5ldCAgIHsgZmlsbDogI2YwZTRmYjsgc3Ryb2tlOiAjN2U1N2MyOyB9CiAgICAudGV4dC1odyAgICB7IGZpbGw6IHZhcigtLWh3LWluayk7IH0KICAgIC50ZXh0LXN3ICAgIHsgZmlsbDogdmFyKC0tc3ctaW5rKTsgfQogICAgLnRleHQtbmV0ICAgeyBmaWxsOiAjNGEyODcwOyB9CiAgICAubi10ZXh0ICAgICB7IGZvbnQtc2l6ZTogMTIuNXB4OyBmb250LXdlaWdodDogNjAwOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyB9CiAgICAubi10ZXh0LXNtICB7IGZvbnQtc2l6ZTogMTFweDsgICBmb250LXdlaWdodDogNjAwOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyB9CiAgICAubi1zdWIgICAgICB7IGZvbnQtc2l6ZTogMTAuNXB4OyB0ZXh0LWFuY2hvcjogbWlkZGxlOyB9CiAgICAubi1zdWItc20gICB7IGZvbnQtc2l6ZTogOS41cHg7ICB0ZXh0LWFuY2hvcjogbWlkZGxlOyB9CiAgICAuYXJyb3cgICAgICB7IGZpbGw6IG5vbmU7IHN0cm9rZTogdmFyKC0taW5rKTsgc3Ryb2tlLXdpZHRoOiAxLjU7IH0KICAgIC5hcnJvdy1uZXQgIHsgZmlsbDogbm9uZTsgc3Ryb2tlOiAjN2U1N2MyOyBzdHJva2Utd2lkdGg6IDEuMjsgc3Ryb2tlLWRhc2hhcnJheTogNCAzOyB9CiAgICAuYXJyb3ctaGVhZCB7IGZpbGw6IHZhcigtLWluayk7IH0KICAgIC5hcnJvdy1uZXQtaHsgZmlsbDogIzdlNTdjMjsgfQogICAgLnRpdGxlICAgICAgeyBmaWxsOiB2YXIoLS1pbmspOyBmb250LXNpemU6IDE2cHg7IGZvbnQtd2VpZ2h0OiA3MDA7IH0KICAgIC5zdWItb2xkLXQgIHsgZmlsbDogI2IwMzQzNDsgfQogICAgLnN1Yi1uZXctdCAgeyBmaWxsOiAjMDA2MzAwOyB9CiAgICBAbWVkaWEgKHByZWZlcnMtY29sb3Itc2NoZW1lOiBkYXJrKSB7CiAgICAgIC5zdWItb2xkLXQgeyBmaWxsOiAjZTY2NzY3OyB9CiAgICAgIC5zdWItbmV3LXQgeyBmaWxsOiAjNGNhODRjOyB9CiAgICAgIC5ub2RlLW5ldCAgeyBmaWxsOiAjMmExNzQ1OyB9CiAgICAgIC50ZXh0LW5ldCAgeyBmaWxsOiAjZDBiOGZmOyB9CiAgICAgIC5hcnJvdy1uZXQgeyBzdHJva2U6ICNiMzliZGQ7IH0KICAgICAgLmFycm93LW5ldC1oeyBmaWxsOiAjYjM5YmRkOyB9CiAgICB9CiAgPC9zdHlsZT4KCiAgPHJlY3QgY2xhc3M9ImNhcmQiIHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iODc5IiBoZWlnaHQ9IjU5OSIgcng9IjEwIi8+CgogIDwhLS0gPT09PT09PT09PT09PT09PT09PSBPTEQgc3ViZ3JhcGggKGxlZnQpID09PT09PT09PT09PT09PT09PT0gLS0+CiAgPHJlY3QgY2xhc3M9InN1Yi1vbGQiIHg9IjMwIiB5PSI2MCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSI1MjAiIHJ4PSIxNCIvPgogIDx0ZXh0IGNsYXNzPSJzdWItdGl0bGUgc3ViLW9sZC10IiB4PSI1MCIgeT0iODYiPuaXp+aWueahiCDCtyDova/ku7bmqKHmi58gUFBTPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiIgeD0iNTAiIHk9IjEwNCIgc3R5bGU9InRleHQtYW5jaG9yOnN0YXJ0OyI+6ZO+6Lev6ZW/IC8g5L6d6LWW5b2V6Z+zIC8g5Y+XIENQVSDosIPluqblvbHlk408L3RleHQ+CgogIDwhLS0gPT09PT0gT0xEIMK3IOS4iua4uOWQjOatpemTvu+8iOS4u+S7juWvueavlCAyIOihjOW4g+WxgO+8iT09PT09IC0tPgogIDx0ZXh0IGNsYXNzPSJzZWMtdGl0bGUiIHg9IjUwIiB5PSIxMzIiPuS4iua4uCBQVFAg5ZCM5q2l6ZO+PC90ZXh0PgoKICA8IS0tIFJvdyAxOiDnvZHnu5zlsYIg4oCUIOi/nOerryBtYXN0ZXIg4oaUIHB0cDRsIC0tPgogIDx0ZXh0IGNsYXNzPSJyb3ctbGFiZWwiIHg9IjUwIiB5PSIxODMiIHN0eWxlPSJ0ZXh0LWFuY2hvcjpzdGFydDsiPue9kee7nDwvdGV4dD4KICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLW5ldCIgeD0iODAiICB5PSIxNTUiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0NSIgcng9IjYiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0LXNtIHRleHQtbmV0IiB4PSIxMTAiIHk9IjE3MyI+6L+c56uvPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXRleHQtc20gdGV4dC1uZXQiIHg9IjExMCIgeT0iMTg3Ij5NYXN0ZXI8L3RleHQ+CgogIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtc3ciICB4PSIxOTAiIHk9IjE1NSIgd2lkdGg9IjYwIiBoZWlnaHQ9IjQ1IiByeD0iNiIvPgogIDx0ZXh0IGNsYXNzPSJuLXRleHQtc20gdGV4dC1zdyIgIHg9IjIyMCIgeT0iMTgyIj5wdHA0bDwvdGV4dD4KCiAgPGxpbmUgY2xhc3M9ImFycm93LW5ldCIgeDE9IjE0MCIgeTE9IjE3OCIgeDI9IjE5MCIgeTI9IjE3OCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1uZXQtaCIgcG9pbnRzPSIxOTAsMTc4IDE4MywxNzQgMTgzLDE4MiIvPgogIDx0ZXh0IGNsYXNzPSJuZXQtbGFiZWwiIHg9IjE2NSIgeT0iMTcxIiBzdHlsZT0idGV4dC1hbmNob3I6bWlkZGxlOyI+bmV0d29yazwvdGV4dD4KCiAgPCEtLSBWZXJ0aWNhbCBhcnJvdzogcHRwNGwg4oaTIFBIQyAocm93IDEgdG8gcm93IDIpIC0tPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9IjIyMCIgeTE9IjIwMCIgeDI9IjIyMCIgeTI9IjIzMCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjIyMCwyMzAgMjE1LDIyMSAyMjUsMjIxIi8+CgogIDwhLS0gUm93IDI6IOacrOWcsOmTviDigJQgUEhDIOKGkiBwaGMyc3lzIOKGkiDns7vnu5/ml7bpkp8gLS0+CiAgPHRleHQgY2xhc3M9InJvdy1sYWJlbCIgeD0iNTAiIHk9IjI1OCIgc3R5bGU9InRleHQtYW5jaG9yOnN0YXJ0OyI+5pys5ZywPC90ZXh0PgogIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtaHciIHg9IjE5MCIgeT0iMjMwIiB3aWR0aD0iNjAiIGhlaWdodD0iNDUiIHJ4PSI2Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dC1zbSB0ZXh0LWh3IiB4PSIyMjAiIHk9IjI1NyI+UEhDPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLXN3IiB4PSIyNjUiIHk9IjIzMCIgd2lkdGg9IjY1IiBoZWlnaHQ9IjQ1IiByeD0iNiIvPgogIDx0ZXh0IGNsYXNzPSJuLXRleHQtc20gdGV4dC1zdyIgeD0iMjk3IiB5PSIyNTciPnBoYzJzeXM8L3RleHQ+CgogIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtaHciIHg9IjM0NSIgeT0iMjMwIiB3aWR0aD0iNzUiIGhlaWdodD0iNDUiIHJ4PSI2Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dC1zbSB0ZXh0LWh3IiB4PSIzODIiIHk9IjI1NSI+57O757uf5pe26ZKfPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1Yi1zbSAgdGV4dC1odyIgeD0iMzgyIiB5PSIyNjgiPlJFQUxUSU1FPC90ZXh0PgoKICA8IS0tIFJvdyAyIGhvcml6b250YWwgYXJyb3dzIC0tPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9IjI1MCIgeTE9IjI1MiIgeDI9IjI2NSIgeTI9IjI1MiIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjI2NSwyNTIgMjU4LDI0OSAyNTgsMjU1Ii8+CiAgPGxpbmUgY2xhc3M9ImFycm93IiB4MT0iMzMwIiB5MT0iMjUyIiB4Mj0iMzQ1IiB5Mj0iMjUyIi8+CiAgPHBvbHlnb24gY2xhc3M9ImFycm93LWhlYWQiIHBvaW50cz0iMzQ1LDI1MiAzMzgsMjQ5IDMzOCwyNTUiLz4KCiAgPCEtLSA9PT09PSBPTEQgwrcg6Z+z6aKR5rS+55Sf6ZO+77yI5L6d6LWW57O757uf5pe26ZKfICsg5b2V6Z+z77yJPT09PT0gLS0+CiAgPHRleHQgY2xhc3M9InNlYy10aXRsZSIgeD0iNTAiIHk9IjMwNSI+6Z+z6aKR5rS+55Sf6ZO+PC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLWh3IiB4PSI1MCIgIHk9IjMyMCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSI1MCIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtaHciIHg9IjEyMCIgeT0iMzQ1Ij5BTFNBIOmHh+mbhjwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1odyIgIHg9IjEyMCIgeT0iMzYxIj5JwrJTIOW9lemfszwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1odyIgeD0iMjEwIiB5PSIzMjAiIHdpZHRoPSIxNDAiIGhlaWdodD0iNTAiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LWh3IiB4PSIyODAiIHk9IjM0NSI+RE1BIOS4reaWrTwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1odyIgIHg9IjI4MCIgeT0iMzYxIj7mr48gMTAgbXMg5LiA5qyhPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLXN3IiB4PSI1MCIgIHk9IjM5MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI1MCIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtc3ciIHg9IjIwMCIgeT0iNDE1Ij7ova/ku7YgUFBTIMK3IC9kZXYvcHBzMTwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1zdyIgIHg9IjIwMCIgeT0iNDMxIj4xMDAg5qyh5Lit5pat5ZCI5oiQIDEg5Liq6ISJ5YayPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLXN3IiB4PSI1MCIgIHk9IjQ2MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI1MCIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtc3ciIHg9IjIwMCIgeT0iNDg1Ij5waGMyc3lzXzI8L3RleHQ+CiAgPHRleHQgY2xhc3M9Im4tc3ViIHRleHQtc3ciICB4PSIyMDAiIHk9IjUwMSI+5q+U5a+5IFBQUyDkuI4gUEhDIOeul+WBj+enuzwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1odyIgeD0iNTAiICB5PSI1MzAiIHdpZHRoPSIzMDAiIGhlaWdodD0iNDgiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LWh3IiB4PSIyMDAiIHk9IjU1MyI+QXVkaW8gUExMIOWvhOWtmOWZqDwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1odyIgIHg9IjIwMCIgeT0iNTY5Ij7lhpkgTUNMSyDpopHnjoc8L3RleHQ+CgogIDwhLS0gQXVkaW8gY2hhaW4gYXJyb3dzIChhbGwgaG9yaXpvbnRhbCAvIHZlcnRpY2FsLCBubyBjcm9zc2luZ3MpIC0tPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9IjE5MCIgeTE9IjM0NSIgeDI9IjIxMCIgeTI9IjM0NSIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjIxMCwzNDUgMjAzLDM0MCAyMDMsMzUwIi8+CiAgPGxpbmUgY2xhc3M9ImFycm93IiB4MT0iMjgwIiB5MT0iMzcwIiB4Mj0iMjAwIiB5Mj0iMzkwIi8+CiAgPHBvbHlnb24gY2xhc3M9ImFycm93LWhlYWQiIHBvaW50cz0iMjAwLDM5MCAyMDcsMzg1IDIwOSwzOTQiLz4KICA8bGluZSBjbGFzcz0iYXJyb3ciIHgxPSIyMDAiIHkxPSI0NDAiIHgyPSIyMDAiIHkyPSI0NjAiLz4KICA8cG9seWdvbiBjbGFzcz0iYXJyb3ctaGVhZCIgcG9pbnRzPSIyMDAsNDYwIDE5NSw0NTEgMjA1LDQ1MSIvPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9IjIwMCIgeTE9IjUxMCIgeDI9IjIwMCIgeTI9IjUzMCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjIwMCw1MzAgMTk1LDUyMSAyMDUsNTIxIi8+CgogIDwhLS0gPT09PT0g6Leo5q616L+e5o6l77ya57O757uf5pe26ZKfIOKGkiBBTFNB77yI5bmz5ruR5puy57q/77yM5peg5Lqk5Y+J77yJPT09PT0gLS0+CiAgPHBhdGggY2xhc3M9ImFycm93IiBkPSJNIDM4MiAyNzUgQyAzODIgMjk1LCAxMjAgMjk1LCAxMjAgMzIwIi8+CiAgPHBvbHlnb24gY2xhc3M9ImFycm93LWhlYWQiIHBvaW50cz0iMTIwLDMyMCAxMTUsMzExIDEyNSwzMTEiLz4KCiAgPCEtLSA9PT09PSBQSEMg4oaSIHBoYzJzeXNfMiDovrnms6jvvJromZrnur/lsI/op5LmoIfvvIzpgb/lvIDkuLvkvZPotbDlj7PkvqflpJbnvJggPT09PT0gLS0+CiAgPHBhdGggY2xhc3M9ImFycm93IiBkPSJNIDIyMCAyNzUgTCAyMjAgMjk1IEwgMzgwIDI5NSBMIDM4MCA0NjAgTCAzNTAgNDYwIiBzdHJva2UtZGFzaGFycmF5PSIzIDMiIHN0cm9rZS13aWR0aD0iMSIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjM1MCw0NjAgMzU4LDQ1NSAzNTgsNDY1Ii8+CiAgPHRleHQgY2xhc3M9Im4tc3ViLXNtIiB4PSIzODUiIHk9IjI5MCIgc3R5bGU9InRleHQtYW5jaG9yOnN0YXJ0OyBmaWxsOiB2YXIoLS1pbmstMik7Ij5QSEMg5Y+C6ICDPC90ZXh0PgoKICA8IS0tID09PT09PT09PT09PT09PT09PT0gTkVXIHN1YmdyYXBoIChyaWdodCkgPT09PT09PT09PT09PT09PT09PSAtLT4KICA8cmVjdCBjbGFzcz0ic3ViLW5ldyIgeD0iNDUwIiB5PSI2MCIgd2lkdGg9IjQwMCIgaGVpZ2h0PSI1MjAiIHJ4PSIxNCIvPgogIDx0ZXh0IGNsYXNzPSJzdWItdGl0bGUgc3ViLW5ldy10IiB4PSI0NzAiIHk9Ijg2Ij7mlrDmlrnmoYggwrcgUFBCIOi3qOWfn+ebtOazqDwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIiIHg9IjQ3MCIgeT0iMTA0IiBzdHlsZT0idGV4dC1hbmNob3I6c3RhcnQ7Ij7pk77ot6/nn60gLyDkuI3kvp3otZblvZXpn7MgLyDnu5XlvIAgQ1BVPC90ZXh0PgoKICA8dGV4dCBjbGFzcz0ic2VjLXRpdGxlIiB4PSI0NzAiIHk9IjEzMiI+6Z+z6aKR5rS+55Sf6ZO+77yIUFBCIOebtOazqO+8iTwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1zdyIgeD0iNDcwIiB5PSIxNzAiIHdpZHRoPSIzNjAiIGhlaWdodD0iNjAiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LXN3IiB4PSI2NTAiIHk9IjE5OCI+cHRwNGwg5o+Q5Y+WIGZyZXEgKFBQQik8L3RleHQ+CiAgPHRleHQgY2xhc3M9Im4tc3ViIHRleHQtc3ciICB4PSI2NTAiIHk9IjIxNiI+UEkg5Ly65pyN55u05o6l6L6T5Ye65peg6YeP57qy5q+U5L6LPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLXN3IiB4PSI0NzAiIHk9IjI2NSIgd2lkdGg9IjM2MCIgaGVpZ2h0PSI1NiIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtc3ciIHg9IjY1MCIgeT0iMjkzIj5FTUEg5bmz5ruRIMK3IM6xID0gMC4xPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiB0ZXh0LXN3IiAgeD0iNjUwIiB5PSIzMTAiPuS9jumAmua7pOazoiDCtyDmiKrmraIg4omIIDAuMDE2IEh6PC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLXN3IiB4PSI0NzAiIHk9IjM1NSIgd2lkdGg9IjM2MCIgaGVpZ2h0PSI1NiIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtc3ciIHg9IjY1MCIgeT0iMzgzIj7pmZDluYUgwrcgwrExMDAwIEh6PC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiB0ZXh0LXN3IiAgeD0iNjUwIiB5PSI0MDAiPumYsueqgeWPmCAvIOmYsuWksemUgTwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1odyIgeD0iNDcwIiB5PSI0NDUiIHdpZHRoPSIzNjAiIGhlaWdodD0iNTAiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LWh3IiB4PSI2NTAiIHk9IjQ2OSI+QXVkaW8gUExMIOWvhOWtmOWZqDwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1odyIgIHg9IjY1MCIgeT0iNDg2Ij7lhpkgTUNMSyDpopHnjoc8L3RleHQ+CgogIDwhLS0gTkVXIGFycm93cyAtLT4KICA8bGluZSBjbGFzcz0iYXJyb3ciIHgxPSI2NTAiIHkxPSIyMzAiIHgyPSI2NTAiIHkyPSIyNjUiLz4KICA8cG9seWdvbiBjbGFzcz0iYXJyb3ctaGVhZCIgcG9pbnRzPSI2NTAsMjY1IDY0NSwyNTYgNjU1LDI1NiIvPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9IjY1MCIgeTE9IjMyMSIgeDI9IjY1MCIgeTI9IjM1NSIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjY1MCwzNTUgNjQ1LDM0NiA2NTUsMzQ2Ii8+CiAgPGxpbmUgY2xhc3M9ImFycm93IiB4MT0iNjUwIiB5MT0iNDExIiB4Mj0iNjUwIiB5Mj0iNDQ1Ii8+CiAgPHBvbHlnb24gY2xhc3M9ImFycm93LWhlYWQiIHBvaW50cz0iNjUwLDQ0NSA2NDUsNDM2IDY1NSw0MzYiLz4KCiAgPCEtLSBWUyBkaXZpZGVyIC0tPgogIDx0ZXh0IGNsYXNzPSJ0aXRsZSIgeD0iNDQwIiB5PSIzMzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIHN0eWxlPSJmb250LXNpemU6MzZweDsgZmlsbDogdmFyKC0taW5rLW11dGUpOyI+dnM8L3RleHQ+Cjwvc3ZnPgo=" alt="音频方案演进对比"></p>
+<h3 id="31-旧方案软件-pps-长链路">3.1 旧方案：软件 PPS 长链路 </h3>
+<p>旧方案用一条长链路把音频时钟绑到 PTP：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>ALSA 采集 → DMA 中断 → 软件模拟 PPS<span class="token punctuation">(</span>/dev/pps1<span class="token punctuation">)</span> → phc2sys_2 算偏移 → Audio PLL 寄存器
+</code></pre><p><strong>关键是：这套方案里根本没有硬件 PPS，脉冲全靠软件合成。</strong> 整条机制如下：</p>
+<ol>
+<li>ALSA 开启录音后，I²S 把采集到的音频数据交给 <strong>DMA</strong> 搬运到内存；</li>
+<li>每攒满一个 period（<code>period-time=10ms</code> → 每秒 100 次中断），DMA 触发一次中断；</li>
+<li>在 DMA 中断回调里调用 <code>vhd_send_pps_event()</code>，<strong>每 100 次中断（即每秒）合成一个 PPS 脉冲</strong>，喂给 Linux PPS 子系统 <code>/dev/pps1</code>；</li>
+<li><code>phc2sys_2</code> 读 <code>/dev/pps1</code>，拿这个「软 PPS」和 PHC 比对算偏移。</li>
+</ol>
+<p>录音时能看到对应 DMA 通道的中断计数疯涨：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code><span class="token function">cat</span> /proc/interrupts <span class="token operator">|</span> <span class="token function">grep</span> dma
+<span class="token comment"># 37:     286422   0   GIC-0 111 Edge   ffe001f000.gdma   ← 音频 DMA 通道</span>
+</code></pre><p>启动三条命令，<code>phc2sys_2</code> 是改造重点：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>ptp4l <span class="token parameter variable">-i</span> eth0 <span class="token parameter variable">-m</span> <span class="token parameter variable">-H</span> <span class="token parameter variable">-s</span> <span class="token operator">&gt;</span> /dev/null <span class="token operator">&amp;</span>
+phc2sys <span class="token parameter variable">-s</span> /dev/ptp0 <span class="token parameter variable">-r</span> <span class="token parameter variable">-w</span> <span class="token operator">&gt;</span> /dev/null <span class="token operator">&amp;</span>
+phc2sys_2 <span class="token parameter variable">-c</span> CLOCK_REALTIME <span class="token parameter variable">-d</span> /dev/pps1 <span class="token parameter variable">-w</span> <span class="token parameter variable">-m</span> <span class="token parameter variable">-E</span> pi <span class="token parameter variable">-l</span> <span class="token number">7</span> <span class="token parameter variable">-P</span> <span class="token number">0.1</span> <span class="token parameter variable">-I</span> <span class="token number">0.16</span> <span class="token operator">&gt;</span> /dev/null <span class="token operator">&amp;</span>
+</code></pre><p>（<code>-E pi</code> PI 伺服，<code>-P 0.1</code> 比例常数，<code>-I 0.16</code> 积分常数）</p>
+<p>核心改造在 <code>phc2sys_2</code> 的 <code>update_clock()</code> 里——不再调系统时钟，改成根据 PPS 与 PHC 偏差算 MCLK 频率，写 <code>/proc/ambarella/clock</code>：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token keyword keyword-case">case</span> SERVO_LOCKED<span class="token operator">:</span>
+<span class="token keyword keyword-case">case</span> SERVO_LOCKED_STABLE<span class="token operator">:</span>
+    <span class="token class-name">int64_t</span> base_freq <span class="token operator">=</span> <span class="token number">12288000LL</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-static">static</span> <span class="token class-name">int64_t</span> last_freq <span class="token operator">=</span> <span class="token number">12288000LL</span><span class="token punctuation">;</span>
+    <span class="token class-name">int64_t</span> ppbi <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">int64_t</span><span class="token punctuation">)</span>ppb<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">500</span> <span class="token operator">*</span> <span class="token number">500</span><span class="token punctuation">;</span>          <span class="token comment">// 量化到 500ppb 步长</span>
+    <span class="token class-name">int64_t</span> new_freq <span class="token operator">=</span> base_freq <span class="token operator">-</span> base_freq <span class="token operator">*</span> ppbi <span class="token operator">/</span> <span class="token number">1000000000L</span> <span class="token operator">/</span> <span class="token number">4</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 突变保护：单次变化超 100Hz 视为异常，保持上次值</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>new_freq <span class="token operator">-</span> last_freq <span class="token operator">&gt;</span> <span class="token number">100LL</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>new_freq <span class="token operator">-</span> last_freq <span class="token operator">&lt;</span> <span class="token operator">-</span><span class="token number">100LL</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        new_freq <span class="token operator">=</span> last_freq<span class="token punctuation">;</span>  s_reset_offset <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>new_freq <span class="token operator">&gt;</span> <span class="token number">12289000LL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> new_freq <span class="token operator">=</span> <span class="token number">12289000LL</span><span class="token punctuation">;</span> s_reset_offset <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>  <span class="token comment">// 上限</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>new_freq <span class="token operator">&lt;</span> <span class="token number">12287000LL</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> new_freq <span class="token operator">=</span> <span class="token number">12287000LL</span><span class="token punctuation">;</span> s_reset_offset <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>  <span class="token comment">// 下限</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>new_freq <span class="token operator">!=</span> last_freq<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-char">char</span> cmd<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">snprintf</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>cmd<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"echo gclk_audio2 %llu &gt; /proc/ambarella/clock"</span><span class="token punctuation">,</span> new_freq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">system</span><span class="token punctuation">(</span>cmd<span class="token punctuation">)</span><span class="token punctuation">;</span>  last_freq <span class="token operator">=</span> new_freq<span class="token punctuation">;</span>  s_reset_offset <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword keyword-break">break</span><span class="token punctuation">;</span>
+</code></pre><p><strong>这套机制有三个硬伤，最终导致它被放弃：</strong></p>
+<p><strong>① 依赖录音。</strong> PPS 由 DMA 中断触发，不开录音就没有中断，PPS 根本产生不了——同步成了录音的「附属品」。</p>
+<p><strong>② <code>period-time</code> 必须锁死 10ms。</strong> 它是 PPS 节拍的来源，换别的值 PPS 就不准，录音配置因此被卡死：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>arecord <span class="token parameter variable">-D</span> hw:0,0 <span class="token parameter variable">-f</span> S16_LE <span class="token parameter variable">-r</span> <span class="token number">48000</span> <span class="token parameter variable">-c</span> <span class="token number">4</span> --period-time<span class="token operator">=</span><span class="token number">10000</span> /dev/null
+<span class="token comment"># cat /proc/asound/card0/pcm0c/sub0/hw_params</span>
+<span class="token comment">#   period_size: 480      ← 必须 48000×0.01</span>
+<span class="token comment">#   buffer_size: 1920</span>
+</code></pre><p><strong>③ CPU 调度抖动（致命）。</strong> 中断响应和脉冲合成都跑在 CPU 上，负载一高就被抢占，脉冲边沿随之抖动。</p>
+<p><code>ppstest /dev/pps1</code> 实测精度随负载剧烈波动——低负载还能压在十几 μs，高负载直接飙到 <strong>±40~100 μs</strong>：</p>
+<p><img src="../images/pps_4.png" alt="低负载 PPS 偏差"></p>
+<p><img src="../images/pps_3.png" alt="高负载 PPS 偏差"></p>
+<p>这个精度远不够，旧方案在高负载场景下基本不可用。</p>
+<h3 id="32-新方案物理同源">3.2 新方案：物理同源 </h3>
+<blockquote>
+<p>💡 <strong>整个新方案的命门</strong>：PHC 和 Audio PLL 由同一颗 24 MHz 物理晶振驱动。晶振漂移以<strong>绝对相同的比例</strong>同时映射到网络域和音频域，而 PTP 算出的 <code>freq</code>（PPB）是<strong>无量纲相对比例</strong>——直接跨域注入即可等效纠偏，根本不用重新采音频。</p>
+</blockquote>
+<p>这一句话背后藏着三层意思，把它拆开看更清楚：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>物理事实</th>
+<th>工程推论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. 时钟树</strong></td>
+<td>24 MHz 晶振同时驱动 PHC 与 Audio PLL</td>
+<td>两个时钟域<strong>共享同一个频率源</strong></td>
+</tr>
+<tr>
+<td><strong>2. 漂移</strong></td>
+<td>温度/老化引起的晶振漂移 → PHC 与 Audio PLL <strong>按相同比例</strong>漂移</td>
+<td>网络域与音频域的频偏<strong>完全相关</strong></td>
+</tr>
+<tr>
+<td><strong>3. 跨域纠偏</strong></td>
+<td><code>ptp4l</code> 测得 PHC 相对 master 的频偏 = 晶振频偏（PHC 派生自该晶振）</td>
+<td>Audio PLL 由<strong>同一颗晶振派生</strong>→ 也有完全相同的频偏 → <strong>把 PPB 直接写入 Audio PLL 寄存器</strong>即可等效纠偏</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键洞察</strong>：PTP 算出的 PPB 不是「PHC 这一路专属的频率偏差」，而是「<strong>24 MHz 晶振的频率偏差</strong>」——因为 PHC 与 Audio PLL 都从这颗晶振派生。所以 PPB 可以<strong>直接跨域注入</strong>到 Audio PLL，不需要任何额外补偿或重新采音频。</p>
+<p>新链路因此短得多，且不依赖录音、不依赖 DMA：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>ptp4l 提取 freq<span class="token punctuation">(</span>PPB<span class="token punctuation">)</span> → EMA 平滑 → 限幅 → 写 Audio PLL 寄存器
+</code></pre><h3 id="33-落地clockc-三件套平滑--补偿--限幅">3.3 落地：clock.c 三件套（平滑 + 补偿 + 限幅） </h3>
+<p>「同源 + 跨域注入」的信号流——这是新方案能成立的根本：</p>
+<p><img src="data:image/svg+xml;charset=utf-8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNDgwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCAnU2Vnb2UgVUknLCBzYW5zLXNlcmlmIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IueJqeeQhuWQjOa6kCBQUEIg6Leo5Z+f57qg5YGP5L+h5Y+35rWBIj4KICA8dGl0bGU+54mp55CG5ZCM5rqQ77yaMjQgTUh6IOaZtuaMr+WQjOaXtumpseWKqCBQSEMg5LiOIEF1ZGlvIFBMTO+8jFBQQiDnm7TmjqXot6jln5/nuqDlgY88L3RpdGxlPgogIDxkZXNjPuaZtuaMr+a8guenu+S7peebuOWQjOavlOS+i+aYoOWwhOWIsCBQSEMg5LiOIEF1ZGlvIFBMTO+8m1BUUCDkvLrmnI3nrpflh7rnmoQgUFBCIOaYr+aXoOmHj+e6suebuOWvueavlOS+i++8jOWPr+ebtOaOpeazqOWFpemfs+mikeWfnzwvZGVzYz4KICA8c3R5bGU+CiAgICA6cm9vdCB7CiAgICAgIC0tc3VyZmFjZTogICAgICAjZmNmY2ZiOwogICAgICAtLWluazogICAgICAgICAgIzBiMGIwYjsKICAgICAgLS1pbmstMjogICAgICAgICM1MjUxNGU7CiAgICAgIC0taW5rLW11dGU6ICAgICAjODk4NzgxOwogICAgICAtLWJvcmRlcjogICAgICAgcmdiYSgxMSwxMSwxMSwwLjEwKTsKICAgICAgLS1ncmlkOiAgICAgICAgICNlMWUwZDk7CiAgICAgIC0tc3JjLWZpbGw6ICAgICAjZmRlMGU4OwogICAgICAtLXNyYy1zdGs6ICAgICAgI2Q1NTE4MTsKICAgICAgLS1zcmMtaW5rOiAgICAgICM0YTFmMmM7CiAgICAgIC0taHctZmlsbDogICAgICAjZGJlYWZlOwogICAgICAtLWh3LXN0azogICAgICAgIzJhNzhkNjsKICAgICAgLS1ody1pbms6ICAgICAgICMwZDJjNTI7CiAgICAgIC0tc3ctZmlsbDogICAgICAjZmZmM2IwOwogICAgICAtLXN3LXN0azogICAgICAgI2M5ODUwMDsKICAgICAgLS1zdy1pbms6ICAgICAgICM0ZDM1MDA7CiAgICAgIC0tb3V0LWZpbGw6ICAgICAjY2ZlYWNjOwogICAgICAtLW91dC1zdGs6ICAgICAgIzAwODMwMDsKICAgICAgLS1vdXQtaW5rOiAgICAgICMwZDJjMGQ7CiAgICB9CiAgICBAbWVkaWEgKHByZWZlcnMtY29sb3Itc2NoZW1lOiBkYXJrKSB7CiAgICAgIDpyb290IHsKICAgICAgICAtLXN1cmZhY2U6ICAgICAgIzFhMWExOTsKICAgICAgICAtLWluazogICAgICAgICAgI2ZmZmZmZjsKICAgICAgICAtLWluay0yOiAgICAgICAgI2MzYzJiNzsKICAgICAgICAtLWluay1tdXRlOiAgICAgIzg5ODc4MTsKICAgICAgICAtLWJvcmRlcjogICAgICAgcmdiYSgyNTUsMjU1LDI1NSwwLjEwKTsKICAgICAgICAtLWdyaWQ6ICAgICAgICAgIzJjMmMyYTsKICAgICAgICAtLXNyYy1maWxsOiAgICAgIzRhMWYyYzsKICAgICAgICAtLXNyYy1zdGs6ICAgICAgI2U4N2JhNDsKICAgICAgICAtLXNyYy1pbms6ICAgICAgI2ZkZTBlODsKICAgICAgICAtLWh3LWZpbGw6ICAgICAgIzBkMmM1MjsKICAgICAgICAtLWh3LXN0azogICAgICAgIzM5ODdlNTsKICAgICAgICAtLWh3LWluazogICAgICAgI2NmZTJmYjsKICAgICAgICAtLXN3LWZpbGw6ICAgICAgIzRkMzUwMDsKICAgICAgICAtLXN3LXN0azogICAgICAgI2VkYTEwMDsKICAgICAgICAtLXN3LWluazogICAgICAgI2ZmZjNiMDsKICAgICAgICAtLW91dC1maWxsOiAgICAgIzBkMmMwZDsKICAgICAgICAtLW91dC1zdGs6ICAgICAgIzRjYTg0YzsKICAgICAgICAtLW91dC1pbms6ICAgICAgI2NmZWFjYzsKICAgICAgfQogICAgfQogICAgLmNhcmQgICAgICAgeyBmaWxsOiB2YXIoLS1zdXJmYWNlKTsgc3Ryb2tlOiB2YXIoLS1ib3JkZXIpOyBzdHJva2Utd2lkdGg6IDE7IH0KICAgIC5ub2RlICAgICAgIHsgc3Ryb2tlLXdpZHRoOiAxLjU7IH0KICAgIC5ub2RlLXNyYyAgIHsgZmlsbDogdmFyKC0tc3JjLWZpbGwpOyBzdHJva2U6IHZhcigtLXNyYy1zdGspOyB9CiAgICAubm9kZS1odyAgICB7IGZpbGw6IHZhcigtLWh3LWZpbGwpOyBzdHJva2U6IHZhcigtLWh3LXN0ayk7IH0KICAgIC5ub2RlLXN3ICAgIHsgZmlsbDogdmFyKC0tc3ctZmlsbCk7IHN0cm9rZTogdmFyKC0tc3ctc3RrKTsgfQogICAgLm5vZGUtb3V0ICAgeyBmaWxsOiB2YXIoLS1vdXQtZmlsbCk7IHN0cm9rZTogdmFyKC0tb3V0LXN0ayk7IH0KICAgIC50ZXh0LXNyYyAgIHsgZmlsbDogdmFyKC0tc3JjLWluayk7IH0KICAgIC50ZXh0LWh3ICAgIHsgZmlsbDogdmFyKC0taHctaW5rKTsgfQogICAgLnRleHQtc3cgICAgeyBmaWxsOiB2YXIoLS1zdy1pbmspOyB9CiAgICAudGV4dC1vdXQgICB7IGZpbGw6IHZhcigtLW91dC1pbmspOyB9CiAgICAubi10ZXh0ICAgICB7IGZvbnQtc2l6ZTogMTNweDsgZm9udC13ZWlnaHQ6IDYwMDsgdGV4dC1hbmNob3I6IG1pZGRsZTsgfQogICAgLm4tc3ViICAgICAgeyBmb250LXNpemU6IDExcHg7IHRleHQtYW5jaG9yOiBtaWRkbGU7IH0KICAgIC5hcnJvdyAgICAgIHsgZmlsbDogbm9uZTsgc3Ryb2tlOiB2YXIoLS1pbmspOyBzdHJva2Utd2lkdGg6IDEuNTsgfQogICAgLmFycm93LWRhc2ggeyBmaWxsOiBub25lOyBzdHJva2U6IHZhcigtLWluay0yKTsgc3Ryb2tlLXdpZHRoOiAxLjU7IHN0cm9rZS1kYXNoYXJyYXk6IDUgMzsgfQogICAgLmFycm93LWhlYWQgeyBmaWxsOiB2YXIoLS1pbmspOyB9CiAgICAuYXJyb3ctbGJsICB7IGZpbGw6IHZhcigtLWluay0yKTsgZm9udC1zaXplOiAxMXB4OyB9CiAgICAuYXJyb3ctZW1waCB7IGZpbGw6IHZhcigtLXNyYy1zdGspOyBmb250LXNpemU6IDEycHg7IGZvbnQtd2VpZ2h0OiA2MDA7IH0KICAgIC50aXRsZSAgICAgIHsgZmlsbDogdmFyKC0taW5rKTsgZm9udC1zaXplOiAxNnB4OyBmb250LXdlaWdodDogNzAwOyB9CiAgPC9zdHlsZT4KCiAgPHJlY3QgY2xhc3M9ImNhcmQiIHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iODk5IiBoZWlnaHQ9IjQ3OSIgcng9IjEwIi8+CiAgPHRleHQgY2xhc3M9InRpdGxlIiB4PSI0NTAiIHk9IjMyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7niannkIblkIzmupDvvJpQUEIg6Leo5Z+f562J5pWI57qg5YGPPC90ZXh0PgoKICA8IS0tIENvbCAxOiAyNE1IeiBjcnlzdGFsIChzcmMpIC0tPgogIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtc3JjIiB4PSI0MCIgeT0iMTAwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjgwIiByeD0iMTAiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtc3JjIiB4PSIxMjAiIHk9IjEzNSI+MjQgTUh6IOeJqeeQhuaZtuaMrzwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1zcmMiICB4PSIxMjAiIHk9IjE1NSI+6aKR546H5ryC56e75rqQPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiB0ZXh0LXNyYyIgIHg9IjEyMCIgeT0iMTcwIj7muKnluqYgwrcg6ICB5YyWPC90ZXh0PgoKICA8IS0tIENvbCAyOiBQSEMgKGh3KSArIEF1ZGlvIFBMTCAoaHcpIC0tPgogIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtaHciIHg9IjI2MCIgeT0iNjAiICB3aWR0aD0iMTYwIiBoZWlnaHQ9IjYwIiByeD0iOCIvPgogIDx0ZXh0IGNsYXNzPSJuLXRleHQgdGV4dC1odyIgeD0iMzQwIiB5PSI4NiI+UEhDPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiB0ZXh0LWh3IiAgeD0iMzQwIiB5PSIxMDMiPue9kee7nOehrOS7tuaXtumSnzwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1odyIgeD0iMjYwIiB5PSIxNjAiIHdpZHRoPSIxNjAiIGhlaWdodD0iNjAiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LWh3IiB4PSIzNDAiIHk9IjE4NiI+QXVkaW8gUExMPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiB0ZXh0LWh3IiAgeD0iMzQwIiB5PSIyMDMiPumfs+mikeaXtumSnzwvdGV4dD4KCiAgPCEtLSBkYXNoZWQgYXJyb3dzIGZyb20gY3J5c3RhbCB0byBib3RoIGNsb2NrcyAoc2FtZSBkcmlmdCkgLS0+CiAgPHBhdGggY2xhc3M9ImFycm93LWRhc2giIGQ9Ik0gMjAwIDEzMCBRIDIzMCAxMDAgMjYwIDkwIi8+CiAgPHBvbHlnb24gY2xhc3M9ImFycm93LWhlYWQiIHBvaW50cz0iMjYwLDkwIDI1MSw4NiAyNTIsOTYiLz4KICA8dGV4dCBjbGFzcz0iYXJyb3ctZW1waCIgeD0iMjI1IiB5PSI4MCI+55u45ZCM5q+U5L6L5ryC56e7PC90ZXh0PgoKICA8cGF0aCBjbGFzcz0iYXJyb3ctZGFzaCIgZD0iTSAyMDAgMTUwIFEgMjMwIDE3MCAyNjAgMTkwIi8+CiAgPHBvbHlnb24gY2xhc3M9ImFycm93LWhlYWQiIHBvaW50cz0iMjYwLDE5MCAyNTEsMTg2IDI1MiwxOTYiLz4KICA8dGV4dCBjbGFzcz0iYXJyb3ctZW1waCIgeD0iMjI1IiB5PSIyMDAiPuebuOWQjOavlOS+i+a8guenuzwvdGV4dD4KCiAgPCEtLSBDb2wgMzogUFRQIE1hc3RlciArIHB0cDRsIHNlcnZvIC0tPgogIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtc3JjIiB4PSI1MDAiIHk9IjYwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjYwIiByeD0iOCIvPgogIDx0ZXh0IGNsYXNzPSJuLXRleHQgdGV4dC1zcmMiIHg9IjU4MCIgeT0iODYiPlBUUCDkuLvml7bpkp88L3RleHQ+CiAgPHRleHQgY2xhc3M9Im4tc3ViIHRleHQtc3JjIiAgeD0iNTgwIiB5PSIxMDMiPkdyYW5kbWFzdGVyPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLXN3IiB4PSI1MDAiIHk9IjE2MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI2MCIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtc3ciIHg9IjU4MCIgeT0iMTg2Ij5wdHA0bCDkvLrmnI08L3RleHQ+CiAgPHRleHQgY2xhc3M9Im4tc3ViIHRleHQtc3ciICB4PSI1ODAiIHk9IjIwMyI+566X5Ye6IGZyZXEgKFBQQik8L3RleHQ+CgogIDwhLS0gTWFzdGVyIC0+IHNlcnZvIChyZWZlcmVuY2UgaW5wdXQpIC0tPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9IjU4MCIgeTE9IjEyMCIgeDI9IjU4MCIgeTI9IjE2MCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjU4MCwxNjAgNTc1LDE1MSA1ODUsMTUxIi8+CgogIDwhLS0gUEhDIC0+IHNlcnZvIChjb21wYXJlKSAtLT4KICA8cGF0aCBjbGFzcz0iYXJyb3ciIGQ9Ik0gNDIwIDkwIFEgNDYwIDkwIDUwMCAxNzUiLz4KICA8cG9seWdvbiBjbGFzcz0iYXJyb3ctaGVhZCIgcG9pbnRzPSI1MDAsMTc1IDQ5MiwxNjggNDk5LDE2NSIvPgogIDx0ZXh0IGNsYXNzPSJhcnJvdy1sYmwiIHg9IjQzMCIgeT0iMTQ1Ij5QSEMg5q+U5a+5PC90ZXh0PgoKICA8IS0tIENvbCA0OiBFTUEgKyBMaW1pdGVyIC0tPgogIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtc3ciIHg9IjcwMCIgeT0iNjAiIHdpZHRoPSIxNjAiIGhlaWdodD0iNTAiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LXN3IiB4PSI3ODAiIHk9Ijg1Ij5FTUEg5bmz5ruRPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiB0ZXh0LXN3IiAgeD0iNzgwIiB5PSIxMDAiPs6xID0gMC4xPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLXN3IiB4PSI3MDAiIHk9IjEzMCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSI1MCIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtc3ciIHg9Ijc4MCIgeT0iMTU1Ij7pmZDluYU8L3RleHQ+CiAgPHRleHQgY2xhc3M9Im4tc3ViIHRleHQtc3ciICB4PSI3ODAiIHk9IjE3MCI+wrExMDAwIEh6PC90ZXh0PgoKICA8IS0tIHNlcnZvIC0+IEVNQSAtLT4KICA8cGF0aCBjbGFzcz0iYXJyb3ciIGQ9Ik0gNjYwIDE3NSBRIDY5MCAxNzUgNzIwIDEwMCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjcyMCwxMDAgNzIwLDExMCA3MTMsMTA3Ii8+CiAgPHRleHQgY2xhc3M9ImFycm93LWVtcGgiIHg9IjcyMCIgeT0iMTIwIj5QUEIg6Leo5Z+f562J5pWI57qg5YGPPC90ZXh0PgoKICA8IS0tIEVNQSAtPiBsaW1pdGVyIC0tPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9Ijc4MCIgeTE9IjExMCIgeDI9Ijc4MCIgeTI9IjEzMCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9Ijc4MCwxMzAgNzc1LDEyMSA3ODUsMTIxIi8+CgogIDwhLS0gRmluYWw6IGxpbWl0ZXIgLT4gQXVkaW8gUExMIChjb3JyZWN0aW9uIGJhY2stYXBwbGllZCwgcm91dGUgdmlhIGJvdHRvbSkgLS0+CiAgPHBhdGggY2xhc3M9ImFycm93IiBkPSJNIDcwMCAxODAgTCA3MDAgMjUwIEwgNDIwIDI1MCBMIDQyMCAyMjAiLz4KICA8cG9seWdvbiBjbGFzcz0iYXJyb3ctaGVhZCIgcG9pbnRzPSI0MjAsMjIwIDQxNCwyMzAgNDI2LDIzMCIvPgogIDx0ZXh0IGNsYXNzPSJhcnJvdy1sYmwiIHg9IjUxMCIgeT0iMjQ0Ij7lhpnlr4TlrZjlmag8L3RleHQ+CgogIDwhLS0gQm90dG9tOiBNQ0xLIG91dHB1dCAtLT4KICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLW91dCIgeD0iMjYwIiB5PSIyOTAiIHdpZHRoPSIxNjAiIGhlaWdodD0iODAiIHJ4PSIxMCIvPgogIDx0ZXh0IGNsYXNzPSJuLXRleHQgdGV4dC1vdXQiIHg9IjM0MCIgeT0iMzIwIj5NQ0xLIOW+ruiwg+i+k+WHujwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1vdXQiICB4PSIzNDAiIHk9IjM0MCI+MTIuMjg4IE1IejwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1vdXQiICB4PSIzNDAiIHk9IjM1NiI+wrEzMCBIeiDnuqDlgY88L3RleHQ+CgogIDxwYXRoIGNsYXNzPSJhcnJvdyIgZD0iTSAzNDAgMjIwIEwgMzQwIDI5MCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjM0MCwyOTAgMzM1LDI4MSAzNDUsMjgxIi8+CgogIDwhLS0gbGVnZW5kIC0tPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQwLCAzOTUpIj4KICAgIDxyZWN0IGNsYXNzPSJjYXJkIiB4PSIwIiB5PSIwIiB3aWR0aD0iODIwIiBoZWlnaHQ9IjY1IiByeD0iOCIgc3R5bGU9ImZpbGw6IHZhcigtLXN1cmZhY2UpOyBzdHJva2U6IHZhcigtLWJvcmRlcik7IHN0cm9rZS13aWR0aDogMTsiLz4KICAgIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtc3JjIiB4PSIxNCIgIHk9IjIyIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSI0Ii8+CiAgICA8dGV4dCBjbGFzcz0idGV4dC1zcmMiIHg9IjQwIiB5PSIzNyIgc3R5bGU9ImZvbnQtc2l6ZToxMnB4OyI+5pe26Ze05rqQIC8g5ryC56e75rqQPC90ZXh0PgogICAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1odyIgIHg9IjE4MCIgeT0iMjIiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgcng9IjQiLz4KICAgIDx0ZXh0IGNsYXNzPSJ0ZXh0LWh3IiB4PSIyMDYiIHk9IjM3IiBzdHlsZT0iZm9udC1zaXplOjEycHg7Ij7noazku7bml7bpkp88L3RleHQ+CiAgICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLXN3IiAgeD0iMzIwIiB5PSIyMiIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiByeD0iNCIvPgogICAgPHRleHQgY2xhc3M9InRleHQtc3ciIHg9IjM0NiIgeT0iMzciIHN0eWxlPSJmb250LXNpemU6MTJweDsiPui9r+S7tuS8uuacjSAvIOWkhOeQhjwvdGV4dD4KICAgIDxyZWN0IGNsYXNzPSJub2RlIG5vZGUtb3V0IiB4PSI0OTAiIHk9IjIyIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSI0Ii8+CiAgICA8dGV4dCBjbGFzcz0idGV4dC1vdXQiIHg9IjUxNiIgeT0iMzciIHN0eWxlPSJmb250LXNpemU6MTJweDsiPuacgOe7iOi+k+WHujwvdGV4dD4KICAgIDxsaW5lIGNsYXNzPSJhcnJvdy1kYXNoIiB4MT0iNjQwIiB5MT0iMzIiIHgyPSI2ODAiIHkyPSIzMiIvPgogICAgPHRleHQgY2xhc3M9ImFycm93LWxibCIgeD0iNjkwIiB5PSIzNiIgc3R5bGU9ImZvbnQtc2l6ZToxMnB4OyI+54mp55CG5ZCM5rqQ77yI6Jma57q/77yJPC90ZXh0PgogIDwvZz4KPC9zdmc+Cg==" alt="物理同源：PPB 跨域纠偏信号流"></p>
+<p>改造 <code>ptp4l</code> 的 <code>clock_synchronize_locked()</code>，只在<strong>从模式锁定</strong>（<code>clock_best_foreign(c)</code>）下执行：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token function">clock_best_foreign</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword keyword-static">static</span> FILE <span class="token operator">*</span>audio_clk_fp <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-double">double</span> smoothed_adj <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-static">static</span> <span class="token keyword keyword-int">int</span> init <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-double">double</span> BASE_FREQ <span class="token operator">=</span> <span class="token number">12288000.0</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-double">double</span> SMOOTH_FACTOR <span class="token operator">=</span> <span class="token number">0.1</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-long">long</span> MAX_FREQ_DIFF <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">;</span>   <span class="token comment">// ±1000Hz 限幅</span>
+
+    <span class="token comment">// ① EMA 平滑</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>init<span class="token punctuation">)</span> <span class="token punctuation">{</span> smoothed_adj <span class="token operator">=</span> adj<span class="token punctuation">;</span> init <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword keyword-else">else</span> smoothed_adj <span class="token operator">=</span> SMOOTH_FACTOR<span class="token operator">*</span>adj <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">1.0</span><span class="token operator">-</span>SMOOTH_FACTOR<span class="token punctuation">)</span><span class="token operator">*</span>smoothed_adj<span class="token punctuation">;</span>
+
+    <span class="token comment">// ② 频率补偿</span>
+    <span class="token keyword keyword-long">long</span> target_freq <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword keyword-long">long</span><span class="token punctuation">)</span><span class="token punctuation">(</span>BASE_FREQ <span class="token operator">-</span> BASE_FREQ <span class="token operator">*</span> smoothed_adj <span class="token operator">/</span> <span class="token number">1e9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// ③ 限幅</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>target_freq <span class="token operator">&gt;</span> BASE_FREQ <span class="token operator">+</span> MAX_FREQ_DIFF<span class="token punctuation">)</span> target_freq <span class="token operator">=</span> BASE_FREQ <span class="token operator">+</span> MAX_FREQ_DIFF<span class="token punctuation">;</span>
+    <span class="token keyword keyword-else">else</span> <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>target_freq <span class="token operator">&lt;</span> BASE_FREQ <span class="token operator">-</span> MAX_FREQ_DIFF<span class="token punctuation">)</span> target_freq <span class="token operator">=</span> BASE_FREQ <span class="token operator">-</span> MAX_FREQ_DIFF<span class="token punctuation">;</span>
+
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>audio_clk_fp<span class="token punctuation">)</span> audio_clk_fp <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"/proc/ambarella/clock"</span><span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-if">if</span> <span class="token punctuation">(</span>audio_clk_fp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">fprintf</span><span class="token punctuation">(</span>audio_clk_fp<span class="token punctuation">,</span> <span class="token string">"gclk_audio2 %ld\n"</span><span class="token punctuation">,</span> target_freq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">fflush</span><span class="token punctuation">(</span>audio_clk_fp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">pr_info</span><span class="token punctuation">(</span><span class="token string">"audio clock: raw freq %+7.0f -&gt; smoothed %+7.2f -&gt; set %ld Hz"</span><span class="token punctuation">,</span>
+            adj<span class="token punctuation">,</span> smoothed_adj<span class="token punctuation">,</span> target_freq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p><strong>三件套的物理意义与算例：</strong></p>
+<p><strong>① EMA 平滑（α=0.1）—— 每秒只吸收 10% 新值，把跳变稀释掉</strong></p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>smoothed <span class="token operator">=</span> <span class="token number">0.1</span> × adj + <span class="token number">0.9</span> × smoothed_prev   <span class="token comment"># 新值 = 10%当前 + 90%上次</span>
+</code></pre><p>每次只用 10% 的新数据，剩下 90% 还是老结果，所以输出很「迟钝」——比如 adj 这一秒从 2500 跳到 3000（+500），平滑值只会涨 50，跳变被稀释了。</p>
+<p>它本质是个<strong>低通滤波</strong>，等效截止频率 ≈ 0.016 Hz（周期约 1 分钟）。换句话说：<strong>周期长于约 1 分钟的慢趋势</strong>（晶振温漂/老化，这才是真正要补偿的）放行；<strong>更快的抖动</strong>（网络延迟波动、CPU 调度引起的 freq 跳变，这些是噪声）一律抹平，不会灌进音频时钟。</p>
+<p><strong>② 频率补偿 + 推导</strong>（adj = +2600 ppb）</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>target_freq <span class="token operator">=</span> BASE_FREQ × <span class="token punctuation">(</span><span class="token number">1</span> - smoothed_adj/1e9<span class="token punctuation">)</span>
+Δf <span class="token operator">=</span> <span class="token number">12288000</span> × <span class="token number">2600</span> / 1e9 <span class="token operator">=</span> <span class="token number">31.95</span> Hz
+target_freq <span class="token operator">=</span> <span class="token number">12288000</span> - <span class="token number">31.95</span> <span class="token operator">=</span> <span class="token number">12,287</span>,968 Hz
+</code></pre><p><strong>③ 限幅（±1000 Hz）</strong>：防失锁/网络突变导致时钟跳变。</p>
+<h3 id="34-实测日志验算">3.4 实测日志验算 </h3>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>ptp4l<span class="token punctuation">[</span><span class="token number">790.212</span><span class="token punctuation">]</span>: master offset <span class="token parameter variable">-128</span> s2 freq +2510 path delay <span class="token number">11830</span>
+ptp4l<span class="token punctuation">[</span><span class="token number">790.212</span><span class="token punctuation">]</span>: audio clock: raw freq +2510 -<span class="token operator">&gt;</span> smoothed +2579.46 -<span class="token operator">&gt;</span> <span class="token builtin class-name">set</span> <span class="token number">12287968</span> Hz
+</code></pre><table>
+<thead>
+<tr>
+<th>时刻</th>
+<th style="text-align:right">master offset (ns)</th>
+<th style="text-align:right">s2 freq (ppb)</th>
+<th style="text-align:right">平滑值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>790</td>
+<td style="text-align:right">-128</td>
+<td style="text-align:right">+2510</td>
+<td style="text-align:right">2579</td>
+</tr>
+<tr>
+<td>791</td>
+<td style="text-align:right">+94</td>
+<td style="text-align:right">+2693</td>
+<td style="text-align:right">2591</td>
+</tr>
+<tr>
+<td>792</td>
+<td style="text-align:right">-125</td>
+<td style="text-align:right">+2503</td>
+<td style="text-align:right">2582</td>
+</tr>
+<tr>
+<td>793</td>
+<td style="text-align:right">+38</td>
+<td style="text-align:right">+2628</td>
+<td style="text-align:right">2587</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>观察规律：<br>
+offset 偏负（本地慢）→ freq 偏低；<br>
+offset 偏正（本地快）→ freq 偏高。</p>
+<p>伺服一直在调频率消除 offset。稳态时 MCLK 落在 <strong>12,287,967~12,287,970 Hz</strong>（偏低 30~33Hz），<code>s2 freq</code> 稳定在 ~2600 ppb。</p>
+</blockquote>
+<h3 id="35-如何判断是否同步">3.5 如何判断是否同步 </h3>
+<p>目前是通过示波器可以看到如下视频（两台设备 MCLK 波形相对静止，证明音频时钟已频率锁定）：</p>
+<video controls="controls" width="500" height="300">
+    <source src="../video/audio_ptp.mp4" type="video/mp4">
+</video>
+<h2 id="四-视频同步方案演进">四、视频同步方案演进 </h2>
+<p><img src="data:image/svg+xml;charset=utf-8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MjAgNDYwIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCAnU2Vnb2UgVUknLCBzYW5zLXNlcmlmIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IuinhumikeW4p+WQjOatpSDmlrDml6fmlrnmoYjlr7nmr5QiPgogIDx0aXRsZT7op4bpopHluKflkIzmraXvvJrml6fmlrnmoYjvvIhocnRpbWVyIOi9r+S7tiBGU0lO77yJdnMg5paw5pa55qGI77yITUFDIOehrOS7tiBQUFMg55u06amx77yJPC90aXRsZT4KICA8ZGVzYz7ml6fmlrnmoYggaHJ0aW1lciDihpIgR1BJTyBGU0lOIOKGkiBTZW5zb3LvvJvmlrDmlrnmoYggTUFDIOKGkiBQQ0Ig6LWw57q/IOKGkiBTZW5zb3I8L2Rlc2M+CiAgPHN0eWxlPgogICAgOnJvb3QgewogICAgICAtLXN1cmZhY2U6ICAgICAgI2ZjZmNmYjsKICAgICAgLS1pbms6ICAgICAgICAgICMwYjBiMGI7CiAgICAgIC0taW5rLTI6ICAgICAgICAjNTI1MTRlOwogICAgICAtLWluay1tdXRlOiAgICAgIzg5ODc4MTsKICAgICAgLS1ib3JkZXI6ICAgICAgIHJnYmEoMTEsMTEsMTEsMC4xMCk7CiAgICAgIC0tZ3JpZDogICAgICAgICAjZTFlMGQ5OwogICAgICAtLWh3LWZpbGw6ICAgICAgI2RiZWFmZTsKICAgICAgLS1ody1zdGs6ICAgICAgICMyYTc4ZDY7CiAgICAgIC0taHctaW5rOiAgICAgICAjMGQyYzUyOwogICAgICAtLXN3LWZpbGw6ICAgICAgI2ZmZjNiMDsKICAgICAgLS1zdy1zdGs6ICAgICAgICNjOTg1MDA7CiAgICAgIC0tc3ctaW5rOiAgICAgICAjNGQzNTAwOwogICAgICAtLW9sZC1iZzogICAgICAgcmdiYSgyMjcsNzMsNzIsMC4wNik7CiAgICAgIC0tb2xkLXN0azogICAgICByZ2JhKDIyNyw3Myw3MiwwLjQ1KTsKICAgICAgLS1uZXctYmc6ICAgICAgIHJnYmEoMCwxMzEsMCwwLjA2KTsKICAgICAgLS1uZXctc3RrOiAgICAgIHJnYmEoMCwxMzEsMCwwLjQ1KTsKICAgIH0KICAgIEBtZWRpYSAocHJlZmVycy1jb2xvci1zY2hlbWU6IGRhcmspIHsKICAgICAgOnJvb3QgewogICAgICAgIC0tc3VyZmFjZTogICAgICAjMWExYTE5OwogICAgICAgIC0taW5rOiAgICAgICAgICAjZmZmZmZmOwogICAgICAgIC0taW5rLTI6ICAgICAgICAjYzNjMmI3OwogICAgICAgIC0taW5rLW11dGU6ICAgICAjODk4NzgxOwogICAgICAgIC0tYm9yZGVyOiAgICAgICByZ2JhKDI1NSwyNTUsMjU1LDAuMTApOwogICAgICAgIC0tZ3JpZDogICAgICAgICAjMmMyYzJhOwogICAgICAgIC0taHctZmlsbDogICAgICAjMGQyYzUyOwogICAgICAgIC0taHctc3RrOiAgICAgICAjMzk4N2U1OwogICAgICAgIC0taHctaW5rOiAgICAgICAjY2ZlMmZiOwogICAgICAgIC0tc3ctZmlsbDogICAgICAjNGQzNTAwOwogICAgICAgIC0tc3ctc3RrOiAgICAgICAjZWRhMTAwOwogICAgICAgIC0tc3ctaW5rOiAgICAgICAjZmZmM2IwOwogICAgICAgIC0tb2xkLWJnOiAgICAgICByZ2JhKDIyNywxMDMsMTAzLDAuMTApOwogICAgICAgIC0tb2xkLXN0azogICAgICByZ2JhKDIyNywxMDMsMTAzLDAuNTUpOwogICAgICAgIC0tbmV3LWJnOiAgICAgICByZ2JhKDc2LDE2OCw3NiwwLjEwKTsKICAgICAgICAtLW5ldy1zdGs6ICAgICAgcmdiYSg3NiwxNjgsNzYsMC41NSk7CiAgICAgIH0KICAgIH0KICAgIC5jYXJkICAgICAgIHsgZmlsbDogdmFyKC0tc3VyZmFjZSk7IHN0cm9rZTogdmFyKC0tYm9yZGVyKTsgc3Ryb2tlLXdpZHRoOiAxOyB9CiAgICAuc3ViLW9sZCAgICB7IGZpbGw6IHZhcigtLW9sZC1iZyk7IHN0cm9rZTogdmFyKC0tb2xkLXN0ayk7IHN0cm9rZS13aWR0aDogMS41OyBzdHJva2UtZGFzaGFycmF5OiA2IDQ7IH0KICAgIC5zdWItbmV3ICAgIHsgZmlsbDogdmFyKC0tbmV3LWJnKTsgc3Ryb2tlOiB2YXIoLS1uZXctc3RrKTsgc3Ryb2tlLXdpZHRoOiAxLjU7IH0KICAgIC5zdWItdGl0bGUgIHsgZm9udC1zaXplOiAxM3B4OyBmb250LXdlaWdodDogNzAwOyB9CiAgICAubm9kZSAgICAgICB7IHN0cm9rZS13aWR0aDogMS41OyB9CiAgICAubm9kZS1odyAgICB7IGZpbGw6IHZhcigtLWh3LWZpbGwpOyBzdHJva2U6IHZhcigtLWh3LXN0ayk7IH0KICAgIC5ub2RlLXN3ICAgIHsgZmlsbDogdmFyKC0tc3ctZmlsbCk7IHN0cm9rZTogdmFyKC0tc3ctc3RrKTsgfQogICAgLnRleHQtaHcgICAgeyBmaWxsOiB2YXIoLS1ody1pbmspOyB9CiAgICAudGV4dC1zdyAgICB7IGZpbGw6IHZhcigtLXN3LWluayk7IH0KICAgIC5uLXRleHQgICAgIHsgZm9udC1zaXplOiAxM3B4OyBmb250LXdlaWdodDogNjAwOyB0ZXh0LWFuY2hvcjogbWlkZGxlOyB9CiAgICAubi1zdWIgICAgICB7IGZvbnQtc2l6ZTogMTFweDsgdGV4dC1hbmNob3I6IG1pZGRsZTsgfQogICAgLmFycm93ICAgICAgeyBmaWxsOiBub25lOyBzdHJva2U6IHZhcigtLWluayk7IHN0cm9rZS13aWR0aDogMS41OyB9CiAgICAuYXJyb3ctaGVhZCB7IGZpbGw6IHZhcigtLWluayk7IH0KICAgIC5hcnJvdy1uZXQgIHsgZmlsbDogbm9uZTsgc3Ryb2tlOiAjN2U1N2MyOyBzdHJva2Utd2lkdGg6IDEuMjsgc3Ryb2tlLWRhc2hhcnJheTogNCAzOyB9CiAgICAuYXJyb3ctbmV0LWh7IGZpbGw6ICM3ZTU3YzI7IH0KICAgIC50aXRsZSAgICAgIHsgZmlsbDogdmFyKC0taW5rKTsgZm9udC1zaXplOiAxNnB4OyBmb250LXdlaWdodDogNzAwOyB9CiAgICAuc3ViLW9sZC10ICB7IGZpbGw6ICNiMDM0MzQ7IH0KICAgIC5zdWItbmV3LXQgIHsgZmlsbDogIzAwNjMwMDsgfQogICAgQG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTogZGFyaykgewogICAgICAuc3ViLW9sZC10IHsgZmlsbDogI2U2Njc2NzsgfQogICAgICAuc3ViLW5ldy10IHsgZmlsbDogIzRjYTg0YzsgfQogICAgfQogICAgLm1ldHJpYyAgICAgeyBmb250LXNpemU6IDI4cHg7IGZvbnQtd2VpZ2h0OiA3MDA7IHRleHQtYW5jaG9yOiBtaWRkbGU7IH0KICAgIC5tZXRyaWMtbGJsIHsgZm9udC1zaXplOiAxMXB4OyB0ZXh0LWFuY2hvcjogbWlkZGxlOyB9CiAgPC9zdHlsZT4KCiAgPHJlY3QgY2xhc3M9ImNhcmQiIHg9IjAuNSIgeT0iMC41IiB3aWR0aD0iODE5IiBoZWlnaHQ9IjQ1OSIgcng9IjEwIi8+CiAgPHRleHQgY2xhc3M9InRpdGxlIiB4PSI0MTAiIHk9IjMyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7op4bpopHluKflkIzmraXvvJrml6fmlrnmoYjvvIhocnRpbWVy77yJdnMg5paw5pa55qGI77yITUFDIOehrOS7tiBQUFPvvIk8L3RleHQ+CgogIDwhLS0gT0xEIHN1YmdyYXBoIChsZWZ0KSAtLT4KICA8cmVjdCBjbGFzcz0ic3ViLW9sZCIgeD0iMzAiIHk9IjYwIiB3aWR0aD0iMzYwIiBoZWlnaHQ9IjM3MCIgcng9IjE0Ii8+CiAgPHRleHQgY2xhc3M9InN1Yi10aXRsZSBzdWItb2xkLXQiIHg9IjUwIiB5PSI4OCI+5pen5pa55qGIIMK3IGhydGltZXIg6L2v5Lu2IEZTSU48L3RleHQ+CiAgPHRleHQgY2xhc3M9Im4tc3ViIiB4PSI1MCIgeT0iMTA2IiBzdHlsZT0idGV4dC1hbmNob3I6c3RhcnQ7Ij7lj5cgQ1BVIOiwg+W6puW9seWTjTwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1zdyIgeD0iODAiICB5PSIxNDAiIHdpZHRoPSIyNjAiIGhlaWdodD0iNjQiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LXN3IiB4PSIyMTAiIHk9IjE3MCI+aHJ0aW1lciDova/ku7blrprml7blmag8L3RleHQ+CiAgPHRleHQgY2xhc3M9Im4tc3ViIHRleHQtc3ciICB4PSIyMTAiIHk9IjE4OCI+5LiJ5oCB6L2u6L2sIMK3IOaJk+iEieWGsjwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1zdyIgIHg9IjIxMCIgeT0iMjAyIj7kvp3otZYgTGludXgg6LCD5bqmPC90ZXh0PgoKICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLWh3IiB4PSI4MCIgIHk9IjI0MCIgd2lkdGg9IjI2MCIgaGVpZ2h0PSI2MCIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtaHciIHg9IjIxMCIgeT0iMjcwIj5HUElPIEZTSU4g6ISJ5YayPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiB0ZXh0LWh3IiAgeD0iMjEwIiB5PSIyODgiPjEgbXMg6auY55S15bmzIMK3IDMzLjMzIG1zIOWRqOacnzwvdGV4dD4KCiAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1odyIgeD0iODAiICB5PSIzMzUiIHdpZHRoPSIyNjAiIGhlaWdodD0iNjAiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LWh3IiB4PSIyMTAiIHk9IjM2NSI+U2Vuc29yIOS7juaooeW8j+WHuuW4pzwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1odyIgIHg9IjIxMCIgeT0iMzgzIj40SzMwIMK3IOi3n+majyBGU0lOIOinpuWPkTwvdGV4dD4KCiAgPCEtLSBPTEQgYXJyb3dzIC0tPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9IjIxMCIgeTE9IjIwNCIgeDI9IjIxMCIgeTI9IjI0MCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjIxMCwyNDAgMjA1LDIzMSAyMTUsMjMxIi8+CiAgPGxpbmUgY2xhc3M9ImFycm93IiB4MT0iMjEwIiB5MT0iMzAwIiB4Mj0iMjEwIiB5Mj0iMzM1Ii8+CiAgPHBvbHlnb24gY2xhc3M9ImFycm93LWhlYWQiIHBvaW50cz0iMjEwLDMzNSAyMDUsMzI2IDIxNSwzMjYiLz4KCiAgPCEtLSBNZXRyaWMgZm9yIE9MRCAtLT4KICA8dGV4dCBjbGFzcz0ibWV0cmljIHN1Yi1vbGQtdCIgeD0iMjEwIiB5PSI0MzAiPsKxMTAwIM68czwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibWV0cmljLWxibCIgeD0iMjEwIiB5PSI0NDgiIHN0eWxlPSJmaWxsOiB2YXIoLS1pbmstMik7Ij7nm7jkvY3nsr7luqY8L3RleHQ+CgogIDwhLS0gTkVXIHN1YmdyYXBoIChyaWdodCkgLS0+CiAgPHJlY3QgY2xhc3M9InN1Yi1uZXciIHg9IjQzMCIgeT0iNjAiIHdpZHRoPSIzNjAiIGhlaWdodD0iMzcwIiByeD0iMTQiLz4KICA8dGV4dCBjbGFzcz0ic3ViLXRpdGxlIHN1Yi1uZXctdCIgeD0iNDUwIiB5PSI4OCI+5paw5pa55qGIIMK3IE1BQyDnoazku7YgUFBTIOebtOmpsTwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIiIHg9IjQ1MCIgeT0iMTA2IiBzdHlsZT0idGV4dC1hbmNob3I6c3RhcnQ7Ij5QVFAg6YWN572u6amx5YqoIMK3IOehrOS7tuinpuWPkTwvdGV4dD4KCiAgPCEtLSBQVFAgKOmFjee9rua6kCkgLS0+CiAgPHJlY3QgY2xhc3M9Im5vZGUgbm9kZS1zdyIgeD0iNDgwIiB5PSIxMjUiIHdpZHRoPSIyNjAiIGhlaWdodD0iNTAiIHJ4PSI4Ii8+CiAgPHRleHQgY2xhc3M9Im4tdGV4dCB0ZXh0LXN3IiB4PSI2MTAiIHk9IjE0NyI+UFRQIOaXtumXtOWfuuWHhjwvdGV4dD4KICA8dGV4dCBjbGFzcz0ibi1zdWIgdGV4dC1zdyIgIHg9IjYxMCIgeT0iMTY1Ij7phY3nva4gTUFDIOWvhOWtmOWZqCDCtyDlr7npvZAgbWFzdGVyIOaXtumXtDwvdGV4dD4KCiAgPCEtLSBNQUMg56Gs5Lu2IFBQUyAtLT4KICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLWh3IiB4PSI0ODAiIHk9IjIwMCIgd2lkdGg9IjI2MCIgaGVpZ2h0PSI1MCIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtaHciIHg9IjYxMCIgeT0iMjIyIj5NQUMg56Gs5Lu2IFBQUyDovpPlh7o8L3RleHQ+CiAgPHRleHQgY2xhc3M9Im4tc3ViIHRleHQtaHciICB4PSI2MTAiIHk9IjI0MCI+MzAgSHogwrcg56Gs5Lu25q+U6L6D5Zmo6Kem5Y+RPC90ZXh0PgoKICA8IS0tIFNlbnNvciAtLT4KICA8cmVjdCBjbGFzcz0ibm9kZSBub2RlLWh3IiB4PSI0ODAiIHk9IjI3NSIgd2lkdGg9IjI2MCIgaGVpZ2h0PSI1MCIgcng9IjgiLz4KICA8dGV4dCBjbGFzcz0ibi10ZXh0IHRleHQtaHciIHg9IjYxMCIgeT0iMjk3Ij5TZW5zb3Ig5LuO5qih5byP5Ye65binPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJuLXN1YiB0ZXh0LWh3IiAgeD0iNjEwIiB5PSIzMTUiPjRLMzAgwrcg6Lef6ZqPIFBQUyDop6blj5E8L3RleHQ+CgogIDwhLS0gTkVXIGFycm93czogUFRQ4oaSTUFDIOaOp+WItua1ge+8iOe0q+iJsuiZmue6v++8iTsgTUFD4oaSU2Vuc29yIFBQUyDkv6Hlj7fmtYHvvIjpu5HoibLlrp7nur/vvIkgLS0+CiAgPGxpbmUgY2xhc3M9ImFycm93LW5ldCIgeDE9IjYxMCIgeTE9IjE3NSIgeDI9IjYxMCIgeTI9IjIwMCIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1uZXQtaCIgcG9pbnRzPSI2MTAsMjAwIDYwNSwxOTMgNjE1LDE5MyIvPgogIDxsaW5lIGNsYXNzPSJhcnJvdyIgeDE9IjYxMCIgeTE9IjI1MCIgeDI9IjYxMCIgeTI9IjI3NSIvPgogIDxwb2x5Z29uIGNsYXNzPSJhcnJvdy1oZWFkIiBwb2ludHM9IjYxMCwyNzUgNjA1LDI2NiA2MTUsMjY2Ii8+CgogIDwhLS0gTWV0cmljIGZvciBORVcgLS0+CiAgPHRleHQgY2xhc3M9Im1ldHJpYyBzdWItbmV3LXQiIHg9IjYxMCIgeT0iNDMwIj4mbHQ7IDEgzrxzPC90ZXh0PgogIDx0ZXh0IGNsYXNzPSJtZXRyaWMtbGJsIiB4PSI2MTAiIHk9IjQ0OCIgc3R5bGU9ImZpbGw6IHZhcigtLWluay0yKTsiPuebuOS9jeeyvuW6pjwvdGV4dD4KCiAgPCEtLSBWUyBkaXZpZGVyIC0tPgogIDx0ZXh0IGNsYXNzPSJ0aXRsZSIgeD0iNDEwIiB5PSIyNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIHN0eWxlPSJmb250LXNpemU6MzZweDsgZmlsbDogdmFyKC0taW5rLW11dGUpOyI+dnM8L3RleHQ+Cjwvc3ZnPgo=" alt="视频帧同步对比：旧方案 hrtimer 软件 FSIN（±100 μs）vs 新方案 MAC 硬件 PPS 直驱（PTP 配置驱动 · < 1 μs）"></p>
+<h3 id="41-旧方案hrtimer-软件-fsin">4.1 旧方案：hrtimer 软件 FSIN </h3>
+<p>Sensor 工作在从模式，由 SoC 发 FSIN 脉冲触发出帧。相位对齐靠算到下一个周期边界的等待时间：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c c"><code>u64 <span class="token function">get_sync_ptp_time_wait</span><span class="token punctuation">(</span><span class="token keyword keyword-void">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    u64 now <span class="token operator">=</span> <span class="token function">ktime_get_real_ns</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 到下一个周期边界的差值，例：4K30 每帧 33.33ms</span>
+    <span class="token keyword keyword-return">return</span> target_interval_ns <span class="token operator">-</span> <span class="token punctuation">(</span>now <span class="token operator">%</span> target_interval_ns<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre><p>hrtimer 状态机（三态轮转打脉冲）：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token keyword keyword-switch">switch</span> <span class="token punctuation">(</span>current_state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token keyword keyword-case">case</span> AJUST_PTPTIME_STATE<span class="token operator">:</span>   <span class="token comment">// 对齐到系统时间（能被目标周期整除）</span>
+    s_diff_ptptime <span class="token operator">=</span> <span class="token function">get_sync_ptp_time_wait</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    next_interval <span class="token operator">=</span> <span class="token function">ktime_set</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> s_diff_ptptime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    current_state <span class="token operator">=</span> LOW_STATE<span class="token punctuation">;</span>
+    <span class="token keyword keyword-break">break</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-case">case</span> LOW_STATE<span class="token operator">:</span>
+    <span class="token function">gpio_set_value</span><span class="token punctuation">(</span>GPIO_PIN<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    current_state <span class="token operator">=</span> HIGH_STATE<span class="token punctuation">;</span>
+    next_interval <span class="token operator">=</span> <span class="token function">ktime_set</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1000000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">// 1ms 高电平脉冲</span>
+    <span class="token keyword keyword-break">break</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-case">case</span> HIGH_STATE<span class="token operator">:</span>
+    <span class="token function">gpio_set_value</span><span class="token punctuation">(</span>GPIO_PIN<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    current_state <span class="token operator">=</span> AJUST_PTPTIME_STATE<span class="token punctuation">;</span>
+    <span class="token comment">// 半周期减去 LOW_STATE 的 1ms，保证总周期准确；预留时间给 PTP 对齐</span>
+    next_interval <span class="token operator">=</span> <span class="token function">ktime_set</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> target_interval_ns<span class="token operator">/</span><span class="token number">2</span> <span class="token operator">-</span> <span class="token number">1000000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword keyword-break">break</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token function">hrtimer_forward_now</span><span class="token punctuation">(</span>timer<span class="token punctuation">,</span> next_interval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre><p>痛点：hrtimer 终究是<strong>软件定时器</strong>，触发精度受限于<strong>操作系统调度抖动 + 中断响应延迟</strong>。实测 4K30（33.33ms 帧周期）下，CPU 高负载时 FSIN 信号的相位同步最大误差约 <strong>0.1ms（±100μs）</strong>：</p>
+<p><img src="../images/phase_sync.png" alt="FSIN 相位同步误差 1"></p>
+<p><img src="../images/phase_sync_2.png" alt="FSIN 相位同步误差 2"></p>
+<p><strong>实际测量精度</strong>：</p>
+<p><img src="0c2213dfad4256f8bd05bdfd8181824.jpg" alt="alt text"></p>
+<p>这个量级的相位抖动会让多机 Sensor 的曝光起点错开，拍视频墙时仍可能看到轻微 banding/撕裂——而 genlock 级别同步要求远比这高，所以软件 FSIN 最终也被废弃。</p>
+<h3 id="42-新方案mac-硬件-pps-直驱">4.2 新方案：MAC 硬件 PPS 直驱 </h3>
+<p><strong>设计思路</strong>：先通过 PTP 协议把全网设备网卡硬件时钟（PHC）同步到纳秒级；再由软件算出未来的绝对时间点 + 30Hz 周期，下发到网卡寄存器。</p>
+<p><strong>执行逻辑</strong>：到达预设时间后，MAC 芯片底层的<strong>硬件比较器</strong>自动接管，精准输出 FSIN 方波触发 Sensor。规避 Linux 系统调度、中断响应造成的延迟抖动。</p>
+<p>实测效果（Sensor 从机模式下，MIPI 数据跟随 FSIN 信号稳定输出，多机帧同步）：</p>
+<p><img src="1f7153d0a5d7b6a7506bc04408da9a1.jpg" alt="视频帧同步实测效果"></p>
+<p>精度对比：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>触发方式</th>
+<th>相位精度</th>
+<th>受 CPU 负载影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>旧 hrtimer</td>
+<td>软件定时器</td>
+<td>±100μs（无序波动）</td>
+<td>是</td>
+</tr>
+<tr>
+<td><strong>MAC PPS 直驱</strong></td>
+<td>硬件比较器</td>
+<td><strong>平均 -2.8μs，极限 ±10.5μs</strong></td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+<p><strong>长测验证（连续 12.8 小时 / 23,000+ 次样本烤机）</strong>：</p>
+<ul>
+<li><strong>频率锁定</strong>：稳定输出 30.00 Hz 方波，通道1 标准差仅 <strong>4.493 mHz</strong>、通道2 仅 <strong>2.398 mHz</strong>（波动 &lt; 0.005 Hz），免疫长期时钟漂移；</li>
+<li><strong>相位对齐</strong>：两路平均相位差 <strong>-30.37 m°</strong>，等效时间误差仅 <strong>-2.8μs</strong>，整晚极限波动被死死限制在 <strong>±10.5μs</strong> 以内。</li>
+</ul>
+<hr>
+<h2 id="五-踩过的坑">五、踩过的坑 </h2>
+<h3 id="51-坑一多机-pps-相位误差-28没做绝对时间对齐">5.1 坑一：多机 PPS 相位误差 28°——没做绝对时间对齐 </h3>
+<p><img src="./ptp_images/ptp_1.jpg" alt="多机 PPS 相位误差 28°"></p>
+<blockquote>
+<p>⚠️ <strong>症状</strong>：多台从机 PPS 之间有约 28° 相位差。听起来不大，但换算成时间很吓人——</p>
+</blockquote>
+<h4 id="28-到底是多大量化换算">28° 到底是多大？（量化换算） </h4>
+<p>本项目 PPS 是 30 Hz：</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>时间偏差 = 28°/360° × (1/30) s ≈ 2.59 ms
+</code></pre><p>通用公式（任意角度 + 任意频率都能套）：</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>Δt = θ / (360° × f)
+   = 相位角度(°) / (360° × 频率(Hz))
+</code></pre><p>代入 28° + 30 Hz：Δt = 28 / (360 × 30) ≈ 2.59 ms ✓</p>
+<p>示波器实测两机 PPS 的相位差（28°）见上图。</p>
+<h4 id="根因没做绝对时间对齐">根因：没做绝对时间对齐 </h4>
+<p><strong>启动时没做相位对齐。</strong> PHC 计数器溢出产生 PPS 的时刻由 <code>MAC_PPS0_Target_Time</code> 决定——<strong>不对齐就是各自随机起跑</strong>。</p>
+<p>硬件寄存器（出自 CV72 Datasheet 13.3.1.74~76）：</p>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>偏移</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MAC_PPS0_Target_Time_Seconds</code></td>
+<td><code>0xb80</code></td>
+<td>目标时间（秒）</td>
+</tr>
+<tr>
+<td><code>MAC_PPS0_Target_Time_Nanoseconds</code></td>
+<td><code>0xb84</code></td>
+<td>目标时间（纳秒）</td>
+</tr>
+<tr>
+<td><code>MAC_PPS_Control</code></td>
+<td><code>0xb70</code></td>
+<td>PPS 控制（下发 <code>0010</code> = START Pulse Train）</td>
+</tr>
+</tbody>
+</table>
+<p>手册原文要点：<em>当时间戳值与两个 Target Time 寄存器匹配时，MAC 开始 PPS 输出；此命令生成脉冲列，上升沿在 Target Time 定义的起始点触发。</em></p>
+<h4 id="解法">解法 </h4>
+<p><strong>绝对时间对齐</strong>——让所有机器约定在同一绝对时刻起跑：</p>
+<pre data-role="codeBlock" data-info="c" class="language-c c"><code><span class="token class-name">clockid_t</span> clkid <span class="token operator">=</span> <span class="token function">FD_TO_CLOCKID</span><span class="token punctuation">(</span>fd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword keyword-struct">struct</span> <span class="token class-name">timespec</span> ts<span class="token punctuation">;</span>
+<span class="token function">clock_gettime</span><span class="token punctuation">(</span>clkid<span class="token punctuation">,</span> <span class="token operator">&amp;</span>ts<span class="token punctuation">)</span><span class="token punctuation">;</span>              <span class="token comment">// 1. 取当前 PTP 时间</span>
+
+<span class="token keyword keyword-struct">struct</span> <span class="token class-name">ptp_perout_request</span> perout_req<span class="token punctuation">;</span>
+<span class="token function">memset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>perout_req<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword keyword-sizeof">sizeof</span><span class="token punctuation">(</span>perout_req<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+perout_req<span class="token punctuation">.</span>index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>                    <span class="token comment">// 对应 MAC_PPS0</span>
+
+<span class="token class-name">uint64_t</span> align_sec <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token class-name">uint64_t</span> target_sec <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>ts<span class="token punctuation">.</span>tv_sec <span class="token operator">/</span> align_sec<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> align_sec <span class="token operator">+</span> <span class="token number">10</span><span class="token punctuation">;</span>  <span class="token comment">// 下个10s整倍 + 10s缓冲</span>
+perout_req<span class="token punctuation">.</span>start<span class="token punctuation">.</span>sec  <span class="token operator">=</span> target_sec<span class="token punctuation">;</span>
+perout_req<span class="token punctuation">.</span>start<span class="token punctuation">.</span>nsec <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>               <span class="token comment">// ★ 纳秒必须为 0，保证边沿对齐</span>
+</code></pre><p>用 <code>devmem</code> 验证是否写入：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>devmem 0xFFE000EB84      <span class="token comment"># 读纳秒寄存器（应 = 0）</span>
+devmem 0xFFE000EB80      <span class="token comment"># 读秒寄存器（应是 10 的整倍）</span>
+</code></pre><blockquote>
+<p>💡 <strong>三个要点</strong>：</p>
+<ul>
+<li><code>align_sec=10</code>：对齐 10 秒整倍，便于多机同步</li>
+<li><code>target_sec += 10</code>：再多 10 秒缓冲，确保 PTP 锁定 + 寄存器配置来得及</li>
+<li><code>nsec=0</code>：纳秒必须为 0，否则不同机的 PPS 上升沿会偏几纳秒——抵消绝对时间对齐的意义</li>
+</ul>
+</blockquote>
+<h3 id="52-坑二千兆百兆混用隐形的时间杀手">5.2 坑二：千兆/百兆混用——隐形的「时间杀手」 </h3>
+<p><img src="./ptp_images/ptp_2.jpg" alt="PHC时间偏差"></p>
+<blockquote>
+<p>⚠️ <strong>症状</strong>：烤机后多机相位差飙到 <strong>2.175 ms</strong>，PPS 链路没问题，最终发现 <strong>PHC 时间本身就有偏差</strong>——问题在时间源，不在 PPS 输出。</p>
+</blockquote>
+<h4 id="定位手法">定位手法 </h4>
+<p>用 MultiExec 在两机<strong>同时</strong>执行 <code>phc_ctl eth0 get</code> 读最原始 PHC 时间，做减法（右 − 左）：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>第一次：0.002199519 s  <span class="token punctuation">(</span><span class="token number">2.2</span> ms<span class="token punctuation">)</span>
+第二次：0.000680204 s  <span class="token punctuation">(</span><span class="token number">2.08</span> ms<span class="token punctuation">)</span>
+第三次：0.001946535 s  <span class="token punctuation">(</span><span class="token number">1.94</span> ms<span class="token punctuation">)</span>
+</code></pre><p>三次结果跟示波器测的 2.175 ms 基本吻合。</p>
+<h4 id="根因链路速率不一致">根因：链路速率不一致 </h4>
+<p><strong>链路速率不一致</strong>——有几台机器悄悄降级到 100Mb/s：</p>
+<table>
+<thead>
+<tr>
+<th>机器</th>
+<th>链路速率</th>
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NC-12x80…</td>
+<td>1000Mb/s</td>
+<td>正常</td>
+</tr>
+<tr>
+<td>NC-90-G2…</td>
+<td>100Mb/s</td>
+<td>⚠️ 降级</td>
+</tr>
+<tr>
+<td>其他机器</td>
+<td>100Mb/s</td>
+<td>⚠️ 降级</td>
+</tr>
+</tbody>
+</table>
+<h4 id="为什么对-ptp-是毁灭性的">为什么对 PTP 是毁灭性的？ </h4>
+<p>PTP 整套计算<strong>假设收发延迟对称</strong>，链路速率不一致会从两方面打破这个假设：</p>
+<ol>
+<li><strong>序列化延迟暴增</strong>：100M 发同包耗时是 1000M 的 10 倍，纳秒级时间戳的物理误差直接放大。</li>
+<li><strong>交换机非对称缓冲</strong>：千兆→百兆要排队缓存，百兆→千兆畅通无阻 → <strong>延迟不对称</strong>。</li>
+</ol>
+<blockquote>
+<p>💡 <strong>结论</strong>：<strong>链路对称性是 PTP 的生命线</strong>，所有设备必须统一速率（全千兆），不允许任何机器悄悄降级。</p>
+</blockquote>
+<h3 id="53-坑三tai-vs-utcphc-为何总比系统时钟早-37-秒">5.3 坑三：TAI vs UTC——PHC 为何总比系统时钟早 37 秒？ </h3>
+<p><img src="image-1.png" alt="闰秒：TAI 与 UTC 相差 37 秒"></p>
+<blockquote>
+<p>✅ <strong>结论先行</strong>：<strong>这不是 bug，是正确行为</strong>。PHC 用的是 TAI 时间，系统时钟（<code>CLOCK_REALTIME</code>）用的是 UTC，两者<strong>设计上就差 37 秒</strong>，PTP 同步依然成功。</p>
+</blockquote>
+<h4 id="utc-vs-tai两套时间从何而来">UTC vs TAI：两套时间从何而来 </h4>
+<p>日常生活中我们只用一种时间，但在高精度计算机网络中，时间分成了<strong>两派</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>服务对象</th>
+<th>特性</th>
+<th>谁在用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UTC</strong>（协调世界时）</td>
+<td>"人"和操作系统</td>
+<td>必须和地球自转保持一致；地球自转变慢时会<strong>插秒</strong>（如 <code>23:59:60</code>）或<strong>减秒</strong></td>
+<td>Linux <code>date</code>、Windows 时钟</td>
+</tr>
+<tr>
+<td><strong>TAI</strong>（国际原子时）</td>
+<td>"机器"和物理定律</td>
+<td>完全基于原子钟震荡，<strong>绝对均匀、单调递增、永不跳跃</strong></td>
+<td>PTP、GPS、NTP 内部</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ptp-为什么选-tai-而不是-utc">PTP 为什么选 TAI 而不是 UTC </h4>
+<p><strong>IEEE 1588 规定：PTP 网络中传输的时间必须是 TAI。</strong></p>
+<p>原因：对于工业控制、5G 基站、自动驾驶等场景，时间突然"倒退 1 秒"或"停顿 1 秒"（闰秒）会带来严重灾难：</p>
+<ul>
+<li><strong>数据库</strong>：唯一索引冲突、事务回滚混乱</li>
+<li><strong>实时控制</strong>：PID 积分项爆炸、执行器误动作</li>
+<li><strong>音视频同步</strong>：相位跳变 ±1 秒，丢帧/卡顿</li>
+</ul>
+<h4 id="tai-与-utc-怎么就差出了-37-秒">TAI 与 UTC 怎么就差出了 37 秒 </h4>
+<p>从 1972 年到本项目实施时（2026 年），地球自转累计慢了约 <strong>37 秒</strong>。UTC 为了等地球，已经主动"暂停"了 37 次（每次插 1 秒）。所以：</p>
+<pre data-role="codeBlock" data-info="text" class="language-text text"><code>TAI − UTC ≈ 37 秒
+</code></pre><p>未来还会有闰秒——具体何时插入由 IERS（国际地球自转服务）提前数月宣布。</p>
+<h3 id="54-排查方法--调试手段">5.4 排查方法 + 调试手段 </h3>
+<p>四步排查法：</p>
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>操作</th>
+<th>预期</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>检查网卡链路速率</td>
+<td>全部 1000Mb/s</td>
+</tr>
+<tr>
+<td>2</td>
+<td>检查 PHC 时间偏差</td>
+<td>多机 &lt; 1μs</td>
+</tr>
+<tr>
+<td>3</td>
+<td>等 phc2sys 锁定</td>
+<td>s2 freq 稳定 &lt; 100 ppb</td>
+</tr>
+<tr>
+<td>4</td>
+<td>示波器测 PPS 对齐</td>
+<td>多机边沿 &lt; 200ns</td>
+</tr>
+</tbody>
+</table>
+<p>查同步状态（<code>pmc</code>），关注 offsetFromMaster 和 meanPathDelay：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>pmc <span class="token parameter variable">-u</span> <span class="token parameter variable">-b</span> <span class="token number">0</span> <span class="token string">'GET CURRENT_DATA_SET'</span>
+<span class="token comment">#   stepsRemoved     1            ← 距主时钟 1 跳</span>
+<span class="token comment">#   offsetFromMaster 6.0          ← 比主时钟快 6ns，精度很高</span>
+<span class="token comment">#   meanPathDelay    3386.0       ← 链路延迟 3.4μs</span>
+</code></pre><p>对比 PHC 时间与系统时间：</p>
+<pre data-role="codeBlock" data-info="bash" class="language-bash bash"><code>phc_ctl eth0 get      <span class="token comment"># 网卡时间：1776783654.214753612</span>
+<span class="token function">date</span> +%s%N            <span class="token comment"># 系统时间</span>
+或者直接输入
+phc_ctl eth0 <span class="token function">cmp</span>
+</code></pre><hr>
+<h2 id="六-遗留问题与反思">六、遗留问题与反思 </h2>
+<ol>
+<li><strong>Audio PLL 分辨率 / 量化误差</strong>：只能以 1Hz（≈81.38 PPB）为步长台阶式跳变——某些写入值因为量化不到，落不到期望的频率上，频率曲线会出现"断层"（看似 Bug，本质是 1Hz 步长的精度天花板）。要进一步降台阶，需要换**小数分频（Sigma-Delta 调制器）**架构的 Audio PLL。</li>
+<li><strong>出帧延迟差异</strong>：不同 Sensor 收到 FSIN 后曝光/出帧时间本身不同；DPHY 和 CPHY 之间也有差异。</li>
+</ol>
+<p><img src="531c18cc420502afe7e40422444c7ad.jpg" alt="alt text"></p>
+<hr>
+<h2 id="七-三点核心心得">七、三点核心心得 </h2>
+<ol>
+<li><strong>精度敏感的链路，优先用硬件绕开 CPU 调度。</strong> 音频取 PPB 直注、视频取 MAC PPS，本质都是把软件抖动从链路里摘出去——这是精度提升的真正来源。软件 PPS / hrtimer 都是「能跑但不准」。</li>
+<li><strong>跨域纠偏的前提是「同源」。</strong> PHC 和 Audio PLL 同一颗 24MHz 晶振，PPB 才能跨域等效注入。换平台前要先确认时钟拓扑。</li>
+<li><strong>链路对称性是 PTP 的生命线。</strong> 千兆/百兆混用、交换机非对称缓冲，会让时间补偿体系静悄悄失效——最难查，因为它不报错、只漂移。</li>
+</ol>
+<p>排查方法论：<strong>现象 → 回溯到最原始的物理量（PHC 时间、链路速率）→ 定位根因 → 对症修复。</strong> 别在末端现象上打转，往下追一层往往就豁然开朗。</p>
+
+      </div>
+      
+      
+    
+    
+    <script type="module">
+// TODO: If ZenUML gets integrated into mermaid in the future,
+//      we can remove the following lines.
+
+
+var MERMAID_CONFIG = ({"startOnLoad":false});
+if (typeof MERMAID_CONFIG !== 'undefined') {
+  MERMAID_CONFIG.startOnLoad = false
+  MERMAID_CONFIG.cloneCssStyles = false
+  MERMAID_CONFIG.theme = "default"
+}
+
+mermaid.initialize(MERMAID_CONFIG || {})
+if (typeof(window['Reveal']) !== 'undefined') {
+  function mermaidRevealHelper(event) {
+    var currentSlide = event.currentSlide
+    var diagrams = currentSlide.querySelectorAll('div.mermaid')
+    for (var i = 0; i < diagrams.length; i++) {
+      var diagram = diagrams[i]
+      if (!diagram.hasAttribute('data-processed')) {
+        mermaid.init(null, diagram, ()=> {
+          Reveal.slide(event.indexh, event.indexv)
+        })
+      }
+    }
+  }
+  Reveal.addEventListener('slidetransitionend', mermaidRevealHelper)
+  Reveal.addEventListener('ready', mermaidRevealHelper)
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+} else {
+  await mermaid.run({
+    nodes: document.querySelectorAll('div.mermaid')
+  })
+}
+</script>
+    
+    
+    
+  
+    </body></html>

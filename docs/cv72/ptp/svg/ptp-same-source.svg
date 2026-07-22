@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" role="img" aria-label="物理同源 PPB 跨域纠偏信号流">
+  <title>物理同源：24 MHz 晶振同时驱动 PHC 与 Audio PLL，PPB 直接跨域纠偏</title>
+  <desc>晶振漂移以相同比例映射到 PHC 与 Audio PLL；PTP 伺服算出的 PPB 是无量纲相对比例，可直接注入音频域</desc>
+  <style>
+    :root {
+      --surface:      #fcfcfb;
+      --ink:          #0b0b0b;
+      --ink-2:        #52514e;
+      --ink-mute:     #898781;
+      --border:       rgba(11,11,11,0.10);
+      --grid:         #e1e0d9;
+      --src-fill:     #fde0e8;
+      --src-stk:      #d55181;
+      --src-ink:      #4a1f2c;
+      --hw-fill:      #dbeafe;
+      --hw-stk:       #2a78d6;
+      --hw-ink:       #0d2c52;
+      --sw-fill:      #fff3b0;
+      --sw-stk:       #c98500;
+      --sw-ink:       #4d3500;
+      --out-fill:     #cfeacc;
+      --out-stk:      #008300;
+      --out-ink:      #0d2c0d;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface:      #1a1a19;
+        --ink:          #ffffff;
+        --ink-2:        #c3c2b7;
+        --ink-mute:     #898781;
+        --border:       rgba(255,255,255,0.10);
+        --grid:         #2c2c2a;
+        --src-fill:     #4a1f2c;
+        --src-stk:      #e87ba4;
+        --src-ink:      #fde0e8;
+        --hw-fill:      #0d2c52;
+        --hw-stk:       #3987e5;
+        --hw-ink:       #cfe2fb;
+        --sw-fill:      #4d3500;
+        --sw-stk:       #eda100;
+        --sw-ink:       #fff3b0;
+        --out-fill:     #0d2c0d;
+        --out-stk:      #4ca84c;
+        --out-ink:      #cfeacc;
+      }
+    }
+    .card       { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+    .node       { stroke-width: 1.5; }
+    .node-src   { fill: var(--src-fill); stroke: var(--src-stk); }
+    .node-hw    { fill: var(--hw-fill); stroke: var(--hw-stk); }
+    .node-sw    { fill: var(--sw-fill); stroke: var(--sw-stk); }
+    .node-out   { fill: var(--out-fill); stroke: var(--out-stk); }
+    .text-src   { fill: var(--src-ink); }
+    .text-hw    { fill: var(--hw-ink); }
+    .text-sw    { fill: var(--sw-ink); }
+    .text-out   { fill: var(--out-ink); }
+    .n-text     { font-size: 13px; font-weight: 600; text-anchor: middle; }
+    .n-sub      { font-size: 11px; text-anchor: middle; }
+    .arrow      { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+    .arrow-dash { fill: none; stroke: var(--ink-2); stroke-width: 1.5; stroke-dasharray: 5 3; }
+    .arrow-head { fill: var(--ink); }
+    .arrow-lbl  { fill: var(--ink-2); font-size: 11px; }
+    .arrow-emph { fill: var(--src-stk); font-size: 12px; font-weight: 600; }
+    .title      { fill: var(--ink); font-size: 16px; font-weight: 700; }
+  </style>
+
+  <rect class="card" x="0.5" y="0.5" width="899" height="479" rx="10"/>
+  <text class="title" x="450" y="32" text-anchor="middle">物理同源：PPB 跨域等效纠偏</text>
+
+  <!-- Col 1: 24MHz crystal (src) -->
+  <rect class="node node-src" x="40" y="100" width="160" height="80" rx="10"/>
+  <text class="n-text text-src" x="120" y="135">24 MHz 物理晶振</text>
+  <text class="n-sub text-src"  x="120" y="155">频率漂移源</text>
+  <text class="n-sub text-src"  x="120" y="170">温度 · 老化</text>
+
+  <!-- Col 2: PHC (hw) + Audio PLL (hw) -->
+  <rect class="node node-hw" x="260" y="60"  width="160" height="60" rx="8"/>
+  <text class="n-text text-hw" x="340" y="86">PHC</text>
+  <text class="n-sub text-hw"  x="340" y="103">网络硬件时钟</text>
+
+  <rect class="node node-hw" x="260" y="160" width="160" height="60" rx="8"/>
+  <text class="n-text text-hw" x="340" y="186">Audio PLL</text>
+  <text class="n-sub text-hw"  x="340" y="203">音频时钟</text>
+
+  <!-- dashed arrows from crystal to both clocks (same drift) -->
+  <path class="arrow-dash" d="M 200 130 Q 230 100 260 90"/>
+  <polygon class="arrow-head" points="260,90 251,86 252,96"/>
+  <text class="arrow-emph" x="225" y="80">相同比例漂移</text>
+
+  <path class="arrow-dash" d="M 200 150 Q 230 170 260 190"/>
+  <polygon class="arrow-head" points="260,190 251,186 252,196"/>
+  <text class="arrow-emph" x="225" y="200">相同比例漂移</text>
+
+  <!-- Col 3: PTP Master + ptp4l servo -->
+  <rect class="node node-src" x="500" y="60" width="160" height="60" rx="8"/>
+  <text class="n-text text-src" x="580" y="86">PTP 主时钟</text>
+  <text class="n-sub text-src"  x="580" y="103">Grandmaster</text>
+
+  <rect class="node node-sw" x="500" y="160" width="160" height="60" rx="8"/>
+  <text class="n-text text-sw" x="580" y="186">ptp4l 伺服</text>
+  <text class="n-sub text-sw"  x="580" y="203">算出 freq (PPB)</text>
+
+  <!-- Master -> servo (reference input) -->
+  <line class="arrow" x1="580" y1="120" x2="580" y2="160"/>
+  <polygon class="arrow-head" points="580,160 575,151 585,151"/>
+
+  <!-- PHC -> servo (compare) -->
+  <path class="arrow" d="M 420 90 Q 460 90 500 175"/>
+  <polygon class="arrow-head" points="500,175 492,168 499,165"/>
+  <text class="arrow-lbl" x="430" y="145">PHC 比对</text>
+
+  <!-- Col 4: EMA + Limiter -->
+  <rect class="node node-sw" x="700" y="60" width="160" height="50" rx="8"/>
+  <text class="n-text text-sw" x="780" y="85">EMA 平滑</text>
+  <text class="n-sub text-sw"  x="780" y="100">α = 0.1</text>
+
+  <rect class="node node-sw" x="700" y="130" width="160" height="50" rx="8"/>
+  <text class="n-text text-sw" x="780" y="155">限幅</text>
+  <text class="n-sub text-sw"  x="780" y="170">±1000 Hz</text>
+
+  <!-- servo -> EMA -->
+  <path class="arrow" d="M 660 175 Q 690 175 720 100"/>
+  <polygon class="arrow-head" points="720,100 720,110 713,107"/>
+  <text class="arrow-emph" x="720" y="120">PPB 跨域等效纠偏</text>
+
+  <!-- EMA -> limiter -->
+  <line class="arrow" x1="780" y1="110" x2="780" y2="130"/>
+  <polygon class="arrow-head" points="780,130 775,121 785,121"/>
+
+  <!-- Final: limiter -> Audio PLL (correction back-applied, route via bottom) -->
+  <path class="arrow" d="M 700 180 L 700 250 L 420 250 L 420 220"/>
+  <polygon class="arrow-head" points="420,220 414,230 426,230"/>
+  <text class="arrow-lbl" x="510" y="244">写寄存器</text>
+
+  <!-- Bottom: MCLK output -->
+  <rect class="node node-out" x="260" y="290" width="160" height="80" rx="10"/>
+  <text class="n-text text-out" x="340" y="320">MCLK 微调输出</text>
+  <text class="n-sub text-out"  x="340" y="340">12.288 MHz</text>
+  <text class="n-sub text-out"  x="340" y="356">±30 Hz 纠偏</text>
+
+  <path class="arrow" d="M 340 220 L 340 290"/>
+  <polygon class="arrow-head" points="340,290 335,281 345,281"/>
+
+  <!-- legend -->
+  <g transform="translate(40, 395)">
+    <rect class="card" x="0" y="0" width="820" height="65" rx="8" style="fill: var(--surface); stroke: var(--border); stroke-width: 1;"/>
+    <rect class="node node-src" x="14"  y="22" width="20" height="20" rx="4"/>
+    <text class="text-src" x="40" y="37" style="font-size:12px;">时间源 / 漂移源</text>
+    <rect class="node node-hw"  x="180" y="22" width="20" height="20" rx="4"/>
+    <text class="text-hw" x="206" y="37" style="font-size:12px;">硬件时钟</text>
+    <rect class="node node-sw"  x="320" y="22" width="20" height="20" rx="4"/>
+    <text class="text-sw" x="346" y="37" style="font-size:12px;">软件伺服 / 处理</text>
+    <rect class="node node-out" x="490" y="22" width="20" height="20" rx="4"/>
+    <text class="text-out" x="516" y="37" style="font-size:12px;">最终输出</text>
+    <line class="arrow-dash" x1="640" y1="32" x2="680" y2="32"/>
+    <text class="arrow-lbl" x="690" y="36" style="font-size:12px;">物理同源（虚线）</text>
+  </g>
+</svg>

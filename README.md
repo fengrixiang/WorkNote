@@ -15,6 +15,7 @@
 | [晨星 SSC268G](/docs/ssc268g/ssc268) | SSC268G 调试指南 |
 | [地平线 X3](/docs/x3/x3) | BPU/AI 推理、模型转换、摄像头、GPIO |
 | [ARM 平台](/docs/ARM/arm) | STM32 编译分析、编译优化、printf 重定向 |
+| [QMK 键盘移植](/docs/ARM/qmk) | QMK 固件使用、AT32F423 移植案例 |
 
 ### Camera / Sensor
 
@@ -26,19 +27,22 @@
 | [IAV 框架](/docs/sensor/iav) | IAV 视频框架 |
 | [SP50E40 帧同步](/docs/sensor/sp50e40) | SP50E40 帧同步测试 |
 | [AR2020 帧同步](/docs/sensor/ar2020) | AR2020 帧同步测试 |
+| [Sensor 测试记录](/docs/sensor/test) | Sensor 临时调试记录 |
 
 ### 云台 / 电机
 
 | 文档 | 说明 |
 | ---- | ---- |
-| [云台开发](/docs/monitor/monitor) | 步进电机控制、MS35774 vs TMC5272 对比 |
+| [云台开发](/docs/monitor/monitor) | 预置位精度测试、MS35774 vs TMC5272 对比 |
+| [云台概述](/docs/monitor/ptz) | 云台速度与电机速度换算 |
+| [电机概述](/docs/motor/motor) | 电机基础与控制 |
 | [MS35774 寄存器](/docs/monitor/ms35774) | MS35774 寄存器说明 |
 | [MS35774 速度表](/docs/monitor/ms35774_speed) | 24/48/96 档速度表计算 |
 | [MS35774 驱动](/docs/monitor/ms35774_drive) | MS35774 驱动调试 |
 | [MS41969](/docs/monitor/ms41969) | MS41969 调试笔记 |
 | [TMC5272](/docs/monitor/tmc5272) | 8-Point Ramp 原理与使用 |
 | [TMC5272 驱动](/docs/monitor/tmc5272_drive) | TMC5272 驱动调试 |
-| [VX630A](/docs/monitor/VX630A) | VX630A 调试笔记 |
+| [VX630A vs VX720](/docs/monitor/VX630A_VS_VX720) | 云台速度对比测试 |
 | [Python 工具](/docs/monitor/python) | Python 辅助工具 |
 
 ### Linux
@@ -80,7 +84,8 @@
 | ---- | ---- |
 | [Kernel 开发](/docs/kernel/kernel) | Linux 内核开发笔记 |
 | [U-Boot 开发](/docs/uboot/u-boot) | Bootloader 开发 |
-| [eMMC](/docs/uboot/emmc) | eMMC 存储调试 |
+| [eMMC](/docs/kernel/emmc) | eMMC 存储调试 |
+| [DDR 压测](/docs/kernel/ddr) | DDR 压力测试方案 |
 
 ### 调试工具
 

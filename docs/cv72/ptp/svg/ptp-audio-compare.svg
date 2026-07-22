@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 600" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" role="img" aria-label="音频时钟同步 新旧方案对比">
+  <title>音频同步：旧方案（软件 PPS 长链路）vs 新方案（PPB 跨域直注）</title>
+  <desc>旧方案完整链路：上游 ptp4l 同步 PHC + phc2sys 同步系统时钟 → 音频链 ALSA/DMA/软件PPS/phc2sys_2/Audio PLL；新方案跳过整个软件派生链，ptp4l 直接把 PPB 注入 Audio PLL</desc>
+  <style>
+    :root {
+      --surface:      #fcfcfb;
+      --ink:          #0b0b0b;
+      --ink-2:        #52514e;
+      --ink-mute:     #898781;
+      --border:       rgba(11,11,11,0.10);
+      --grid:         #e1e0d9;
+      --hw-fill:      #dbeafe;
+      --hw-stk:       #2a78d6;
+      --hw-ink:       #0d2c52;
+      --sw-fill:      #fff3b0;
+      --sw-stk:       #c98500;
+      --sw-ink:       #4d3500;
+      --old-bg:       rgba(227,73,72,0.06);
+      --old-stk:      rgba(227,73,72,0.45);
+      --new-bg:       rgba(0,131,0,0.06);
+      --new-stk:      rgba(0,131,0,0.45);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface:      #1a1a19;
+        --ink:          #ffffff;
+        --ink-2:        #c3c2b7;
+        --ink-mute:     #898781;
+        --border:       rgba(255,255,255,0.10);
+        --grid:         #2c2c2a;
+        --hw-fill:      #0d2c52;
+        --hw-stk:       #3987e5;
+        --hw-ink:       #cfe2fb;
+        --sw-fill:      #4d3500;
+        --sw-stk:       #eda100;
+        --sw-ink:       #fff3b0;
+        --old-bg:       rgba(227,103,103,0.10);
+        --old-stk:      rgba(227,103,103,0.55);
+        --new-bg:       rgba(76,168,76,0.10);
+        --new-stk:      rgba(76,168,76,0.55);
+      }
+    }
+    .card       { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+    .sub-old    { fill: var(--old-bg); stroke: var(--old-stk); stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .sub-new    { fill: var(--new-bg); stroke: var(--new-stk); stroke-width: 1.5; }
+    .sub-title  { font-size: 13px; font-weight: 700; }
+    .sec-title  { font-size: 11px; font-weight: 600; fill: var(--ink-2); }
+    .row-label  { font-size: 10px; font-weight: 600; fill: var(--ink-mute); letter-spacing: 0.5px; }
+    .net-label  { font-size: 9.5px; font-style: italic; fill: var(--ink-mute); }
+    .node       { stroke-width: 1.5; }
+    .node-hw    { fill: var(--hw-fill); stroke: var(--hw-stk); }
+    .node-sw    { fill: var(--sw-fill); stroke: var(--sw-stk); }
+    .node-net   { fill: #f0e4fb; stroke: #7e57c2; }
+    .text-hw    { fill: var(--hw-ink); }
+    .text-sw    { fill: var(--sw-ink); }
+    .text-net   { fill: #4a2870; }
+    .n-text     { font-size: 12.5px; font-weight: 600; text-anchor: middle; }
+    .n-text-sm  { font-size: 11px;   font-weight: 600; text-anchor: middle; }
+    .n-sub      { font-size: 10.5px; text-anchor: middle; }
+    .n-sub-sm   { font-size: 9.5px;  text-anchor: middle; }
+    .arrow      { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+    .arrow-net  { fill: none; stroke: #7e57c2; stroke-width: 1.2; stroke-dasharray: 4 3; }
+    .arrow-head { fill: var(--ink); }
+    .arrow-net-h{ fill: #7e57c2; }
+    .title      { fill: var(--ink); font-size: 16px; font-weight: 700; }
+    .sub-old-t  { fill: #b03434; }
+    .sub-new-t  { fill: #006300; }
+    @media (prefers-color-scheme: dark) {
+      .sub-old-t { fill: #e66767; }
+      .sub-new-t { fill: #4ca84c; }
+      .node-net  { fill: #2a1745; }
+      .text-net  { fill: #d0b8ff; }
+      .arrow-net { stroke: #b39bdd; }
+      .arrow-net-h{ fill: #b39bdd; }
+    }
+  </style>
+
+  <rect class="card" x="0.5" y="0.5" width="879" height="599" rx="10"/>
+
+  <!-- =================== OLD subgraph (left) =================== -->
+  <rect class="sub-old" x="30" y="60" width="400" height="520" rx="14"/>
+  <text class="sub-title sub-old-t" x="50" y="86">旧方案 · 软件模拟 PPS</text>
+  <text class="n-sub" x="50" y="104" style="text-anchor:start;">链路长 / 依赖录音 / 受 CPU 调度影响</text>
+
+  <!-- ===== OLD · 上游同步链（主从对比 2 行布局）===== -->
+  <text class="sec-title" x="50" y="132">上游 PTP 同步链</text>
+
+  <!-- Row 1: 网络层 — 远端 master ↔ ptp4l -->
+  <text class="row-label" x="50" y="183" style="text-anchor:start;">网络</text>
+  <rect class="node node-net" x="80"  y="155" width="60" height="45" rx="6"/>
+  <text class="n-text-sm text-net" x="110" y="173">远端</text>
+  <text class="n-text-sm text-net" x="110" y="187">Master</text>
+
+  <rect class="node node-sw"  x="190" y="155" width="60" height="45" rx="6"/>
+  <text class="n-text-sm text-sw"  x="220" y="182">ptp4l</text>
+
+  <line class="arrow-net" x1="140" y1="178" x2="190" y2="178"/>
+  <polygon class="arrow-net-h" points="190,178 183,174 183,182"/>
+  <text class="net-label" x="165" y="171" style="text-anchor:middle;">network</text>
+
+  <!-- Vertical arrow: ptp4l ↓ PHC (row 1 to row 2) -->
+  <line class="arrow" x1="220" y1="200" x2="220" y2="230"/>
+  <polygon class="arrow-head" points="220,230 215,221 225,221"/>
+
+  <!-- Row 2: 本地链 — PHC → phc2sys → 系统时钟 -->
+  <text class="row-label" x="50" y="258" style="text-anchor:start;">本地</text>
+  <rect class="node node-hw" x="190" y="230" width="60" height="45" rx="6"/>
+  <text class="n-text-sm text-hw" x="220" y="257">PHC</text>
+
+  <rect class="node node-sw" x="265" y="230" width="65" height="45" rx="6"/>
+  <text class="n-text-sm text-sw" x="297" y="257">phc2sys</text>
+
+  <rect class="node node-hw" x="345" y="230" width="75" height="45" rx="6"/>
+  <text class="n-text-sm text-hw" x="382" y="255">系统时钟</text>
+  <text class="n-sub-sm  text-hw" x="382" y="268">REALTIME</text>
+
+  <!-- Row 2 horizontal arrows -->
+  <line class="arrow" x1="250" y1="252" x2="265" y2="252"/>
+  <polygon class="arrow-head" points="265,252 258,249 258,255"/>
+  <line class="arrow" x1="330" y1="252" x2="345" y2="252"/>
+  <polygon class="arrow-head" points="345,252 338,249 338,255"/>
+
+  <!-- ===== OLD · 音频派生链（依赖系统时钟 + 录音）===== -->
+  <text class="sec-title" x="50" y="305">音频派生链</text>
+
+  <rect class="node node-hw" x="50"  y="320" width="140" height="50" rx="8"/>
+  <text class="n-text text-hw" x="120" y="345">ALSA 采集</text>
+  <text class="n-sub text-hw"  x="120" y="361">I²S 录音</text>
+
+  <rect class="node node-hw" x="210" y="320" width="140" height="50" rx="8"/>
+  <text class="n-text text-hw" x="280" y="345">DMA 中断</text>
+  <text class="n-sub text-hw"  x="280" y="361">每 10 ms 一次</text>
+
+  <rect class="node node-sw" x="50"  y="390" width="300" height="50" rx="8"/>
+  <text class="n-text text-sw" x="200" y="415">软件 PPS · /dev/pps1</text>
+  <text class="n-sub text-sw"  x="200" y="431">100 次中断合成 1 个脉冲</text>
+
+  <rect class="node node-sw" x="50"  y="460" width="300" height="50" rx="8"/>
+  <text class="n-text text-sw" x="200" y="485">phc2sys_2</text>
+  <text class="n-sub text-sw"  x="200" y="501">比对 PPS 与 PHC 算偏移</text>
+
+  <rect class="node node-hw" x="50"  y="530" width="300" height="48" rx="8"/>
+  <text class="n-text text-hw" x="200" y="553">Audio PLL 寄存器</text>
+  <text class="n-sub text-hw"  x="200" y="569">写 MCLK 频率</text>
+
+  <!-- Audio chain arrows (all horizontal / vertical, no crossings) -->
+  <line class="arrow" x1="190" y1="345" x2="210" y2="345"/>
+  <polygon class="arrow-head" points="210,345 203,340 203,350"/>
+  <line class="arrow" x1="280" y1="370" x2="200" y2="390"/>
+  <polygon class="arrow-head" points="200,390 207,385 209,394"/>
+  <line class="arrow" x1="200" y1="440" x2="200" y2="460"/>
+  <polygon class="arrow-head" points="200,460 195,451 205,451"/>
+  <line class="arrow" x1="200" y1="510" x2="200" y2="530"/>
+  <polygon class="arrow-head" points="200,530 195,521 205,521"/>
+
+  <!-- ===== 跨段连接：系统时钟 → ALSA（平滑曲线，无交叉）===== -->
+  <path class="arrow" d="M 382 275 C 382 295, 120 295, 120 320"/>
+  <polygon class="arrow-head" points="120,320 115,311 125,311"/>
+
+  <!-- ===== PHC → phc2sys_2 边注：虚线小角标，避开主体走右侧外缘 ===== -->
+  <path class="arrow" d="M 220 275 L 220 295 L 380 295 L 380 460 L 350 460" stroke-dasharray="3 3" stroke-width="1"/>
+  <polygon class="arrow-head" points="350,460 358,455 358,465"/>
+  <text class="n-sub-sm" x="385" y="290" style="text-anchor:start; fill: var(--ink-2);">PHC 参考</text>
+
+  <!-- =================== NEW subgraph (right) =================== -->
+  <rect class="sub-new" x="450" y="60" width="400" height="520" rx="14"/>
+  <text class="sub-title sub-new-t" x="470" y="86">新方案 · PPB 跨域直注</text>
+  <text class="n-sub" x="470" y="104" style="text-anchor:start;">链路短 / 不依赖录音 / 绕开 CPU</text>
+
+  <text class="sec-title" x="470" y="132">音频派生链（PPB 直注）</text>
+
+  <rect class="node node-sw" x="470" y="170" width="360" height="60" rx="8"/>
+  <text class="n-text text-sw" x="650" y="198">ptp4l 提取 freq (PPB)</text>
+  <text class="n-sub text-sw"  x="650" y="216">PI 伺服直接输出无量纲比例</text>
+
+  <rect class="node node-sw" x="470" y="265" width="360" height="56" rx="8"/>
+  <text class="n-text text-sw" x="650" y="293">EMA 平滑 · α = 0.1</text>
+  <text class="n-sub text-sw"  x="650" y="310">低通滤波 · 截止 ≈ 0.016 Hz</text>
+
+  <rect class="node node-sw" x="470" y="355" width="360" height="56" rx="8"/>
+  <text class="n-text text-sw" x="650" y="383">限幅 · ±1000 Hz</text>
+  <text class="n-sub text-sw"  x="650" y="400">防突变 / 防失锁</text>
+
+  <rect class="node node-hw" x="470" y="445" width="360" height="50" rx="8"/>
+  <text class="n-text text-hw" x="650" y="469">Audio PLL 寄存器</text>
+  <text class="n-sub text-hw"  x="650" y="486">写 MCLK 频率</text>
+
+  <!-- NEW arrows -->
+  <line class="arrow" x1="650" y1="230" x2="650" y2="265"/>
+  <polygon class="arrow-head" points="650,265 645,256 655,256"/>
+  <line class="arrow" x1="650" y1="321" x2="650" y2="355"/>
+  <polygon class="arrow-head" points="650,355 645,346 655,346"/>
+  <line class="arrow" x1="650" y1="411" x2="650" y2="445"/>
+  <polygon class="arrow-head" points="650,445 645,436 655,436"/>
+
+  <!-- VS divider -->
+  <text class="title" x="440" y="330" text-anchor="middle" style="font-size:36px; fill: var(--ink-mute);">vs</text>
+</svg>

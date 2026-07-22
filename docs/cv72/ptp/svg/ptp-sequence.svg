@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" role="img" aria-label="PTP Master Slave Sequence Diagram">
+  <title>PTP 报文时序：Sync / Follow_Up / Delay_Req / Delay_Resp</title>
+  <desc>PTP 主从时钟通过四类报文交换四个时间戳 t1~t4，计算 path_delay 与 offset。</desc>
+  <style>
+    :root {
+      --surface:      #fcfcfb;
+      --ink:          #0b0b0b;
+      --ink-2:        #52514e;
+      --ink-mute:     #898781;
+      --border:       rgba(11,11,11,0.10);
+      --grid:         #e1e0d9;
+      --master-fill:  #ffd6b8;
+      --master-stk:   #d95926;
+      --master-ink:   #4a1f0a;
+      --note-fill:    #fff3b0;
+      --note-stk:     #c98500;
+      --note-ink:     #4d3500;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --surface:      #1a1a19;
+        --ink:          #ffffff;
+        --ink-2:        #c3c2b7;
+        --ink-mute:     #898781;
+        --border:       rgba(255,255,255,0.10);
+        --grid:         #2c2c2a;
+        --master-fill:  #4a1f0a;
+        --master-stk:   #eb6834;
+        --master-ink:   #ffd6b8;
+        --note-fill:    #4d3500;
+        --note-stk:     #eda100;
+        --note-ink:     #fff3b0;
+      }
+    }
+    .card      { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+    .lane-bg   { fill: none; stroke: var(--grid); stroke-width: 1; stroke-dasharray: 4 4; }
+    .lane-label{ fill: var(--master-fill); stroke: var(--master-stk); stroke-width: 1.5; }
+    .lane-text { fill: var(--master-ink); font-size: 14px; font-weight: 600; }
+    .msg-line  { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+    .msg-arrow { fill: var(--ink); }
+    .msg-text  { fill: var(--ink); font-size: 13px; }
+    .msg-emph  { fill: var(--master-stk); font-size: 12px; font-weight: 600; }
+    .note      { fill: var(--note-fill); stroke: var(--note-stk); stroke-width: 1; }
+    .note-text { fill: var(--note-ink); font-size: 12px; }
+    .time-mark { fill: var(--master-stk); }
+    .time-text { fill: var(--master-ink); font-size: 11px; font-weight: 600; }
+  </style>
+
+  <rect class="card" x="0.5" y="0.5" width="719" height="479" rx="10"/>
+
+  <!-- lane labels (top headers) -->
+  <rect class="lane-label" x="80"  y="40" width="160" height="36" rx="8"/>
+  <text class="lane-text" x="160" y="63" text-anchor="middle">PTP Master</text>
+  <rect class="lane-label" x="480" y="40" width="160" height="36" rx="8"/>
+  <text class="lane-text" x="560" y="63" text-anchor="middle">PTP Slave</text>
+
+  <!-- lifelines -->
+  <line class="lane-bg" x1="160" y1="76" x2="160" y2="440"/>
+  <line class="lane-bg" x1="560" y1="76" x2="560" y2="440"/>
+
+  <!-- message 1: Sync (with t1 stamp) -->
+  <line class="msg-line" x1="170" y1="120" x2="550" y2="120"/>
+  <polygon class="msg-arrow" points="550,120 540,116 540,124"/>
+  <text class="msg-text"   x="200" y="113">Sync</text>
+  <text class="msg-emph"   x="200" y="138">携 t1 发送时刻</text>
+  <circle class="time-mark" cx="170" cy="120" r="4"/>
+  <text class="time-text"  x="178" y="125">t1</text>
+
+  <!-- note 1: t2 at slave receive -->
+  <rect class="note" x="380" y="156" width="170" height="30" rx="6"/>
+  <text class="note-text" x="465" y="175" text-anchor="middle">t2 = Slave 接收时刻</text>
+  <circle class="time-mark" cx="550" cy="171" r="4"/>
+  <line class="msg-line" x1="555" y1="171" x2="555" y2="120" stroke-dasharray="2 2" stroke-width="1"/>
+
+  <!-- message 2: Follow_Up -->
+  <line class="msg-line" x1="170" y1="210" x2="550" y2="210"/>
+  <polygon class="msg-arrow" points="550,210 540,206 540,214"/>
+  <text class="msg-text" x="200" y="203">Follow_Up</text>
+  <text class="msg-emph" x="200" y="228">精确 t1</text>
+
+  <!-- message 3: Delay_Req (slave -> master) -->
+  <line class="msg-line" x1="550" y1="280" x2="170" y2="280"/>
+  <polygon class="msg-arrow" points="170,280 180,276 180,284"/>
+  <text class="msg-text" x="280" y="273">Delay_Req</text>
+  <text class="msg-emph" x="280" y="298">携 t3 发送时刻</text>
+  <circle class="time-mark" cx="550" cy="280" r="4"/>
+  <text class="time-text"  x="558" y="275">t3</text>
+
+  <!-- note 2: t4 at master receive -->
+  <rect class="note" x="170" y="316" width="170" height="30" rx="6"/>
+  <text class="note-text" x="255" y="335" text-anchor="middle">t4 = Master 接收时刻</text>
+  <circle class="time-mark" cx="170" cy="331" r="4"/>
+  <line class="msg-line" x1="165" y1="331" x2="165" y2="280" stroke-dasharray="2 2" stroke-width="1"/>
+
+  <!-- message 4: Delay_Resp -->
+  <line class="msg-line" x1="170" y1="370" x2="550" y2="370"/>
+  <polygon class="msg-arrow" points="550,370 540,366 540,374"/>
+  <text class="msg-text"   x="200" y="363">Delay_Resp</text>
+  <text class="msg-emph"   x="200" y="388">精确 t4</text>
+
+  <!-- formula footer -->
+  <rect class="card" x="60" y="410" width="600" height="50" rx="8" style="fill: var(--surface); stroke: var(--border); stroke-width: 1;"/>
+  <text class="note-text" x="360" y="432" text-anchor="middle" style="font-weight:600;">path_delay = (t2 − t1 + t4 − t3) / 2</text>
+  <text class="note-text" x="360" y="450" text-anchor="middle" style="font-weight:600;">offset = (t2 − t1) − path_delay</text>
+</svg>

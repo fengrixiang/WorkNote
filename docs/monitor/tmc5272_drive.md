@@ -1953,3 +1953,77 @@ f_pulse = v_rps × 200
 - **细分跳变**：某些速度区间细分等级切换（如 16 细分→ 8 细分）可能引起步距不均
 
 **排查方向**：检查供电稳压、确认加速度曲线平滑度、分析负载重心变化区间。
+
+## 16 TMC5272 速度阈值 (TPWMTHRS) 到 输出轴角速度 (°/s) 完整推导过程
+
+### 1. 已知参数定义
+
+| 符号 | 含义 | 当前值 |
+| :--- | :--- | :--- |
+| $f_{CLK}$ | TMC5272 内部时钟频率 | $16,000,000 \text{ Hz}$ |
+| $TPWMTHRS$ | 速度阈值寄存器设定值 | $86 \text{ (0x56)}$ |
+| $MRES$ | 微步分辨率 (每 fullstep 的 $\mu$step 数) | $256$ |
+| $N_{step}$ | 电机单圈 fullstep 数 ($360^\circ / 0.9^\circ$) | $400 \text{ fullsteps/rev}$ |
+| $GR$ | 减速比 (电机轴转数 / 输出轴转数) | $4.5$ |
+
+### 2. 逐步推导过程
+
+#### 步骤 1：计算单个微步周期 $T_{\mu step}$
+**物理意义：** 驱动器发出一个 1/256 微步所需的时间（单位：秒）。
+
+**计算公式：**
+$$ T_{\mu step} = \frac{TPWMTHRS}{f_{CLK}} $$
+
+**代入数值：**
+$$ T_{\mu step} = \frac{86}{16,000,000} = 0.000005375 \text{ s} \ (5.375\ \mu s) $$
+
+#### 步骤 2：计算微步频率 $f_{\mu step}$
+**物理意义：** 每秒钟驱动器发出的微步脉冲数量。
+
+**计算公式：**
+$$ f_{\mu step} = \frac{1}{T_{\mu step}} = \frac{f_{CLK}}{TPWMTHRS} $$
+
+**代入数值：**
+$$ f_{\mu step} = \frac{16,000,000}{86} \approx 186,046.51 \text{ }\mu\text{steps/s (Hz)} $$
+
+#### 步骤 3：计算整步频率 $f_{step}$
+**物理意义：** 换算为电机每秒钟走过的完整步数。
+
+**计算公式：**
+$$ f_{step} = \frac{f_{\mu step}}{MRES} $$
+
+**代入数值：**
+$$ f_{step} = \frac{186,046.51}{256} \approx 726.74 \text{ fullsteps/s (Hz)} $$
+
+#### 步骤 4：计算电机轴角速度 $\omega_{motor}$
+**物理意义：** 步进电机转子本身每秒钟旋转的角度 (°/s)。
+*注：由于 1圈 = 360°，需用整步频率除以单圈步数得到圈数，再乘以 360°。*
+
+**计算公式：**
+$$ \omega_{motor} = \left( \frac{f_{step}}{N_{step}} \right) \times 360^\circ $$
+
+**代入数值：**
+$$ \omega_{motor} = \left( \frac{726.74}{400} \right) \times 360 = 1.81685 \times 360 \approx \mathbf{654.07\ ^\circ/s} $$
+
+#### 步骤 5：计算输出轴角速度 $\omega_{out}$ (目标量)
+**物理意义：** 经过减速箱后，最终机械执行机构每秒钟旋转的角度 (°/s)。
+
+**计算公式：**
+$$ \omega_{out} = \frac{\omega_{motor}}{GR} $$
+
+**代入数值：**
+$$ \omega_{out} = \frac{654.07}{4.5} \approx \mathbf{145.35\ ^\circ/s} $$
+
+---
+
+#### 3. 终极推导公式 (One-liner)
+
+为了在软件代码中一步到位完成计算，我们将上述步骤合并为一个总代数表达式：
+
+$$ \omega_{out\_deg} = \frac{f_{CLK} \times 360}{TPWMTHRS \times MRES \times N_{step} \times GR} $$
+
+**验证计算：**
+$$ \omega_{out\_deg} = \frac{16,000,000 \times 360}{86 \times 256 \times 400 \times 4.5} $$
+$$ \omega_{out\_deg} = \frac{5,760,000,000}{39,628,800} \approx \mathbf{145.3488\ ^\circ/s} $$
+
+---
