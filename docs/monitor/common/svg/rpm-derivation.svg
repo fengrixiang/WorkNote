@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1150 680" xmlns="http://www.w3.org/2000/svg" style="background-color: #0D1117; font-family: 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <!-- 工业蓝图网格背景 -->
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#21262D" stroke-width="1"/>
+      <path d="M 150 0 L 0 0 0 150" fill="none" stroke="#30363D" stroke-width="1.5"/>
+    </pattern>
+    <!-- 仪表盘发光滤镜 -->
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-orange" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="5" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- 金属质感渐变 -->
+    <radialGradient id="metal-radial" cx="50%" cy="50%" r="50%">
+      <stop offset="60%" stop-color="#8B949E" />
+      <stop offset="95%" stop-color="#30363D" />
+      <stop offset="100%" stop-color="#161B22" />
+    </radialGradient>
+    <radialGradient id="gear-radial" cx="50%" cy="50%" r="50%">
+      <stop offset="70%" stop-color="#21262D" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#484F58" stop-opacity="0.9"/>
+    </radialGradient>
+    <!-- 反推箭头标记 -->
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#3FB950" />
+    </marker>
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58A6FF" />
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#F78166" />
+    </marker>
+  </defs>
+  <!-- 背景底色：独立 .svg 经 <img> 引用时确保深色底正常填充 -->
+  <rect width="1150" height="680" fill="#0D1117" />
+  <!-- 1. 铺设蓝图网格 -->
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  <!-- ======================== 底部: 机械传动基础结构 (半透明背景) ======================== -->
+  <g transform="translate(0, 70)" opacity="0.6">
+    <!-- 中间轴大齿轮 60T -->
+    <g transform="translate(294, 380)">
+      <circle cx="0" cy="0" r="120" fill="url(#gear-radial)" stroke="#484F58" stroke-width="2"/>
+      <circle cx="0" cy="0" r="117" fill="none" stroke="#30363D" stroke-width="8" stroke-dasharray="6.28 6.28"/>
+    </g>
+    <!-- 二级传动皮带 -->
+    <g fill="none">
+      <path d="M 294 360 L 800 310 A 70 70 0 0 1 800 450 L 294 400 A 20 20 0 0 1 294 360 Z" stroke="#161B22" stroke-width="16"/>
+      <path d="M 294 360 L 800 310 A 70 70 0 0 1 800 450 L 294 400 A 20 20 0 0 1 294 360 Z" stroke="#484F58" stroke-width="2"/>
+    </g>
+    <!-- 主动电机轴齿轮 12T -->
+    <g transform="translate(150, 380)">
+      <circle cx="0" cy="0" r="24" fill="url(#metal-radial)" />
+      <circle cx="0" cy="0" r="23" fill="none" stroke="#484F58" stroke-width="6" stroke-dasharray="6.28 6.28"/>
+    </g>
+    <!-- 中间轴同轴小带轮 -->
+    <g transform="translate(294, 380)">
+      <circle cx="0" cy="0" r="20" fill="url(#metal-radial)" stroke="#484F58" stroke-width="1.5"/>
+    </g>
+    <!-- 云台负载大带轮 -->
+    <g transform="translate(800, 380)">
+      <circle cx="0" cy="0" r="70" fill="url(#metal-radial)" stroke="#484F58" stroke-width="2"/>
+      <circle cx="0" cy="0" r="32" fill="#0D1117" stroke="#30363D" stroke-width="2"/>
+    </g>
+  </g>
+  <!-- ======================== 顶部: 转速分析 HUD 悬浮层 (重新排布完美防遮挡) ======================== -->
+  <!-- 顶部主标题 -->
+  <g transform="translate(360, 50)">
+    <text x="0" y="0" fill="#E6EDF3" font-size="32" font-weight="900" filter="url(#glow-cyan)">系统转速逆向推导矩阵 (Target: 100°/s)</text>
+    <text x="70" y="25" fill="#8B949E" font-size="14" font-weight="bold" letter-spacing="2">核心公式：RPM = ( 角速度 / 360 ) × 60</text>
+  </g>
+  <!-- =================== [仪表 3] 云台输出端 (起点, X=800) =================== -->
+  <g transform="translate(800, 200)">
+    <!-- 直线引导指向云台机械轴 -->
+    <path d="M 0 110 L 0 250" fill="none" stroke="#3FB950" stroke-width="2" stroke-dasharray="4 4"/>
+    <circle cx="0" cy="250" r="6" fill="#3FB950"/>
+    <!-- 仪表盘主体 -->
+    <circle cx="0" cy="0" r="65" fill="#0D1117" fill-opacity="0.8" stroke="#21262D" stroke-width="8"/>
+    <!-- 转速刻度指示 (低速) -->
+    <path d="M -46 46 A 65 65 0 0 1 0 -65" fill="none" stroke="#3FB950" stroke-width="8" filter="url(#glow-green)"/>
+    <circle cx="-46" cy="46" r="3" fill="#E6EDF3" />
+    <text x="0" y="-80" fill="#8B949E" font-size="15" font-weight="bold" text-anchor="middle">Axis 3 : Gimbal (负载)</text>
+    <text x="0" y="10" fill="#3FB950" font-size="28" font-weight="900" text-anchor="middle" filter="url(#glow-green)">16.67</text>
+    <text x="0" y="30" fill="#3FB950" font-size="12" font-weight="bold" text-anchor="middle">RPM</text>
+    <rect x="-65" y="70" width="130" height="26" rx="4" fill="#3FB950" fill-opacity="0.15" stroke="#3FB950" stroke-width="1"/>
+    <text x="0" y="88" fill="#3FB950" font-size="13" font-weight="bold" text-anchor="middle">目标: 100° / 秒</text>
+  </g>
+  <!-- ====== 推导过程 2 (皮带传动放大) ====== -->
+  <g transform="translate(640, 200)">
+    <!-- 反向推导箭头 -->
+    <path d="M 75 0 L -75 0" fill="none" stroke="#8B949E" stroke-width="2" marker-end="url(#arrow-cyan)" stroke-dasharray="6 4"/>
+    <rect x="-65" y="-15" width="130" height="30" rx="15" fill="#161B22" stroke="#58A6FF" stroke-width="1"/>
+    <text x="0" y="4" fill="#58A6FF" font-size="14" font-weight="bold" text-anchor="middle">皮带放大 × 3.5</text>
+  </g>
+  <!-- =================== [仪表 2] 中间传动轴 (错位排版 X=480) =================== -->
+  <g transform="translate(480, 200)">
+    <!-- 折线引导：从 HUD X=480 指向 实际机械坐标 X=294 (差值 -186) -->
+    <path d="M 0 110 L 0 140 L -186 160 L -186 250" fill="none" stroke="#58A6FF" stroke-width="2" stroke-dasharray="4 4" stroke-linejoin="round"/>
+    <circle cx="-186" cy="250" r="6" fill="#58A6FF"/>
+    <circle cx="0" cy="0" r="65" fill="#0D1117" fill-opacity="0.8" stroke="#21262D" stroke-width="8"/>
+    <!-- 转速刻度指示 (中速) -->
+    <path d="M -46 46 A 65 65 0 1 1 46 46" fill="none" stroke="#58A6FF" stroke-width="8" filter="url(#glow-cyan)"/>
+    <circle cx="-46" cy="46" r="3" fill="#E6EDF3" />
+    <text x="0" y="-80" fill="#8B949E" font-size="15" font-weight="bold" text-anchor="middle">Axis 2 : Intermediate</text>
+    <text x="0" y="10" fill="#58A6FF" font-size="28" font-weight="900" text-anchor="middle" filter="url(#glow-cyan)">58.33</text>
+    <text x="0" y="30" fill="#58A6FF" font-size="12" font-weight="bold" text-anchor="middle">RPM</text>
+    <rect x="-70" y="70" width="140" height="26" rx="4" fill="#58A6FF" fill-opacity="0.15" stroke="#58A6FF" stroke-width="1"/>
+    <text x="0" y="88" fill="#58A6FF" font-size="13" font-weight="bold" text-anchor="middle">计算: 16.67 × 3.5</text>
+  </g>
+  <!-- ====== 推导过程 1 (齿轮传动放大) ====== -->
+  <g transform="translate(315, 200)">
+    <path d="M 75 0 L -75 0" fill="none" stroke="#8B949E" stroke-width="2" marker-end="url(#arrow-orange)" stroke-dasharray="6 4"/>
+    <rect x="-65" y="-15" width="130" height="30" rx="15" fill="#161B22" stroke="#F78166" stroke-width="1"/>
+    <text x="0" y="4" fill="#F78166" font-size="14" font-weight="bold" text-anchor="middle">齿轮放大 × 5.0</text>
+  </g>
+  <!-- =================== [仪表 1] 电机主动端 (终点, X=150) =================== -->
+  <g transform="translate(150, 200)">
+    <!-- 直线引导指向电机机械轴 -->
+    <path d="M 0 110 L 0 250" fill="none" stroke="#F78166" stroke-width="2" stroke-dasharray="4 4"/>
+    <circle cx="0" cy="250" r="6" fill="#F78166"/>
+    <circle cx="0" cy="0" r="65" fill="#0D1117" fill-opacity="0.8" stroke="#21262D" stroke-width="8"/>
+    <!-- 转速刻度指示 (极限高转速，接近满圈) -->
+    <circle cx="0" cy="0" r="65" fill="none" stroke="#F78166" stroke-width="8" stroke-dasharray="408" stroke-dashoffset="20" filter="url(#glow-orange)"/>
+    <circle cx="-46" cy="46" r="3" fill="#E6EDF3" />
+    <text x="0" y="-80" fill="#8B949E" font-size="15" font-weight="bold" text-anchor="middle">Axis 1 : Motor (电机端)</text>
+    <text x="0" y="10" fill="#F78166" font-size="28" font-weight="900" text-anchor="middle" filter="url(#glow-orange)">291.67</text>
+    <text x="0" y="30" fill="#F78166" font-size="12" font-weight="bold" text-anchor="middle">RPM</text>
+    <rect x="-70" y="70" width="140" height="26" rx="4" fill="#F78166" fill-opacity="0.15" stroke="#F78166" stroke-width="1"/>
+    <text x="0" y="88" fill="#F78166" font-size="13" font-weight="bold" text-anchor="middle">计算: 58.33 × 5.0</text>
+  </g>
+  <!-- ======================== 底部数据总结面板 ======================== -->
+  <g transform="translate(180, 590)">
+    <rect x="0" y="0" width="790" height="70" rx="8" fill="#161B22" stroke="#484F58" stroke-width="1.5"/>
+    <text x="40" y="30" fill="#E6EDF3" font-size="15" font-weight="bold">转速极化现象：</text>
+    <text x="40" y="52" fill="#8B949E" font-size="13">
+      由于 <tspan fill="#F78166">17.5 : 1</tspan> 的高减速比，当云台端仅需 <tspan fill="#3FB950">16.67 转/分钟</tspan> 时，主动电机已被迫拉升至 <tspan fill="#F78166">291.67 转/分钟</tspan> 的极高工况。
+    </text>
+  </g>
+</svg>

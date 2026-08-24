@@ -361,6 +361,141 @@ git remote add origin <仓库地址>
 git remote set-url origin <新地址>
 ```
 
+## SSH 免密配置（公钥/私钥）
+
+使用 SSH 方式克隆/推送仓库可免去每次输入账号密码，依赖一对密钥：**私钥**（本地保存，绝不外泄）与**公钥**（添加到代码托管平台）。
+
+### 生成密钥对
+
+```bash
+# 生成 ed25519 密钥（推荐，更安全、速度更快）
+ssh-keygen -t ed25519 -C "fengrixiang@example.com"
+
+# 生成 RSA 密钥（旧平台兼容）
+ssh-keygen -t rsa -b 4096 -C "fengrixiang@example.com"
+
+# 指定密钥文件路径（默认 ~/.ssh/id_ed25519）
+ssh-keygen -t ed25519 -C "备注" -f ~/.ssh/id_ed25519_github
+
+# 一路回车使用默认路径，passphrase 留空即为完全免密
+```
+
+### 查看并复制公钥
+
+```bash
+# 查看公钥内容（.pub 结尾的是公钥，没有 .pub 的是私钥）
+cat ~/.ssh/id_ed25519.pub
+
+# 复制公钥到剪贴板
+cat ~/.ssh/id_ed25519.pub | clip                # Windows Git Bash
+cat ~/.ssh/id_ed25519.pub | xclip -sel clip     # Linux（需安装 xclip）
+```
+
+> 将输出的公钥（以 `ssh-ed25519` 开头）完整添加到 GitHub / GitLab 的 **Settings → SSH Keys**。
+
+### 启动 SSH Agent 并添加私钥
+
+```bash
+# 启动 agent
+eval $(ssh-agent -s)
+
+# 将私钥加入 agent（之后无需重复输入 passphrase）
+ssh-add ~/.ssh/id_ed25519
+
+# 查看已添加的密钥
+ssh-add -l
+```
+
+### 测试连接
+
+```bash
+# 测试 GitHub（成功会返回 Hi <用户名>! You've successfully authenticated...）
+ssh -T git@github.com
+
+# 测试 GitLab
+ssh -T git@gitlab.com
+
+# 测试内网 GitLab（指定端口）
+ssh -T -p 22 git@your.gitlab.server
+```
+
+### HTTPS 与 SSH 互转
+
+```bash
+# 查看当前远程地址
+git remote -v
+
+# HTTPS → SSH（免密推送）
+git remote set-url origin git@github.com:user/repo.git
+
+# SSH → HTTPS
+git remote set-url origin https://github.com/user/repo.git
+
+# 地址格式区别
+# HTTPS: https://github.com/user/repo.git   （需账号密码/token）
+# SSH:    git@github.com:user/repo.git      （用密钥免密）
+```
+
+### 多平台 / 多账号配置
+
+同一台机器需要为 GitHub、GitLab、公司内网配置不同密钥时，编辑 `~/.ssh/config`：
+
+```bash
+# ~/.ssh/config
+
+# ---- GitHub 个人账号 ----
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_github
+    IdentitiesOnly yes
+
+# ---- GitLab 工作账号 ----
+Host gitlab.com
+    HostName gitlab.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_gitlab
+    IdentitiesOnly yes
+
+# ---- 公司内网 GitLab（自定义别名）----
+Host company
+    HostName 192.168.1.100
+    Port 2222
+    User git
+    IdentityFile ~/.ssh/id_ed25519_company
+    IdentitiesOnly yes
+```
+
+使用自定义别名克隆：
+
+```bash
+# 用别名 company 代替复杂的地址
+git clone git@company:group/repo.git
+```
+
+### 常见问题
+
+```bash
+# Permission denied：检查私钥权限（私钥不能被其他用户读取）
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/id_ed25519.pub
+
+# 详细排查 SSH 连接问题
+ssh -vT git@github.com
+
+# 公钥指纹校验（GitHub 公布的 ed25519 指纹）
+# SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU
+ssh-keygen -lf ~/.ssh/id_ed25519.pub
+```
+
+| 文件 | 说明 |
+| ------ | ------ |
+| `~/.ssh/id_ed25519` | **私钥**，绝对不能外泄/提交到仓库 |
+| `~/.ssh/id_ed25519.pub` | **公钥**，添加到代码托管平台 |
+| `~/.ssh/config` | 多账号/多平台的密钥映射配置 |
+| `~/.ssh/known_hosts` | 已信任的远程主机指纹 |
+
 ## 修改已推送的提交信息
 
 ```bash

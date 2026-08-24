@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1150 680" xmlns="http://www.w3.org/2000/svg" style="background-color: #0D1117; font-family: 'Segoe UI', system-ui, sans-serif;">
+  <defs>
+    <!-- 工业蓝图网格背景 -->
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#21262D" stroke-width="1"/>
+      <path d="M 150 0 L 0 0 0 150" fill="none" stroke="#30363D" stroke-width="1.5"/>
+    </pattern>
+    <!-- 发光滤镜 -->
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- 金属渐变质感 -->
+    <linearGradient id="metal-linear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#484F58" />
+      <stop offset="50%" stop-color="#8B949E" />
+      <stop offset="100%" stop-color="#21262D" />
+    </linearGradient>
+    <radialGradient id="metal-radial" cx="50%" cy="50%" r="50%">
+      <stop offset="60%" stop-color="#8B949E" />
+      <stop offset="95%" stop-color="#30363D" />
+      <stop offset="100%" stop-color="#161B22" />
+    </radialGradient>
+    <radialGradient id="gear-radial" cx="50%" cy="50%" r="50%">
+      <stop offset="70%" stop-color="#21262D" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#484F58" stop-opacity="0.9"/>
+    </radialGradient>
+    <radialGradient id="lens-glass" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#58A6FF" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#1F6FEB" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0D1117" stop-opacity="0.9"/>
+    </radialGradient>
+    <!-- 箭头标记 -->
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58A6FF" />
+    </marker>
+  </defs>
+  <!-- 背景底色：独立 .svg 经 <img> 引用时确保深色底正常填充 -->
+  <rect width="1150" height="680" fill="#0D1117" />
+  <!-- 1. 铺设蓝图网格 -->
+  <rect width="100%" height="100%" fill="url(#grid)" />
+  <!-- ======================== 机械物理结构绘制 ======================== -->
+  <!--
+    电机轴 (X=150): 齿轮 r=24 (12齿)
+    中间轴 (X=294): 大齿轮 r=120 (60齿) + 同轴小带轮 r=20
+    云台轴 (X=800): 大带轮 r=70
+  -->
+  <!-- [中间层] 中间轴 60T 大齿轮 (一级从动, r=120) -->
+  <g transform="translate(294, 380)">
+    <circle cx="0" cy="0" r="120" fill="url(#gear-radial)" stroke="#8B949E" stroke-width="2"/>
+    <!-- 精确 60 齿视觉计算 (间距≈12.56) -->
+    <circle cx="0" cy="0" r="117" fill="none" stroke="#484F58" stroke-width="8" stroke-dasharray="6.28 6.28"/>
+    <!-- 减重镂空设计 -->
+    <g fill="#0D1117" fill-opacity="0.7" stroke="#30363D" stroke-width="2">
+      <circle cx="0" cy="-60" r="25" /> <circle cx="0" cy="60" r="25" />
+      <circle cx="-60" cy="0" r="25" /> <circle cx="60" cy="0" r="25" />
+      <circle cx="-42" cy="-42" r="16" /> <circle cx="42" cy="42" r="16" />
+      <circle cx="-42" cy="42" r="16" /> <circle cx="42" cy="-42" r="16" />
+    </g>
+    <!-- 逆时针旋转指示 -->
+    <path d="M 50 -65 A 80 80 0 0 0 -50 -65" fill="none" stroke="#8B949E" stroke-width="3" marker-end="url(#arrow-cyan)" stroke-dasharray="4 2"/>
+  </g>
+  <!-- [底层] 二级传动 3.5:1 皮带系统 -->
+  <g fill="none" stroke-linejoin="round">
+    <!-- 皮带外侧主体 -->
+    <path d="M 294 360 L 800 310 A 70 70 0 0 1 800 450 L 294 400 A 20 20 0 0 1 294 360 Z" stroke="#161B22" stroke-width="16"/>
+    <!-- 同步带内侧齿纹 -->
+    <path d="M 294 360 L 800 310 A 70 70 0 0 1 800 450 L 294 400 A 20 20 0 0 1 294 360 Z" stroke="#79C0FF" stroke-width="4" stroke-dasharray="5 4" stroke-opacity="0.5"/>
+    <!-- 皮带外沿包线 -->
+    <path d="M 294 360 L 800 310 A 70 70 0 0 1 800 450 L 294 400 A 20 20 0 0 1 294 360 Z" stroke="#484F58" stroke-width="2"/>
+  </g>
+  <!-- [顶层] 节点1: 主动电机与 12齿 齿轮 (r=24) -->
+  <g transform="translate(150, 380)">
+    <!-- 步进电机底座 -->
+    <rect x="-55" y="-55" width="110" height="110" rx="10" fill="url(#metal-linear)" stroke="#1F6FEB" stroke-width="2"/>
+    <circle cx="0" cy="0" r="40" fill="#161B22" stroke="#30363D" stroke-width="3"/>
+    <!-- 12齿精确绘制 (间距≈12.56) -->
+    <circle cx="0" cy="0" r="24" fill="url(#metal-radial)" />
+    <circle cx="0" cy="0" r="23" fill="none" stroke="#58A6FF" stroke-width="6" stroke-dasharray="6.28 6.28"/>
+    <circle cx="0" cy="0" r="6" fill="#C9D1D9" />
+    <!-- 顺时针旋转指示 -->
+    <path d="M -20 -35 A 40 40 0 0 1 35 -20" fill="none" stroke="#58A6FF" stroke-width="3" marker-end="url(#arrow-cyan)" stroke-dasharray="4 2"/>
+    <rect x="-35" y="55" width="70" height="22" rx="4" fill="#1F6FEB" fill-opacity="0.2" stroke="#58A6FF" stroke-width="1"/>
+    <text x="0" y="70" fill="#58A6FF" font-size="13" font-weight="bold" text-anchor="middle">Z1 = 12 齿</text>
+  </g>
+  <!-- 节点2中心: 叠在中间轴上的小同步轮 (r=20) -->
+  <g transform="translate(294, 380)">
+    <circle cx="0" cy="0" r="20" fill="url(#metal-radial)" stroke="#58A6FF" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="17" fill="none" stroke="#484F58" stroke-width="2"/>
+    <circle cx="0" cy="0" r="7" fill="#161B22" stroke="#484F58" stroke-width="2"/>
+  </g>
+  <!-- 节点3: 云台负载大同步轮 (r=70) -->
+  <g transform="translate(800, 380)">
+    <circle cx="0" cy="0" r="70" fill="url(#metal-radial)" stroke="#58A6FF" stroke-width="2"/>
+    <circle cx="0" cy="0" r="63" fill="none" stroke="#21262D" stroke-width="4"/>
+    <!-- 辐条 -->
+    <path d="M 0 -63 L 0 63 M -63 0 L 63 0 M -45 -45 L 45 45 M -45 45 L 45 -45" stroke="#161B22" stroke-width="12"/>
+    <!-- 负载隐喻 (相机镜头) -->
+    <circle cx="0" cy="0" r="32" fill="#0D1117" stroke="#484F58" stroke-width="3"/>
+    <circle cx="0" cy="0" r="25" fill="url(#lens-glass)" stroke="#1F6FEB" stroke-width="1"/>
+    <circle cx="-8" cy="-8" r="5" fill="#FFFFFF" fill-opacity="0.15" />
+    <!-- 逆时针旋转指示 -->
+    <path d="M 45 -55 A 70 70 0 0 0 -45 -55" fill="none" stroke="#58A6FF" stroke-width="4" marker-end="url(#arrow-cyan)" />
+    <text x="-45" y="-70" fill="#58A6FF" font-size="14" font-weight="bold">云台输出端</text>
+  </g>
+  <!-- ======================== HUD 结构描述面板 ======================== -->
+  <!-- 顶部标题 -->
+  <g transform="translate(360, 60)">
+    <text x="0" y="0" fill="#E6EDF3" font-size="32" font-weight="900" filter="url(#glow-cyan)">两级精密机械传动架构图</text>
+    <text x="15" y="30" fill="#8B949E" font-size="16" font-weight="bold" letter-spacing="2">总传动链结构：齿轮啮合 + 同步带牵引</text>
+    <line x1="-30" y1="45" x2="430" y2="45" stroke="#1F6FEB" stroke-width="2" />
+  </g>
+  <!-- 传动比推导计算浮窗 -->
+  <g transform="translate(190, 240)">
+    <rect x="-10" y="-15" width="165" height="26" rx="4" fill="#1F6FEB" fill-opacity="0.15" stroke="#58A6FF" stroke-width="1"/>
+    <text x="0" y="2" fill="#58A6FF" font-size="13" font-weight="bold">一级减速比 = 60/12 = 5.0 : 1</text>
+    <path d="M 60 11 L 60 40" stroke="#58A6FF" stroke-width="1.5" stroke-dasharray="2 2"/>
+  </g>
+  <g transform="translate(520, 260)">
+    <rect x="-10" y="-15" width="150" height="26" rx="4" fill="#1F6FEB" fill-opacity="0.15" stroke="#58A6FF" stroke-width="1"/>
+    <text x="0" y="2" fill="#58A6FF" font-size="13" font-weight="bold">二级减速比 = 3.5 : 1</text>
+    <path d="M 55 11 L 55 100" stroke="#58A6FF" stroke-width="1.5" stroke-dasharray="2 2"/>
+  </g>
+  <!-- 左侧：一级传动参数面板 -->
+  <g transform="translate(30, 40)">
+    <rect x="0" y="0" width="250" height="150" rx="6" fill="#161B22" fill-opacity="0.85" stroke="#58A6FF" stroke-width="1.5"/>
+    <path d="M 0 35 L 250 35" stroke="#58A6FF" stroke-width="1" stroke-opacity="0.5"/>
+    <text x="15" y="24" fill="#58A6FF" font-size="15" font-weight="bold" filter="url(#glow-cyan)">[⚙️] 一级传动模块</text>
+    <text x="15" y="60" fill="#E6EDF3" font-size="13">➤ 传动方式: <tspan fill="#79C0FF">齿轮刚性啮合</tspan></text>
+    <text x="15" y="80" fill="#E6EDF3" font-size="13">➤ 主动齿数: <tspan fill="#79C0FF">12 齿 (顺时针)</tspan></text>
+    <text x="15" y="100" fill="#E6EDF3" font-size="13">➤ 从动齿数: <tspan fill="#79C0FF">60 齿 (逆时针)</tspan></text>
+    <text x="15" y="120" fill="#E6EDF3" font-size="13">➤ 运动学特征: <tspan fill="#79C0FF">传动方向反转</tspan></text>
+    <path d="M 125 150 L 125 300" fill="none" stroke="#58A6FF" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-cyan)"/>
+  </g>
+  <!-- 右侧：二级传动参数面板 -->
+  <g transform="translate(860, 40)">
+    <rect x="0" y="0" width="250" height="150" rx="6" fill="#161B22" fill-opacity="0.85" stroke="#58A6FF" stroke-width="1.5"/>
+    <path d="M 0 35 L 250 35" stroke="#58A6FF" stroke-width="1" stroke-opacity="0.5"/>
+    <text x="15" y="24" fill="#58A6FF" font-size="15" font-weight="bold" filter="url(#glow-cyan)">[🔄] 二级传动模块</text>
+    <text x="15" y="60" fill="#E6EDF3" font-size="13">➤ 传动方式: <tspan fill="#79C0FF">同步带柔性牵引</tspan></text>
+    <text x="15" y="80" fill="#E6EDF3" font-size="13">➤ 主动件: <tspan fill="#79C0FF">中间同轴小带轮</tspan></text>
+    <text x="15" y="100" fill="#E6EDF3" font-size="13">➤ 从动件: <tspan fill="#79C0FF">云台负载大带轮</tspan></text>
+    <text x="15" y="120" fill="#E6EDF3" font-size="13">➤ 运动学特征: <tspan fill="#79C0FF">传动方向一致</tspan></text>
+    <path d="M 125 150 L 125 250 L 25 310" fill="none" stroke="#58A6FF" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-cyan)"/>
+  </g>
+  <!-- 底部：系统总方程结论 -->
+  <g transform="translate(250, 580)">
+    <rect x="0" y="0" width="650" height="70" rx="8" fill="#1F6FEB" fill-opacity="0.1" stroke="#58A6FF" stroke-width="1"/>
+    <text x="325" y="30" fill="#E6EDF3" font-size="16" font-weight="bold" text-anchor="middle" filter="url(#glow-cyan)">总传动比方程式</text>
+    <text x="325" y="55" fill="#8B949E" font-size="16" font-weight="bold" text-anchor="middle">
+      <tspan fill="#79C0FF">一级齿轮比 (5.0)</tspan> × <tspan fill="#79C0FF">二级皮带比 (3.5)</tspan> = <tspan fill="#E6EDF3">总减速比 17.5 : 1</tspan>
+    </text>
+  </g>
+</svg>

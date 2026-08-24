@@ -33,17 +33,17 @@
 
 | 文档 | 说明 |
 | ---- | ---- |
-| [云台开发](/docs/monitor/monitor) | 预置位精度测试、MS35774 vs TMC5272 对比 |
-| [云台概述](/docs/monitor/ptz) | 云台速度与电机速度换算 |
+| [云台开发](/docs/monitor/common/monitor) | 预置位精度测试、MS35774 vs TMC5272 对比 |
+| [云台概述](/docs/monitor/common/ptz) | 云台速度与电机速度换算 |
 | [电机概述](/docs/motor/motor) | 电机基础与控制 |
-| [MS35774 寄存器](/docs/monitor/ms35774) | MS35774 寄存器说明 |
-| [MS35774 速度表](/docs/monitor/ms35774_speed) | 24/48/96 档速度表计算 |
-| [MS35774 驱动](/docs/monitor/ms35774_drive) | MS35774 驱动调试 |
-| [MS41969](/docs/monitor/ms41969) | MS41969 调试笔记 |
-| [TMC5272](/docs/monitor/tmc5272) | 8-Point Ramp 原理与使用 |
-| [TMC5272 驱动](/docs/monitor/tmc5272_drive) | TMC5272 驱动调试 |
-| [VX630A vs VX720](/docs/monitor/VX630A_VS_VX720) | 云台速度对比测试 |
-| [Python 工具](/docs/monitor/python) | Python 辅助工具 |
+| [MS35774 寄存器](/docs/monitor/ms35774/ms35774) | MS35774 寄存器说明 |
+| [MS35774 速度表](/docs/monitor/ms35774/ms35774_speed) | 24/48/96 档速度表计算 |
+| [MS35774 驱动](/docs/monitor/ms35774/ms35774_drive) | MS35774 驱动调试 |
+| [MS41969](/docs/monitor/ms41969/ms41969) | MS41969 调试笔记 |
+| [TMC5272](/docs/monitor/tmc5272/tmc5272) | 8-Point Ramp 原理与使用 |
+| [TMC5272 驱动](/docs/monitor/tmc5272/tmc5272_drive) | TMC5272 驱动调试 |
+| [VX630A vs VX720](/docs/monitor/common/VX630A_VS_VX720) | 云台速度对比测试 |
+| [Python 工具](/docs/monitor/common/python) | Python 辅助工具 |
 
 ### Linux
 

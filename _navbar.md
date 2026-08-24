@@ -10,7 +10,7 @@
   - [ARM](/docs/ARM/arm)
 
 - 云台与 Sensor
-  - [云台开发](/docs/monitor/monitor)
+  - [云台开发](/docs/monitor/common/monitor)
   - [Sensor 开发](/docs/sensor/sensor)
   - [MIPI](/docs/sensor/mipi)
   - [V4L2](/docs/sensor/v4l2)

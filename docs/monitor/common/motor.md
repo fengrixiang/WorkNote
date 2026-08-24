@@ -184,5 +184,5 @@
 ## 7. 相关文档
 
 - [TMC5272 步进驱动](https://github.com/trinamic/TMC5272)
-- [MS35774 步进驱动](../monitor/ms35774.md)
-- [MS41969 双轴步进](../monitor/ms41969.md)
+- [MS35774 步进驱动](../monitor/ms35774/ms35774.md)
+- [MS41969 双轴步进](../monitor/ms41969/ms41969.md)

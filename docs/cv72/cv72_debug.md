@@ -87,3 +87,13 @@ $ cat /sys/kernel/debug/clk/clk_summary
 ```
 /home/temperature_read.sh
 ```
+
+
+### 开关跟踪
+```
+source /camos/envsetup.sh
+
+vset aitrackapp.common.track_en true  开
+
+vset aitrackapp.common.track_en false  关
+```

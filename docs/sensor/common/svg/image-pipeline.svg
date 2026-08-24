@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="660" height="700" viewBox="0 0 660 700" xmlns="http://www.w3.org/2000/svg"
+     style="background-color: #0D1117; font-family: 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif;">
+  <defs>
+    <marker id="ar-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#F0883E"/>
+    </marker>
+    <marker id="ar-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#BC8CFF"/>
+    </marker>
+    <marker id="ar-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#56D364"/>
+    </marker>
+    <marker id="ar-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#58A6FF"/>
+    </marker>
+    <marker id="ar-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#FF7B72"/>
+    </marker>
+  </defs>
+
+  <style>
+    .box  { fill: #161B22; stroke-width: 2; rx: 8; ry: 8; }
+    .text { font-size: 15px; fill: #C9D1D9; text-anchor: middle; dominant-baseline: middle; }
+    .line { stroke-width: 2; fill: none; }
+  </style>
+
+  <!-- 背景：独立 .svg 经 <img> 引用时确保深色底正常填充 -->
+  <rect width="660" height="700" fill="#0D1117"/>
+
+  <!-- ===== L1 CMOS Sensor ===== -->
+  <rect x="230" y="40" width="200" height="52" class="box" stroke="#F0883E"/>
+  <text x="330" y="67" class="text">CMOS Sensor</text>
+
+  <path d="M330 92 L330 150" class="line" stroke="#F0883E" marker-end="url(#ar-orange)"/>
+
+  <!-- ===== L2 RAW ===== -->
+  <rect x="230" y="152" width="200" height="52" class="box" stroke="#F0883E"/>
+  <text x="330" y="179" class="text">RAW10 / RAW12</text>
+
+  <path d="M330 204 L330 262" class="line" stroke="#F0883E" marker-end="url(#ar-orange)"/>
+
+  <!-- ===== L3 ISP ===== -->
+  <rect x="230" y="264" width="200" height="52" class="box" stroke="#BC8CFF"/>
+  <text x="330" y="290" class="text">ISP</text>
+
+  <!-- ISP 分流 -->
+  <path d="M330 316 C330 350, 175 342, 175 374" class="line" stroke="#BC8CFF" marker-end="url(#ar-purple)"/>
+  <path d="M330 316 C330 350, 485 342, 485 374" class="line" stroke="#BC8CFF" marker-end="url(#ar-purple)"/>
+
+  <!-- ===== L4 RGB888 / NV12 ===== -->
+  <rect x="95"  y="376" width="160" height="52" class="box" stroke="#56D364"/>
+  <text x="175" y="403" class="text">RGB888</text>
+
+  <rect x="405" y="376" width="160" height="52" class="box" stroke="#58A6FF"/>
+  <text x="485" y="403" class="text">NV12</text>
+
+  <!-- RGB888 分流 -->
+  <path d="M175 428 C175 462, 90 454, 90 486" class="line" stroke="#56D364" marker-end="url(#ar-green)"/>
+  <path d="M175 428 C175 462, 250 454, 250 486" class="line" stroke="#56D364" marker-end="url(#ar-green)"/>
+
+  <!-- NV12 → 编码 -->
+  <path d="M485 428 L485 486" class="line" stroke="#58A6FF" marker-end="url(#ar-blue)"/>
+
+  <!-- ===== L5 显示器 / AI推理 / H.264 ===== -->
+  <rect x="25"  y="488" width="130" height="52" class="box" stroke="#56D364"/>
+  <text x="90"  y="515" class="text">显示器</text>
+
+  <rect x="185" y="488" width="130" height="52" class="box" stroke="#56D364"/>
+  <text x="250" y="515" class="text">AI 推理</text>
+
+  <rect x="400" y="488" width="170" height="52" class="box" stroke="#FF7B72"/>
+  <text x="485" y="515" class="text">H.264 / H.265</text>
+
+  <!-- 编码分流 -->
+  <path d="M485 540 C485 574, 400 566, 400 598" class="line" stroke="#FF7B72" marker-end="url(#ar-red)"/>
+  <path d="M485 540 C485 574, 570 566, 570 598" class="line" stroke="#FF7B72" marker-end="url(#ar-red)"/>
+
+  <!-- ===== L6 网络传输 / 视频存储 ===== -->
+  <rect x="335" y="600" width="130" height="52" class="box" stroke="#FF7B72"/>
+  <text x="400" y="627" class="text">网络传输</text>
+
+  <rect x="505" y="600" width="130" height="52" class="box" stroke="#FF7B72"/>
+  <text x="570" y="627" class="text">视频存储</text>
+</svg>
